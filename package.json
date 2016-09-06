@@ -1,0 +1,28 @@
+{
+  "name": "react-ems",
+  "version": "0.0.1",
+  "description": "equipment management system by react",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "babel": {
+    "presets": [
+      "latest",
+      "stage-0",
+      "react"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pennyren/reactEMS.git"
+  },
+  "keywords": [
+    "react"
+  ],
+  "author": "pennyren",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pennyren/reactEMS/issues"
+  },
+  "homepage": "https://github.com/pennyren/reactEMS#readme"
+}
