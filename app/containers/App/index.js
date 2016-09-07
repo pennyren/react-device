@@ -1,10 +1,10 @@
 import React from 'react';
-import TextField from 'components/TextField';
-
+import SignIn from '../SignIn'
+import styles from './styles.css';
 function App(props) {
 	return (
-		<div>
-			<TextField />
+		<div className="wrapper">
+			<SignIn />
 		</div>
 	)
 }

@@ -1,0 +1,56 @@
+.mdl-textfield {
+	position: relative;
+    display: inline-block;
+ 	font-size: 1.6rem;
+    width: 250px;
+    max-width: 100%;
+    & .mdl-textfield-input {
+        border: none;
+        border-bottom: 1px solid rgba(0,0,0,.12);
+        display: block;
+        padding: 4px 0;
+        font-family: inherit;
+        font-size: 1.6rem;
+        width: 100%;
+        text-align: left;
+        outline: none;
+    }
+    & .mdl-textfield-label {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: block;
+        color: rgba(0,0,0,.26);
+        pointer-events: none;
+        width: 100%;
+        overflow: hidden;
+        white-space: nowrap;
+        text-align: left;
+        margin-top: 5px;
+        &:after {
+            background-color: #39b881;
+            bottom: 0;
+            content: '';
+            height: 2px;
+            left: 45%;
+            position: absolute;
+            transition: all .2s cubic-bezier(.4,0,.2,1);
+            visibility: hidden;
+            width: 10px;
+        }
+    }
+    &.is-dirty .mdl-textfield-label {
+         visibility: hidden;
+    }
+}
+
+.mdl-textfield-input:focus + .mdl-textfield-label:after {
+	left: 0;
+	width: 100%;
+	visibility: visible;
+}
+
+
+
