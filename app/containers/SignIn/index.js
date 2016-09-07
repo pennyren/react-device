@@ -7,7 +7,8 @@ class SignIn extends React.Component {
 		return (
 			<div className="signin">
 				<div className="form">
-					<TextField name="username" placeholder="用户名" withFloat={true}/>
+					<TextField name="username" placeholder="Username" withFloat={true}/>
+					<TextField name="password" placeholder="Password" withFloat={true}/>
 				</div>
 			</div>
 		)
