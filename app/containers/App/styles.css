@@ -42,6 +42,12 @@ body {
 	text-rendering: auto;
 	transform: translate(0, 0);
 	&.mdi-account:before {
-		content: "\F003";
+		content: "\f004";
+	}
+	&.mdi-lock-open:before {
+		content: "\f33f";
+	}
+	&.mdi-account-circle:before {
+		content: "\f009";
 	}
 }

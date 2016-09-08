@@ -1,7 +1,7 @@
 .mdl-textfield {
 	position: relative;
- 	font-size: 1.6rem;
     max-width: 100%;
+    display: inline-block;
     & .mdl-textfield-input {
         border: none;
         border-bottom: 1px solid #dadada;
@@ -20,13 +20,16 @@
         right: 0;
         bottom: 0;
         display: block;
-        color: #9e9e9e;
+        color: #a3a3a3;
         pointer-events: none;
         width: 100%;
         overflow: hidden;
         white-space: nowrap;
         text-align: left;
-        margin-top: 5px;
+        margin-top: 3px;
+        transition-property: margin-top, color, font-size;
+        transition-duration: .2s;
+        transition-timing-function: cubic-bezier(.4,0,.2,1);
         &:after {
             background-color: #39b881;
             bottom: 0;
@@ -39,15 +42,21 @@
             width: 10px;
         }
     }
-    &.is-dirty .mdl-textfield-label {
+    &.is-focus .mdl-textfield-label:after{
+        left: 0;
+        width: 100%;
+        visibility: visible;
+    }
+    &.is-float .mdl-textfield-label{
+        margin-top: -18px;
+        color: #39b881;
+        font-size: 1.2rem;
+    }
+    
+    
+    &.is-dirty:not(.mdl-textfield-float) .mdl-textfield-label {
          visibility: hidden;
     }
-}
-
-.mdl-textfield-input:focus + .mdl-textfield-label:after {
-	left: 0;
-	width: 100%;
-	visibility: visible;
 }
 
 
