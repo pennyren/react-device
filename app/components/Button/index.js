@@ -1,4 +1,5 @@
 import React from 'react';
+import Ripple from 'components/Ripple';
 import styles from './styles.css';
 
 function Button(props) {
@@ -8,6 +9,7 @@ function Button(props) {
 		<button className={className} onClick={onClick}>
 			{name}
 			<div className="mouseon">
+				<Ripple />
 			</div>
 		</button>
 	)
