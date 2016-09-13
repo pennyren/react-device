@@ -4,17 +4,25 @@ function hyphenate(str) {
     return str.replace(hyphenateRE, '$1-$2').toLowerCase();
 }
 
-function prepareStyles(styles) {
+function stringifyStyles(styles) {
 	const styleProps = Object.keys(styles);
 	const len = styleProps.length;
 	let stylesGenerated = [];
+	
 	for (let i = 0; i < len; i++) {
 		let key = styleProps[i];
-		let style = hyphenate(key) + ': ' + styles[key];
-		stylesGenerated.push(style);
+		let val = styles[key];
+
+		if (typeof val === 'number' && val !== 0) {
+			val = val + 'px';
+		}
+		
+		let currentStyle = hyphenate(key) + ': ' + val;
+		stylesGenerated.push(currentStyle);
 	}
-	return stylesGenerated.join(';')
+
+	return stylesGenerated.join('; ')
 }
 
-export default prepareStyles;
+export default stringifyStyles;
 

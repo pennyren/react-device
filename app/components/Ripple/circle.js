@@ -1,6 +1,6 @@
-import React from 'react';
+import React, {Component} from 'react';
 
-class Circle extends React.Component {
+class Circle extends Component {
     componentWillUnmount() {
         clearTimeout(this.enterTimer);
         clearTimeout(this.leaveTimer);
@@ -31,8 +31,10 @@ class Circle extends React.Component {
 
     animate() {
         const style = this.view.style;
+        const opcity = 'opacity 2s cubic-bezier(0.23, 1, 0.32, 1) 0ms';
+        const transform = 'transform 1s cubic-bezier(0.23, 1, 0.32, 1) 0ms';
         style.transform = 'scale(1)';
-        style.transition = 'opacity 2s cubic-bezier(0.23, 1, 0.32, 1) 0ms, transform 1s cubic-bezier(0.23, 1, 0.32, 1) 0ms';
+        style.transition = opcity + ', ' + transform;
     }
 
     initializeAnimation(callback) {

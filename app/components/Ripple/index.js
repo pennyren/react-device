@@ -100,13 +100,15 @@ class Ripple extends React.Component {
 		const {ripples} = this.state;
 		
 		return (
-			<div className="ripple"
+			<div 
+				className="ripple"
 				onMouseUp={this.handleMouseUp}
         		onMouseDown={this.handleMouseDown}
         		onMouseLeave={this.handleMouseLeave}
         		onTouchStart={this.handleTouchStart}
         		onTouchEnd={this.handleTouchEnd}
-        		ref={v => this.view = v}>
+        		ref={v => this.view = v}
+        	>
 	      		<ReactTransitionGroup >
 	        		{ripples}
 	      		</ReactTransitionGroup>

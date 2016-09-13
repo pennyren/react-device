@@ -1,0 +1,7 @@
+.mdl-snackbar {
+	position: absolute;
+	left: 50%;
+	top: 32px;
+	transform: translate(-50%, -50%);
+	background-color: red;
+}

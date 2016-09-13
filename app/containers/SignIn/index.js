@@ -1,6 +1,7 @@
 import React from 'react';
 import TextField from 'components/TextField';
-import Button from 'components/Button';
+import Verification from 'containers/Verification';
+
 import styles from './styles.css';
 
 class SignIn extends React.Component {
@@ -19,7 +20,8 @@ class SignIn extends React.Component {
 						<i className="mdi mdi-lock-open"></i>
 						<TextField name="password" placeholder="Password" withFloat={true}/>
 					</div>
-					<Button name="登录" isRaised={false}/>
+					<Verification />
+					
 				</div>
 			</div>
 		)
