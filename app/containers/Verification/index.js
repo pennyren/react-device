@@ -14,15 +14,11 @@ class Verification extends Component {
 
 	render() {
 		
-		const message = 'hello react';
+		const message = '用户名或密码不正确';
 		return (
 			<div className="verification">
 				<Button name="登录" isRaised={false} onClick={this.singinVerify}/>
-				<Snackbar 
-					clearBindEvents={false}
-					removeLayer={true} 
-					open={this.state.open} 
-					message={message}/>
+				<Snackbar open={this.state.open} message={message}/>
 			</div>
 			
 

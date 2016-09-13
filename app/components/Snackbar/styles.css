@@ -1,7 +1,16 @@
 .mdl-snackbar {
 	position: absolute;
 	left: 50%;
-	top: 32px;
-	transform: translate(-50%, -50%);
-	background-color: red;
-}
+	top: 0;
+	transform: translate(-50%);
+	background-color: rgba(252, 183, 56, 0.2);
+	color: #da5860;
+	padding: 0px 24px;
+    height: 48px;
+    line-height: 48px;
+    border-radius: 2px;
+    max-width: 568px;
+    min-width: 288px;
+    text-align: center;
+    font-size: 1.6rem;
+ }

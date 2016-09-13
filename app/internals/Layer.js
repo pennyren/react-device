@@ -4,8 +4,7 @@ import stringifyStyles from 'utils/stringifyStyles';
 
 class Layer extends Component {
 	defaultProps = {
-		useLayerForClickAway: false,
-		clearBindEvents: true
+		useLayerForClickAway: false
 	}
 
 	componentDidMount() {
@@ -21,13 +20,17 @@ class Layer extends Component {
 	}
 
 	unrenderLayer() {
-		if (this.props.clearBindEvents) {
-			ReactDOM.unmountComponentAtNode(this.layerElement);
-					
-		} 
-		if (this.props.removeLayer) {
-			document.body.removeChild(this.layer);
+		if (!this.layer) {
+			return;
 		}
+
+	
+			ReactDOM.unmountComponentAtNode(this.layer);
+					
+		
+			document.body.removeChild(this.layer);
+			this.layer = null;
+		
 	}
 
 	renderLayer() {
@@ -37,8 +40,6 @@ class Layer extends Component {
 
 				this.layer = document.createElement('div');
 				document.body.appendChild(this.layer);
-
-				
 			}
 			const layerElement = this.props.children;
 			this.layerElement = ReactDOM.render(layerElement, this.layer);;
