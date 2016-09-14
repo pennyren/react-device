@@ -6,12 +6,12 @@ import SnackbarInline from './SnackbarInline.js';
 
 function Snackbar(props) {
 	const {open, message} = props;
+	console.log((open && <SnackbarInline message={message}/>));
 	return (
 		<Layer open={open}>
-			<ReactTransitionGroup>
-				<SnackbarInline message={message}/>
+			<ReactTransitionGroup component="div">
+				{open && <SnackbarInline message={message}/>}
 			</ReactTransitionGroup>
-			
 		</Layer>
 	);
 }

@@ -24,36 +24,30 @@ class Layer extends Component {
 			return;
 		}
 
-	
-			ReactDOM.unmountComponentAtNode(this.layer);
-					
-		
-			document.body.removeChild(this.layer);
-			this.layer = null;
+		/*ReactDOM.unmountComponentAtNode(this.layer);*/
+		/*document.body.removeChild(this.layer);
+		this.layer = null;*/
 		
 	}
 
 	renderLayer() {
-		const {open} = this.props;
+		const {open, children} = this.props;
+		
 		if (open) {
 			if (!this.layer) {
-
 				this.layer = document.createElement('div');
 				document.body.appendChild(this.layer);
 			}
-			const layerElement = this.props.children;
-			this.layerElement = ReactDOM.render(layerElement, this.layer);;
-
+			
+			this.layerElement = ReactDOM.render(children, this.layer);;
 		} else {
 			this.unrenderLayer();
 		}
 	}
-
+	
 	render() {
 		return null;
 	}
-
 }
-
 
 export default Layer;

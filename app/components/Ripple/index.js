@@ -4,18 +4,14 @@ import Circle from './circle';
 import styles from './styles.css';
 
 class Ripple extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			nextKey: 0,
-			ripples: []
-		};
-		this.handleMouseDown = this.handleMouseDown.bind(this);
-		this.handleMouseUp = this.handleMouseUp.bind(this);
-		this.handleMouseLeave = this.handleMouseLeave.bind(this);
-		this.start = this.start.bind(this);
-		this.end = this.end.bind(this);
-		this.getRippleStyle = this.getRippleStyle.bind(this);
+	static defaultProps = {
+		color: '#fff',
+		opacity: 0.3
+	}
+
+	state = {
+		nextKey: 0,
+		ripples: []
 	}
 	
 	start(e) {
@@ -43,22 +39,8 @@ class Ripple extends React.Component {
     	});
 	}
 	
-	handleMouseDown(e) {
-		if (e.button == 0) {
-			this.start(e);
-		}
-	}
-	
-	handleMouseUp() {
-		this.end();
-	}
-	
-	handleMouseLeave() {
-		this.end();
-	}
-	
 	getRippleStyle(e) {
-		const el = this.view;
+		const el = this.Ripple;
 		const elHeight = el.offsetHeight;
     	const elWidth = el.offsetWidth;
 		const rect = el.getBoundingClientRect();
@@ -95,6 +77,20 @@ class Ripple extends React.Component {
 	calcDiag(a, b) {
 		return Math.sqrt((a * a) + (b * b));
 	}
+
+	handleMouseDown = (e) => {
+		if (e.button == 0) {
+			this.start(e);
+		}
+	}
+	
+	handleMouseUp = () => {
+		this.end();
+	}
+	
+	handleMouseLeave = () => {
+		this.end();
+	}
 	
 	render() {
 		const {ripples} = this.state;
@@ -107,7 +103,7 @@ class Ripple extends React.Component {
         		onMouseLeave={this.handleMouseLeave}
         		onTouchStart={this.handleTouchStart}
         		onTouchEnd={this.handleTouchEnd}
-        		ref={v => this.view = v}
+        		ref={v => this.Ripple = v}
         	>
 	      		<ReactTransitionGroup >
 	        		{ripples}
@@ -115,11 +111,6 @@ class Ripple extends React.Component {
 	      	</div>
 		)
 	}
-}
-
-Ripple.defaultProps = {
-	color: '#fff',
-	opacity: 0.3
 }
 
 export default Ripple;

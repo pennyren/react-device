@@ -14,11 +14,11 @@ class SignIn extends React.Component {
 					</div>
 					<div className="textfield">
 						<i className="mdi mdi-account"></i>
-						<TextField name="username" placeholder="Username" withFloat={true}/>
+						<TextField name="username" placeholder="Username" isFloat={true}/>
 					</div>
 					<div className="textfield">
 						<i className="mdi mdi-lock-open"></i>
-						<TextField name="password" placeholder="Password" withFloat={true}/>
+						<TextField name="password" placeholder="Password" isFloat={true}/>
 					</div>
 					<Verification />
 					

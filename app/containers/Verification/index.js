@@ -4,21 +4,26 @@ import Button from 'components/Button';
 
 class Verification extends Component {
 	state = {
-		open: false
+		open: false,
+		message: '用户名或密码不正确'
 	}
 
 	singinVerify = () => {
-		
-		this.setState({open: !this.state.open});
+		const isMatched = false;
+
+		if (!isMatched) {
+			this.setState({open: true});
+			const snackbarTimer = setTimeout(() => {
+				this.setState({open: false});
+			}, 1000);
+		}
 	}
 
 	render() {
-		
-		const message = '用户名或密码不正确';
 		return (
 			<div className="verification">
 				<Button name="登录" isRaised={false} onClick={this.singinVerify}/>
-				<Snackbar open={this.state.open} message={message}/>
+				<Snackbar open={this.state.open} message={this.state.message}/>
 			</div>
 			
 

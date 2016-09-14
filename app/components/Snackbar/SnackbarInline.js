@@ -2,43 +2,30 @@ import React, {Component} from 'react';
 import styles from './styles.css';
 
 class SnackbarInline extends Component {
-	 componentWillUnmount() {
-
+	componentWillUnmount() {
         clearTimeout(this.enterTimer);
         clearTimeout(this.leaveTimer);
     }
 
     componentWillAppear(callback) {
-        
-        this.initializeAnimation(callback);
+        this.initAnimation(callback);
     }
 
-    componentWillEnter(callback) {
-       
-        this.initializeAnimation(callback);
-    }
-
+    
     componentDidAppear() {
-       
-        this.animate();
-    }
-
-    componentDidEnter() {
-      
-        this.animate();
+       this.animate();
     }
 
     componentWillLeave(callback) {
-        
-        const style = this.view.style;
+        console.log(1111111);
+        const style = this.SnackbarInline.style;
         style.visibility = 'hidden';
         style.marginTop = '-24px';
-        const removeAfter = this.props.aborted ? 0 : 2000;
-        this.enterTimer = setTimeout(callback, removeAfter);
+        this.leaveTimer = setTimeout(callback, 0);
     }
 
     animate() {
-        const style = this.view.style;
+        const style = this.SnackbarInline.style;
         const visibility = 'visibility 400ms cubic-bezier(0.23, 1, 0.32, 1) 0ms';
         const marginTop = 'margin-top 400ms cubic-bezier(0.23, 1, 0.32, 1) 0ms';
         style.visibility = 'visible';
@@ -47,15 +34,16 @@ class SnackbarInline extends Component {
         style.transition = visibility + ', ' + marginTop;
     }
 
-    initializeAnimation(callback) {
-        const style = this.view.style;
+    initAnimation(callback) {
+        const style = this.SnackbarInline.style;
         style.visibility = 'hidden';
         style.marginTop = '-24px';
-        this.leaveTimer = setTimeout(callback, 0);
+        this.enterTimer = setTimeout(callback, 0);
     }
+
 	render() {
 		return (
-			<div className="mdl-snackbar" ref={r => this.view = r}>{this.props.message}</div>
+			<div className="mdl-snackbar" ref={r => this.SnackbarInline = r}>{this.props.message}</div>
 		);
 	}
 	

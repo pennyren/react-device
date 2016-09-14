@@ -1,44 +1,58 @@
 import React from 'react';
 import styls from './styles.css';
 class TextField extends React.Component {
-	constructor() {
-		super();
-		this.isFocus = this.isFocus.bind(this);
-		this.isBlur = this.isBlur.bind(this);
-		this.checkDirty = this.checkDirty.bind(this);
+	state = {
+		isFocus: false,
+		isBlur: false,
+		isDirty: false
 	}
+
+	defaultProps = {
+		isFloat: true
+	}
+
 	componentDidMount() {
 		if (this.input.value) {
-			this.view.classList.add('is-dirty');
-			if (this.props.withFloat) {
-				this.view.classList.add('is-float');
+			this.TextField.classList.add('is-dirty');
+			if (this.props.isFloat) {
+				this.TextField.classList.add('is-float');
 			}
 		}
 	}
-	isFocus() {
-		this.view.classList.add('is-focus');
-		if (this.props.withFloat) {
-			this.view.classList.add('is-float');
+
+	isFocus = () => {
+		this.TextField.classList.add('is-focus');
+		if (this.props.isFloat) {
+			this.TextField.classList.add('is-float');
 		}
 	}
-	isBlur() {
-		const classList = this.view.classList;
+
+	isBlur = () => {
+		const classList = this.TextField.classList;
 		classList.remove('is-focus');
-		if (!classList.contains('is-dirty') && this.props.withFloat) {
+		if (!classList.contains('is-dirty') && this.props.isFloat) {
 			classList.remove('is-float');
 		}
 	}
-	checkDirty() {
+
+	checkDirty = () => {
 		const val = this.input.value;
-		const classList = this.view.classList;
+		const classList = this.TextField.classList;
 		val ? classList.add('is-dirty') : classList.remove('is-dirty');
 	}
+
 	render() {
-		const {name, placeholder, withFloat, value} = this.props;
-		const className = withFloat ? 'mdl-textfield mdl-textfield-float' : 'mdl-textfield';
+		const {name, placeholder, isFloat, value} = this.props;
+		let classList = ['mdl-textfield'];
+		if (isFloat) {
+			classList.push('mdl-textfield-float')
+		}
+		
+		
 		const type = (name == 'password') ? 'password' : 'text';
+
 		return (
-			<div className={className} ref={v => this.view = v}>
+			<div className={classList.splite(' ')} ref={v => this.TextField = v}>
 				<input className="mdl-textfield-input" 
 					   type={type}
 					   name={name} 
@@ -47,17 +61,12 @@ class TextField extends React.Component {
 					   ref={r => this.input = r}
 					   onFocus={this.isFocus}
 					   onBlur={this.isBlur}
-					   onChange={this.checkDirty}/>
+					   onChange={this.checkDirty}
+				/>
 				<label className="mdl-textfield-label" htmlFor={name}>{placeholder}</label>
 			</div>
 		)
 	}
-}
-
-TextField.propTypes = {
-	name: React.PropTypes.string,
-	placeholder: React.PropTypes.string,
-	withFloat: React.PropTypes.bool
 }
 
 export default TextField;
