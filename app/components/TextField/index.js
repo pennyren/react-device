@@ -1,23 +1,8 @@
 import React from 'react';
 import styls from './styles.css';
 class TextField extends React.Component {
-	state = {
-		isFocus: false,
-		isBlur: false,
-		isDirty: false
-	}
-
 	defaultProps = {
 		isFloat: true
-	}
-
-	componentDidMount() {
-		if (this.input.value) {
-			this.TextField.classList.add('is-dirty');
-			if (this.props.isFloat) {
-				this.TextField.classList.add('is-float');
-			}
-		}
 	}
 
 	isFocus = () => {
@@ -44,15 +29,22 @@ class TextField extends React.Component {
 	render() {
 		const {name, placeholder, isFloat, value} = this.props;
 		let classList = ['mdl-textfield'];
+
 		if (isFloat) {
 			classList.push('mdl-textfield-float')
 		}
-		
-		
+
+		if (value) {
+			classList.push('is-dirty');
+			if (isFloat) {
+				classList.push('is-float');
+			}
+		}
+
 		const type = (name == 'password') ? 'password' : 'text';
 
 		return (
-			<div className={classList.splite(' ')} ref={v => this.TextField = v}>
+			<div className={classList.join(' ')} ref={v => this.TextField = v}>
 				<input className="mdl-textfield-input" 
 					   type={type}
 					   name={name} 

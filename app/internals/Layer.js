@@ -1,6 +1,5 @@
-import {Component} from 'react';
+import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
-import stringifyStyles from 'utils/stringifyStyles';
 
 class Layer extends Component {
 	defaultProps = {
@@ -24,10 +23,9 @@ class Layer extends Component {
 			return;
 		}
 
-		/*ReactDOM.unmountComponentAtNode(this.layer);*/
-		/*document.body.removeChild(this.layer);
-		this.layer = null;*/
-		
+		ReactDOM.unmountComponentAtNode(this.layer);
+		document.body.removeChild(this.layer);
+		this.layer = null;
 	}
 
 	renderLayer() {
@@ -39,7 +37,7 @@ class Layer extends Component {
 				document.body.appendChild(this.layer);
 			}
 			
-			this.layerElement = ReactDOM.render(children, this.layer);;
+			this.layerElement = ReactDOM.render(children, this.layer);
 		} else {
 			this.unrenderLayer();
 		}

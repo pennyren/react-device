@@ -23,7 +23,7 @@ class Verification extends Component {
 		return (
 			<div className="verification">
 				<Button name="登录" isRaised={false} onClick={this.singinVerify}/>
-				<Snackbar open={this.state.open} message={this.state.message}/>
+				<Snackbar open={this.state.open} message={this.state.message} />
 			</div>
 			
 
