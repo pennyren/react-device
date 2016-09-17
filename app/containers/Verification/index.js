@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Snackbar from 'components/Snackbar';
 import Button from 'components/Button';
+import appHistory from 'utils/history';
 
 class Verification extends Component {
 	state = {
@@ -9,14 +10,16 @@ class Verification extends Component {
 	}
 
 	singinVerify = () => {
-		const isMatched = false;
+		const isMatched = true;
 
 		if (!isMatched) {
 			this.setState({open: true});
 			const snackbarTimer = setTimeout(() => {
 				this.setState({open: false});
 			}, 1000);
-		}
+		} else {
+			appHistory.push('/dashboard');
+		}	
 	}
 
 	render() {
@@ -25,8 +28,6 @@ class Verification extends Component {
 				<Button name="登录" isRaised={false} onClick={this.singinVerify}/>
 				<Snackbar open={this.state.open} message={this.state.message} />
 			</div>
-			
-
 		)
 	}
 }

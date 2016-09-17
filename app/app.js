@@ -1,6 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {Router} from 'react-router';
+import appHistory from 'utils/history';
+import createRoutes from './routes';
 
-import App from 'containers/App';
+const appRoutes = createRoutes();
 
-ReactDOM.render(<App />, document.getElementById('app'));
+ReactDOM.render(
+	<Router
+		history={appHistory} 
+		routes={appRoutes}
+	/>, 
+	document.getElementById('app')
+);

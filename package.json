@@ -29,7 +29,6 @@
   "homepage": "https://github.com/pennyren/reactEMS#readme",
   "dependencies": {
     "react": "^15.3.1",
-    "react-addons-css-transition-group": "^15.3.1",
     "react-addons-transition-group": "^15.3.1",
     "react-dom": "^15.3.1",
     "react-redux": "^4.4.5",

@@ -20,7 +20,7 @@ class Ripple extends React.Component {
 				key={this.state.nextKey}
 				color={this.props.color}
 				opacity={this.props.opacity}
-				style={this.getRippleStyle(e)}
+				style={!this.props.centerRipple ? this.getRippleStyle(e) : {}}
 			/>
 		)];
 
