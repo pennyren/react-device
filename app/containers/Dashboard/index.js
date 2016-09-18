@@ -1,8 +1,14 @@
 import React, {Component} from 'react';
+import AppBar from 'components/AppBar';
+import styles from './styles.css';
 
 class Dashboard extends Component {
 	render() {
-		return <div>This is dashboard!</div>;
+		return (
+			<div className="dashboard">
+				<AppBar />
+			</div>
+		)
 	}
 }
 

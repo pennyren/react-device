@@ -50,4 +50,7 @@ body {
 	&.mdi-account-circle:before {
 		content: "\f009";
 	}
+	&.mdi-dots:before {
+		content: "\f1d9";
+	}
 }

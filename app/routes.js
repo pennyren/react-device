@@ -14,8 +14,7 @@ const createRoutes = function() {
 			path: 'dashboard',
 			component: Dashboard,
 			onEnter: function (nextState, replaceState) {
-				console.log(nextState);
-				console.log(replaceState);
+				
 			}
 		}]
 	};
