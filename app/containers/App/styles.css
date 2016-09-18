@@ -53,4 +53,7 @@ body {
 	&.mdi-dots:before {
 		content: "\f1d9";
 	}
+	&.mdi-menu:before {
+		content: "\f35c";
+	}
 }

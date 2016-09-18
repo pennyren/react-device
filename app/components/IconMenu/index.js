@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Ripple from 'components/Ripple';
+import IconButton from 'components/IconButton';
 import Popover from 'components/Popover';
 import styles from './styles.css';
 
@@ -8,10 +8,7 @@ class IconMenu extends Component {
 		const {items} = this.props;
 		return (
 			<div className="icon-menu">
-				<button className="btn-icon">
-					<i className="mdi mdi-dots"></i>
-					<Ripple centerRipple={true} color="#000"/>
-				</button>
+				<IconButton color="#b4c5cd" classIcon="mdi-dots"/>
 				<Popover items={items} />
 			</div>
 		)
