@@ -5,11 +5,11 @@ import styles from './styles.css';
 
 class IconMenu extends Component {
 	render() {
-		const {items} = this.props;
+		const {menuItems, icon, hasBadge} = this.props;
 		return (
 			<div className="icon-menu">
-				<IconButton color="#b4c5cd" classIcon="mdi-dots"/>
-				<Popover items={items} />
+				<IconButton color="#b4c5cd" icon={icon} hasBadge={hasBadge}/>
+				<Popover items={menuItems} />
 			</div>
 		)
 	}

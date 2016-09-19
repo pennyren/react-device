@@ -8,8 +8,8 @@ class Popover extends Component {
 		const lists = items.map((item, index) => {
 			return (
 				<li className="item" key={index}>
-					{item}
 					<Ripple color="#bababa"/>
+					{item}
 				</li>
 			)
 		});

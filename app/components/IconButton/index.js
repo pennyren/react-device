@@ -3,11 +3,18 @@ import Ripple from 'components/Ripple';
 import styles from './styles.css';
 
 function IconButton(props) {
-	const {onClick, classIcon, color} = props;
-	const className = 'mdi ' + classIcon;
+	const {onClick, icon, color, hasBadge} = props;
+	const classIcon = 'mdi ' + icon;
+	const btnProps = {
+		className: 'btn-icon ' + (hasBadge ? 'is-badged' : '')
+	}
+
+	hasBadge && (btnProps['data-badge'] = 3);
+	
+
 	return (
-		<button className="btn-icon" onClick={onClick}>
-			<i className={className}></i>
+		<button {...btnProps} onClick={onClick}>
+			<i className={classIcon}></i>
 			<Ripple centerRipple={true} color={color}/>
 		</button>
 	)

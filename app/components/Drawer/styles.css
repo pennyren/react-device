@@ -1,22 +1,67 @@
-.drawer {
-	position: fixed;
-	left: 0px;
-    top: 0px;
-	height: 100%;
-    width: 200px;
-   	box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);
-    background-color: #fff;
-    z-index: 7;
-    overflow: auto;
-}
+.drawer-wrapper {
+    letter-spacing: .3rem;
+    font-size: 1.5rem;
+    user-select: none;
+    & .drawer {
+        position: fixed;
+        left: -240px;
+        top: 0;
+        height: 100%;
+        width: 240px;
+        box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);
+        background-color: #fff;
+        z-index: 7;
+        overflow: auto;
+        transition: left .3s cubic-bezier(.4,0,.2,1);
+        & .title {
+            display: block;
+            font-size: 2rem;
+            letter-spacing: .6rem;
+            padding-left: 40px;
+            line-height: 64px;
+            border-bottom: 1px solid rgba(0,0,0,.04);
+            cursor: pointer;
+        }
+        & .drawer-lists {
+            padding-top: 16px;
+            & .drawer-item {
+                position: relative;
+                line-height: 48px;
+                transition: background 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+                background: none;
+                cursor: pointer;
+                padding-left: 40px;
+                &:hover {
+                    background: rgba(0, 0, 0, 0.098);
+                }
+                & .mdi {
+                    font-size: 2.4rem;
+                    margin-right: 16px;
+                    transform: translateY(3px);
+                    color: #39b881;
+                }
+            }
+        }
 
-.obfuscator {
-	position: fixed;
-	height: 100%;
-    width: 100%;
-    top: 0;
-    left: 0;
-    background-color: #000;
-    opacity: 0.5;
-    z-index: 6;
+    }
+    & .obfuscator {
+        position: fixed;
+        height: 100%;
+        width: 100%;
+        top: 0;
+        left: -100%;
+        background-color: #000;
+        opacity: 0;
+        z-index: 6;
+        transition: opacity .6s cubic-bezier(.4,0,.2,1);
+    }
+    &.is-visible {
+        & .drawer {
+            left: 0;
+        }
+        & .obfuscator {
+            left: 0;
+            opacity: 0.5
+        }
+    }
 }

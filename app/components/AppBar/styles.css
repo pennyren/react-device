@@ -9,15 +9,23 @@
     z-index: 5;
 
 	& header {
-		width: 86%;
+		width: 80%;
 		height: 100%;
 		margin: 0 auto;
 		user-select: none;
-		& .btn-icon {
+		& > .btn-icon {
 			margin-top: 8px;
 		}
-		& .icon-menu {
+		& .operate {
+			display: inline-block;
 			float: right;
+			margin-top: 8px;
+			& .mdi {
+				font-size: 2.4rem;
+			}
+			& > .btn-icon, & > .icon-menu{
+				margin-right: 16px;
+			}
 		}
 	}
 }

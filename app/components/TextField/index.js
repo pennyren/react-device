@@ -7,9 +7,7 @@ class TextField extends React.Component {
 
 	isFocus = () => {
 		this.TextField.classList.add('is-focus');
-		if (this.props.isFloat) {
-			this.TextField.classList.add('is-float');
-		}
+		this.props.isFloat && this.TextField.classList.add('is-float');
 	}
 
 	isBlur = () => {
@@ -30,9 +28,7 @@ class TextField extends React.Component {
 		const {name, placeholder, isFloat, value} = this.props;
 		let classList = ['mdl-textfield'];
 
-		if (isFloat) {
-			classList.push('mdl-textfield-float')
-		}
+		isFloat && classList.push('mdl-textfield-float');
 
 		if (value) {
 			classList.push('is-dirty');

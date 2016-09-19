@@ -56,4 +56,19 @@ body {
 	&.mdi-menu:before {
 		content: "\f35c";
 	}
+	&.mdi-mac:before {
+		content: "\f1c4";
+	}
+	&.mdi-bell:before {
+		content: "\f09a";
+	}
+	&.mdi-exit:before {
+		content: "\f206";
+	}
+	&.mdi-search:before {
+		content: "\f349";
+	}
+	&.mdi-plus:before {
+		content: "\f415";
+	}
 }
