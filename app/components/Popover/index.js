@@ -3,6 +3,14 @@ import Ripple from 'components/Ripple';
 import styles from './styles.css';
 
 class Popover extends Component {
+	show = () => {
+
+	}
+
+	hide = () => {
+
+	}
+
 	render() {
 		const {items} = this.props;
 		const lists = items.map((item, index) => {
@@ -14,7 +22,7 @@ class Popover extends Component {
 			)
 		});
 		return (
-			<div className="popover">
+			<div className="popover" ref={r => this.Popover = r}>
 				<ul className="menu">
 					{lists}
 				</ul>
