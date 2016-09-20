@@ -5,8 +5,10 @@ import styles from './styles.css';
 
 class IconMenu extends Component {
 	toggleMenu = () => {
-
+		
+		this.Popover.show();
 	}
+
 	render() {
 		const {menuItems, icon, hasBadge} = this.props;
 		return (

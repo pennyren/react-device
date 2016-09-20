@@ -4,11 +4,11 @@ import styles from './styles.css';
 
 class Popover extends Component {
 	show = () => {
-
+		this.Popover.classList.add('show');
 	}
 
 	hide = () => {
-
+		this.Popover.classList.remove('show');
 	}
 
 	render() {

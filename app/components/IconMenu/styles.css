@@ -1,8 +1,4 @@
 .icon-menu {
 	position: relative;
 	display: inline-block;
-	& .popover {
-		visibility: hidden;
-	}
-	
 }
