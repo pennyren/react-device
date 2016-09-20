@@ -18,8 +18,8 @@ class Drawer extends Component {
 			const className = 'mdi ' + item.icon;
 			return (
 				<li className="drawer-item" key={index}>
-					<Ripple color="#bababa"/>
 					<i className={className}></i>
+					<Ripple color="#bababa"/>
 					{item.name}
 				</li>
 			)

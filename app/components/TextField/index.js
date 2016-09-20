@@ -25,7 +25,7 @@ class TextField extends React.Component {
 	}
 
 	render() {
-		const {name, placeholder, isFloat, value} = this.props;
+		const {name, value, placeholder, isFloat} = this.props;
 		let classList = ['mdl-textfield'];
 
 		isFloat && classList.push('mdl-textfield-float');

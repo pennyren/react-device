@@ -7,23 +7,26 @@
 	box-shadow: 0px 1px 5px rgba(0,0,0,.1);
     color: #909090;
     z-index: 5;
-
+    min-width: 580px;
 	& header {
 		width: 80%;
 		height: 100%;
 		margin: 0 auto;
+		padding: 8px 16px;
 		user-select: none;
-		& > .btn-icon {
-			margin-top: 8px;
-		}
 		& .operate {
 			display: inline-block;
 			float: right;
-			margin-top: 8px;
+			& .icon-textfield {
+				float: left;
+				margin-right: 16px;
+			}
+			
 			& .mdi {
 				font-size: 2.4rem;
 			}
-			& > .btn-icon, & > .icon-menu{
+
+			& > .btn-icon, & > .icon-menu {
 				margin-right: 16px;
 			}
 		}
