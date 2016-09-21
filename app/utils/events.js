@@ -6,4 +6,4 @@ function off(el, type, cb) {
 	el.removeEventListener(type, cb);
 }
 
-export default {on, off};
+export {on, off};

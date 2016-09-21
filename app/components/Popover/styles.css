@@ -2,15 +2,33 @@
 	position: absolute;
 	right: 0;
 	top: 48px;
-	width: 135px;
+	min-width: 135px;
 	border-radius: 2px;
-	box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);
-	visibility: hidden;
-	transition: visibility .2s cubic-bezier(0.4, 0, 0.2, 1);
+	transition: visiblity .2s cubic-bezier(.4,0,.2,1);
+	
+	& .shadow {
+		position: absolute;
+		top: 0;
+		left: 0;
+		height: 100%;
+		width: 100%;
+		transform-origin: 100% 0;
+
+		box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);
+
+		transition: transform .3s cubic-bezier(.4,0,.2,1),opacity .2s cubic-bezier(.4,0,.2,1);
+	}
 	& .menu {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: auto;
 		background: #fff;
 		list-style-type: none;
 		padding: 8px 0;
+		
+		transition: clip .2s cubic-bezier(.4,0,.2,1);
 		& .item {
 			position: relative;
 			padding: 0 16px;
@@ -24,7 +42,5 @@
 			}
 		}
 	}
-	&.show {
-		visibility: visible;
-	}
+	
 }

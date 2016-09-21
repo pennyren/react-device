@@ -5,7 +5,13 @@ import {isDescendant} from 'utils/dom';
 
 class ClickAway extends Component {
 	componentDidMount() {
+		let hierarchy = this.props.hierarchy;
 		this.isCurrentlyMounted = true;
+		this.comparedNode = ReactDOM.findDOMNode(this);
+		while (hierarchy --) {
+			this.comparedNode = this.comparedNode.parentNode;
+		}
+
 		this.props.onClickAway && on(document, 'mouseup', this.handleClickAway, false);
 	}
 
@@ -14,22 +20,22 @@ class ClickAway extends Component {
 		off(document, 'mouseup', this.handleClickAway);
 	}
 
-	handleClickAway(e) {
+	handleClickAway = (e) => {
 		if (e.defaultPrevented) {
       		return;
     	}
 
     	if (this.isCurrentlyMounted) {
-    		const el = ReactDOM.findDOMNode(this);
+    		const el = this.comparedNode;
     		if (document.documentElement.contains(e.target) && !isDescendant(el, e.target)) {
-        		this.props.onClickAway(e);
+    			this.props.onClickAway(e);
       		}
     	}
 	}
 
 	render() {
-		return this.porps.children;
+		return this.props.children;
 	}
 }
 
-export defalut ClickAway;
+export default ClickAway;

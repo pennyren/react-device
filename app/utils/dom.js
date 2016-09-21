@@ -5,4 +5,4 @@ function isDescendant(el, target) {
   	return false;
 };
 
-export default {isDescendant};
+export {isDescendant};
