@@ -14,7 +14,12 @@ class IconMenu extends Component {
 		return (
 			<div className="icon-menu">
 				<IconButton color="#b4c5cd" icon={icon} hasBadge={hasBadge} onClick={this.toggle}/>
-				<Popover items={menuItems} hierarchy={2} ref={r => this.Popover = r}/>
+				<Popover 
+					items={menuItems} 
+					hierarchy={2} 
+					alignment="BOTTOM_LEFT"
+					ref={r => this.Popover = r}
+				/>
 			</div>
 		)
 	}

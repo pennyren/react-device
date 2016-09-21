@@ -19,39 +19,51 @@ class TransitionItem extends Component {
     }
 
     componentWillLeave(callback) {
-        
-       	this.leaveTimer = setTimeout(callback, 200);
+        this.leaveTimer = setTimeout(callback, 200);
     }
 	
 	animate() {
-		const child = this.Popover.children[0];
-		const style = this.Popover.style;
-		this.Popover.classList.add('active');
+		this.style.visiblity = 'visible';
+		this.shadowStyle.transform = 'scale(1)';
 		
-		
-		
-		
+		this.contentStyle.clip = this.intact;
 	}
 
 	initAnimation(callback) {
 		this.style = this.Popover.style;
 		this.shadowStyle = this.Popover.children[0].style;
 		this.contentStyle = this.Popover.children[1].style;
-		const height = this.Popover.children[1].clientHeight;
 
-		this.style.height = height + 'px';
+		this.style.height = this.Popover.children[1].clientHeight + 'px';
+		this.style.visiblity = 'hidden';
 
-
+		this.shadowStyle.transformOrigin = '100% 0';
+		this.shadowStyle.transform = 'scale(0)';
 		
-		
+
+		this.contentStyle.clip = this.applyClip()
 		this.enterTimer = setTimeout(callback, 0);
 	}
 
 	applyClip() {
-		const rect = this.Popover.getBoundingClientRect();
-		console.log(rect)
-		return 'rect(0 ' + '0 ' + rect.height + 'px ' + rect.width + 'px)';
+		const popover = this.Popover.children[1].getBoundingClientRect();
+		const height = popover.height;
+		const width = popover.width;
 		
+		this.intact = 'rect(0 ' + width + 'px ' + height + 'px ' + '0)';
+
+		switch (this.props.alignment) {
+			case 'BOTTOM_LEFT':
+				return 'rect(0 ' + width + 'px ' + '0 '+ width + 'px)';
+			case 'BOTOM_RIGHT':
+				return 'rect(0 0 0 0)';
+			case 'TOP_LEFT':
+				return 'rect(' + height + 'px ' + width + 'px ' + height + 'px ' + width + 'px)';
+			case 'TOP_RIGHT':
+				return 'rect(' + height + 'px ' + '0 ' + height + 'px ' + '0)';
+			default:
+				return '';
+		}
 	}
 
 	render() {
@@ -92,7 +104,7 @@ class Popover extends Component {
 	}
 
 	render() {
-		const {items, hierarchy} = this.props;
+		const {items, hierarchy, alignment} = this.props;
 
 		return (
 			<ReactTransitionGroup component="div">
@@ -100,6 +112,7 @@ class Popover extends Component {
 					<TransitionItem 
 						items={items}
 						hierarchy={hierarchy}
+						alignment={alignment}
 						onClickAway={this.removeAway}
 					/>}
 			</ReactTransitionGroup>
