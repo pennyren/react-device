@@ -9,8 +9,8 @@ class TransitionItem extends Component {
         clearTimeout(this.enterTimer);
         clearTimeout(this.leaveTimer);
     }
-
-   	componentWillEnter(callback) {
+	
+	componentWillEnter(callback) {
         this.initAnimation(callback);
     }
 
@@ -19,14 +19,20 @@ class TransitionItem extends Component {
     }
 
     componentWillLeave(callback) {
-        this.leaveTimer = setTimeout(callback, 200);
+        this.leaveTimer = setTimeout(callback, 0);
     }
 	
 	animate() {
 		this.style.visiblity = 'visible';
+		this.style.transition = 'visiblity .3s cubic-bezier(.4,0,.2,1)';
+
 		this.shadowStyle.transform = 'scale(1)';
+		this.shadowStyle.opacity = 1;
+		this.shadowStyle.transition = 'transform .3s cubic-bezier(.4,0,.2,1),opacity .2s cubic-bezier(.4,0,.2,1)';
 		
 		this.contentStyle.clip = this.intact;
+		this.contentStyle.opacity = 1;
+		this.contentStyle.transition = 'clip .3s cubic-bezier(.4,0,.2,1),opacity .2s cubic-bezier(.4,0,.2,1)';
 	}
 
 	initAnimation(callback) {
@@ -37,11 +43,12 @@ class TransitionItem extends Component {
 		this.style.height = this.Popover.children[1].clientHeight + 'px';
 		this.style.visiblity = 'hidden';
 
-		this.shadowStyle.transformOrigin = '100% 0';
+		this.shadowStyle.transformOrigin = this.getTransformOrigin();
 		this.shadowStyle.transform = 'scale(0)';
-		
+		this.shadowStyle.opacity = 0;
 
-		this.contentStyle.clip = this.applyClip()
+		this.contentStyle.clip = this.applyClip();
+		this.contentStyle.opacity = 0;
 		this.enterTimer = setTimeout(callback, 0);
 	}
 
@@ -61,6 +68,21 @@ class TransitionItem extends Component {
 				return 'rect(' + height + 'px ' + width + 'px ' + height + 'px ' + width + 'px)';
 			case 'TOP_RIGHT':
 				return 'rect(' + height + 'px ' + '0 ' + height + 'px ' + '0)';
+			default:
+				return '';
+		}
+	}
+
+	getTransformOrigin() {
+		switch (this.props.alignment) {
+			case 'BOTTOM_LEFT':
+				return '100% 0';
+			case 'BOTOM_RIGHT':
+				return '0 0';
+			case 'TOP_LEFT':
+				return '100% 100%';
+			case 'TOP_RIGHT':
+				return '0 100%';
 			default:
 				return '';
 		}
