@@ -16,6 +16,9 @@
 		}
 		& .home {
 			overflow: hidden;
+			& .test {
+				background-color: #fff;
+			}
 		}
 	}
 }

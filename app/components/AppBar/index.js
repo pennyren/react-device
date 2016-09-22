@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import IconButton from 'components/IconButton';
-import IconMenu from 'components/IconMenu';
+import IconPopover from 'components/IconPopover';
 import Drawer from 'components/Drawer';
 import IconTextField from 'components/IconTextField';
 import styles from './styles.css';
@@ -21,8 +21,8 @@ class AppBar extends Component {
 					<div className="operate">
 						<IconTextField name="search" icon="mdi-search"/>
 						<IconButton icon="mdi-plus" color="#b4c5cd" />
-						<IconMenu menuItems={menuItems} icon="mdi-bell" hasBadge={true}/>
-						<IconMenu menuItems={menuItems} icon="mdi-account-circle"/>
+						<IconPopover menuItems={menuItems} icon="mdi-bell" hasBadge={true}/>
+						<IconPopover menuItems={menuItems} icon="mdi-account-circle"/>
 					</div>
 				</header>
 				<Drawer 

@@ -38,4 +38,13 @@ class ClickAway extends Component {
 	}
 }
 
+/*
+
+ClickAway.propTypes = {
+	onClickAway: React.PropTypes.func,
+	hierarchy: React.PropTypes.number
+}
+
+*/
+
 export default ClickAway;

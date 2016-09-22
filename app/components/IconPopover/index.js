@@ -3,7 +3,7 @@ import IconButton from 'components/IconButton';
 import Popover from 'components/Popover';
 import styles from './styles.css';
 
-class IconMenu extends Component {
+class IconPopover extends Component {
 	toggle = () => {
 		this.Popover.toggle();
 	}
@@ -12,7 +12,7 @@ class IconMenu extends Component {
 		const {menuItems, icon, hasBadge} = this.props;
 	
 		return (
-			<div className="icon-menu">
+			<div className="icon-popover">
 				<IconButton color="#b4c5cd" icon={icon} hasBadge={hasBadge} onClick={this.toggle}/>
 				<Popover 
 					items={menuItems} 
@@ -25,4 +25,4 @@ class IconMenu extends Component {
 	}
 }
 
-export default IconMenu;
+export default IconPopover;
