@@ -13,10 +13,9 @@ class Dashboard extends Component {
 				<div className="main">
 					<div className="home-bg"></div>
 					<div className="home">
-						<div className="test">
-							<Dropdown menuItems={['react', 'redux']} hierarchy={1}/>
+						<div className="container">
+							<Dropdown menuItems={['react', 'react']} hierarchy={1} />
 						</div>
-						
 					</div>
 				</div>
 			</div>

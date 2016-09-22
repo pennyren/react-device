@@ -5,6 +5,7 @@
 	height: 100%;
 	width: 100%;
 	& .main {
+		position: relative;
 		margin-top: 64px;
 		& .home-bg {
 			position: fixed;
@@ -13,10 +14,15 @@
     		right: 0;
     		bottom: 0;
     		background-color: #f8f9fa;
+    		z-index: -1;
 		}
 		& .home {
+			min-height: 0;
 			overflow: hidden;
-			& .test {
+			& .container {
+				height: calc(100vh - 96px);
+				margin: 16px;
+    			overflow: hidden;
 				background-color: #fff;
 			}
 		}

@@ -15,13 +15,13 @@ class Dropdown extends Component {
 		}
 		return (
 			<div className="dropdown">
-				<input className="dropdown-input"/>
-				<Menu menuItems={menuItems} hierarchy={hierarchy}/>
-				<label>
+				<input className="dropdown-input" readOnly={true}/>
+				<label className="dropdown-label">
 					<svg viewBox="0 0 24 24" style={style}>
 						<path d="M7 10l5 5 5-5z"></path>
 					</svg>
 				</label>
+				<Menu menuItems={menuItems} hierarchy={hierarchy}/>
 			</div>
 		)
 	}
