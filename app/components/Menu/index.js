@@ -4,16 +4,13 @@ import ClickAway from 'internals/ClickAway';
 import styles from './styles.css';
 
 class Menu extends Component {
-	componentDidMount() {
-
+	showUp = () => {
+			this.menu.classList.add('show');
 	}
 
-	showUp() {
-
-	}
-
-	hide() {
-
+	close = () => {
+		this.menu.classList.remove('show');
+		this.props.closeParent();
 	}
 
 	render() {
@@ -28,9 +25,9 @@ class Menu extends Component {
 		});
 
 		return (
-			<ClickAway onClickAway={this.hide} hierarchy={hierarchy}>
-				<div className="menu-container">
-					<ul className="menu" ref={r => this.menu = r}>
+			<ClickAway onClickAway={this.close} hierarchy={hierarchy}>
+				<div className="menu-container" ref={r => this.menu = r}>
+					<ul className="menu">
 						{lists}
 					</ul>
 				</div>
@@ -43,7 +40,10 @@ class Menu extends Component {
 
 Menu.propTypes = {
 	items: React.PropTypes.array,
-	hierarchy: React.PropTypes.number
+	hierarchy: React.PropTypes.number,
+	setValue: React.PropTypes.func,
+	closeParent: React.PropTypes.func,
+	checkedValue: React.PropTypes.string
 }
 
 */

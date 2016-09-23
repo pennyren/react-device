@@ -1,11 +1,8 @@
 .dropdown {
 	position: relative;
 	display: inline-block;
-
-	margin-left: 200px;
-	margin-top: 50px;
-
 	& .dropdown-input {
+		padding: 4px 0;
 		width: 100%;
 		font-size: 1.6rem;
 		outline: none;
@@ -20,7 +17,16 @@
 		left: 0;
 		height: 2px;
 		width: 100%;
-
+		&:after {
+            background-color: #39b881;
+            bottom: 0;
+            content: '';
+            height: 2px;
+            left: 45%;
+            position: absolute;
+            visibility: hidden;
+            width: 10px;
+        }
 		& svg {
 			position: absolute;
 			bottom: 0;
@@ -32,5 +38,17 @@
     		fill: rgb(224, 224, 224);
     		cursor: pointer;
 		}
+	}
+	&.is-selected .dropdown-label:after {
+		left: 0;
+        width: 100%;
+        visibility: visible;
+        transition: all .2s cubic-bezier(.4,0,.2,1);
+	}
+	&.is-selected .dropdown-label svg {
+		fill: #39b881;
+	}
+	& .menu-container {
+		top: -8px;
 	}
 }
