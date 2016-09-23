@@ -34,7 +34,7 @@ class Menu extends Component {
 						{lists}
 					</ul>
 				</div>
-			</ClickAway>
+			</ClickAway>    
 		)
 	}
 }

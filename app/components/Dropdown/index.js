@@ -6,18 +6,12 @@ class Dropdown extends Component {
 	render() {
 		const {menuItems, hierarchy} = this.props;
 
-		const style = {
-			display: 'inline-block',
-			height: '24px',
-			width: '24px',
-			color: 'rgba(0, 0, 0, 0.870588)',
-			fill: 'rgb(224, 224, 224)'
-		}
+		
 		return (
 			<div className="dropdown">
-				<input className="dropdown-input" readOnly={true}/>
+				<input className="dropdown-input" readOnly={true} defaultValue="redux"/>
 				<label className="dropdown-label">
-					<svg viewBox="0 0 24 24" style={style}>
+					<svg viewBox="0 0 24 24">
 						<path d="M7 10l5 5 5-5z"></path>
 					</svg>
 				</label>

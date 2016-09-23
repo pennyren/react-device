@@ -19,9 +19,7 @@
 		width: 100%;
 		height: auto;
 		background: #fff;
-		list-style-type: none;
 		padding: 8px 0;
-		transition: ;
 		& .item {
 			position: relative;
 			padding: 0 16px;
