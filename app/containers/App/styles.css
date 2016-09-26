@@ -75,4 +75,10 @@ ul {
 	&.mdi-plus:before {
 		content: "\f415";
 	}
+	&.mdi-settings:before {
+		content: "\f493";
+	}
+	&.mdi-signout:before {
+		content: "\f343";
+	}
 }

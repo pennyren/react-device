@@ -93,8 +93,8 @@ class TransitionItem extends Component {
 		const lists = items.map((item, index) => {
 			return (
 				<li className="item" key={index}>
-					<Ripple color="#bababa"/>
 					{item}
+					<Ripple color="#bababa"/>
 				</li>
 			)
 		});

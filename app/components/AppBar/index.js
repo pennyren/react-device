@@ -10,10 +10,32 @@ class AppBar extends Component {
 		this.drawer.openDrawer();
 	}
 
+	setAccount = () => {
+		console.log(1);
+	}
+
+	signout = () => {
+		console.log(2);
+	}
+
 	render() {
+		const setting = (
+			<div className="account-item setting" onClick={this.setAccount}>
+				<i className="mdi mdi-settings"></i>设置
+			</div>
+		);
+
+		const signout = (
+			<div className="account-item signout" onClick={this.signout}>
+				<i className="mdi mdi-signout"></i>登出
+			</div>
+		);
+
+		const accountMenu = [setting, signout];
+
 		const menuItems = ['hello react', 'hello react', 'hello react']
 		const drawerItems = [{icon: 'mdi-account', name: '用户'}, {icon: 'mdi-mac', name: '设备'}];
-
+		
 		return (
 			<div className="nav">
 				<header>
@@ -22,7 +44,7 @@ class AppBar extends Component {
 						<IconTextField name="search" icon="mdi-search"/>
 						<IconButton icon="mdi-plus" color="#b4c5cd" />
 						<IconPopover menuItems={menuItems} icon="mdi-bell" hasBadge={true}/>
-						<IconPopover menuItems={menuItems} icon="mdi-account-circle"/>
+						<IconPopover menuItems={accountMenu} icon="mdi-account-circle"/>
 					</div>
 				</header>
 				<Drawer 

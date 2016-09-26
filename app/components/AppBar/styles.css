@@ -29,6 +29,15 @@
 			& > .btn-icon, & > .icon-popover {
 				margin-right: 16px;
 			}
+			& .account-item {
+				line-height: 48px;
+				& .mdi {
+					font-size: 2rem;
+					color: #39b881;
+					margin-right: 16px;
+    				transform: translateY(3px);
+				}
+			}
 		}
 	}
 }
