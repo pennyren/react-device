@@ -10,12 +10,15 @@ class AppBar extends Component {
 		this.drawer.openDrawer();
 	}
 
-	setAccount = () => {
-		console.log(1);
-	}
+	accountMenuChange = (e) => {
+		const el = e.currentTarget.children[0];
+		const currentClass = el.classList.value.split(' ')[1];
 
-	signout = () => {
-		console.log(2);
+		if (currentClass == 'setting') {
+			console.log(1);
+		} else if (currentClass == 'signout') {
+			console.log(2);
+		}
 	}
 
 	render() {
@@ -44,7 +47,11 @@ class AppBar extends Component {
 						<IconTextField name="search" icon="mdi-search"/>
 						<IconButton icon="mdi-plus" color="#b4c5cd" />
 						<IconPopover menuItems={menuItems} icon="mdi-bell" hasBadge={true}/>
-						<IconPopover menuItems={accountMenu} icon="mdi-account-circle"/>
+						<IconPopover 
+							menuItems={accountMenu} 
+							icon="mdi-account-circle" 
+							onRequestClose={this.accountMenuChange}
+						/>
 					</div>
 				</header>
 				<Drawer 

@@ -9,7 +9,7 @@ class IconPopover extends Component {
 	}
 	
 	render() {
-		const {menuItems, icon, hasBadge} = this.props;
+		const {menuItems, icon, hasBadge, onRequestClose} = this.props;
 	
 		return (
 			<div className="icon-popover">
@@ -18,6 +18,7 @@ class IconPopover extends Component {
 					items={menuItems} 
 					hierarchy={2} 
 					alignment="BOTTOM_LEFT"
+					onRequestClose={onRequestClose}
 					ref={r => this.Popover = r}
 				/>
 			</div>

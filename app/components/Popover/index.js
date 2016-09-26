@@ -89,10 +89,10 @@ class TransitionItem extends Component {
 	}
 
 	render() {
-		const {items, onClickAway, hierarchy} = this.props;
+		const {items, onClickAway, hierarchy, onRequestClose} = this.props;
 		const lists = items.map((item, index) => {
 			return (
-				<li className="item" key={index}>
+				<li className="item" key={index} onClick={onRequestClose}>
 					{item}
 					<Ripple color="#bababa"/>
 				</li>
@@ -126,7 +126,7 @@ class Popover extends Component {
 	}
 
 	render() {
-		const {items, hierarchy, alignment} = this.props;
+		const {items, hierarchy, alignment, onRequestClose} = this.props;
 
 		return (
 			<ReactTransitionGroup component="div">
@@ -135,6 +135,7 @@ class Popover extends Component {
 						items={items}
 						hierarchy={hierarchy}
 						alignment={alignment}
+						onRequestClose={onRequestClose}
 						onClickAway={this.removeAway}
 					/>}
 			</ReactTransitionGroup>
