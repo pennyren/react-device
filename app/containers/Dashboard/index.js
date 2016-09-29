@@ -1,8 +1,5 @@
 import React, {Component} from 'react';
 import AppBar from 'components/AppBar';
-
-import Dropdown from 'components/Dropdown';
-
 import styles from './styles.css';
 
 class Dashboard extends Component {
@@ -13,9 +10,7 @@ class Dashboard extends Component {
 				<div className="main">
 					<div className="home-bg"></div>
 					<div className="home">
-						<div className="container">
-							<Dropdown menuItems={['react', 'react']} hierarchy={1} />
-						</div>
+						{this.props.children}
 					</div>
 				</div>
 			</div>

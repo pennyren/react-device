@@ -3,6 +3,7 @@ import IconButton from 'components/IconButton';
 import IconPopover from 'components/IconPopover';
 import Drawer from 'components/Drawer';
 import IconTextField from 'components/IconTextField';
+import appHistory from 'utils/history';
 import styles from './styles.css';
 
 class AppBar extends Component {
@@ -15,7 +16,7 @@ class AppBar extends Component {
 		const currentClass = el.classList.value.split(' ')[1];
 
 		if (currentClass == 'setting') {
-			console.log(1);
+			appHistory.push('/setting');
 		} else if (currentClass == 'signout') {
 			console.log(2);
 		}
