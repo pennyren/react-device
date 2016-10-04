@@ -1,15 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Router} from 'react-router';
-import appHistory from 'utils/history';
-import createRoutes from './routes';
-
-const appRoutes = createRoutes();
+import {history, routes} from './routes';
 
 ReactDOM.render(
-	<Router
-		history={appHistory} 
-		routes={appRoutes}
-	/>, 
+	<Router history={history} routes={routes} />, 
 	document.getElementById('app')
 );

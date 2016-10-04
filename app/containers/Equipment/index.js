@@ -5,7 +5,7 @@ class Equipment extends Component {
 	render() {
 		return (
 			<div className="container">
-				<Dropdown menuItems={['react', 'react']} hierarchy={1} />
+				<Dropdown menuItems={['react', 'redux', 'router']} />
 			</div>
 		)
 	}

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Snackbar from 'components/Snackbar';
 import Button from 'components/Button';
-import appHistory from 'utils/history';
+import {history} from 'routes';
 
 class Verification extends Component {
 	state = {
@@ -18,7 +18,8 @@ class Verification extends Component {
 				this.setState({open: false});
 			}, 1000);
 		} else {
-			appHistory.push('/dashboard');
+			console.log(history);
+			history.push('/dashboard');
 		}	
 	}
 

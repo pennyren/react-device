@@ -1,7 +1,7 @@
 import React from 'react';
 import styls from './styles.css';
 class TextField extends React.Component {
-	defaultProps = {
+	static defaultProps = {
 		isFloat: true
 	}
 
@@ -27,7 +27,6 @@ class TextField extends React.Component {
 	render() {
 		const {name, value, placeholder, isFloat} = this.props;
 		let classList = ['mdl-textfield'];
-
 		isFloat && classList.push('mdl-textfield-float');
 
 		if (value) {
@@ -46,10 +45,10 @@ class TextField extends React.Component {
 					   name={name} 
 					   id={name}
 					   defaultValue={value}
-					   ref={r => this.input = r}
 					   onFocus={this.isFocus}
 					   onBlur={this.isBlur}
 					   onChange={this.checkDirty}
+					   ref={r => this.input = r}
 				/>
 				<label className="mdl-textfield-label" htmlFor={name}>{placeholder}</label>
 			</div>

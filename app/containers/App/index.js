@@ -1,9 +1,12 @@
 import React from 'react';
+import ReactTransitionGroup  from 'react-addons-transition-group';
 import styles from './styles.css';
 function App(props) {
 	return (
 		<div className="wrapper">
-			{props.children}
+			<ReactTransitionGroup component="div">
+				{props.children}
+			</ReactTransitionGroup>
 		</div>
 	)
 }

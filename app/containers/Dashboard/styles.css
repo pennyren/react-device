@@ -17,6 +17,7 @@
     		z-index: -1;
 		}
 		& .home {
+			position: relative;
 			min-height: 0;
 			overflow: hidden;
 			& .container {

@@ -3,7 +3,7 @@ import IconButton from 'components/IconButton';
 import IconPopover from 'components/IconPopover';
 import Drawer from 'components/Drawer';
 import IconTextField from 'components/IconTextField';
-import appHistory from 'utils/history';
+import {history} from 'routes';
 import styles from './styles.css';
 
 class AppBar extends Component {
@@ -16,8 +16,10 @@ class AppBar extends Component {
 		const currentClass = el.classList.value.split(' ')[1];
 
 		if (currentClass == 'setting') {
-			appHistory.push('/setting');
+			history.push('/setting');
 		} else if (currentClass == 'signout') {
+			//do stuff
+			history.push('/signin');
 			console.log(2);
 		}
 	}
@@ -51,7 +53,7 @@ class AppBar extends Component {
 						<IconPopover 
 							menuItems={accountMenu} 
 							icon="mdi-account-circle" 
-							onRequestClose={this.accountMenuChange}
+							stuffAfterClose={this.accountMenuChange}
 						/>
 					</div>
 				</header>

@@ -87,7 +87,7 @@ class TransitionItem extends Component {
 				return '';
 		}
 	}
-
+	
 	render() {
 		const {items, onClickAway, hierarchy, onRequestClose} = this.props;
 		const lists = items.map((item, index) => {
@@ -121,12 +121,19 @@ class Popover extends Component {
 		this.setState({open: !this.state.open});
 	}
 
-	removeAway = (e) => {
+	removeAway = () => {
 		this.setState({open: false});
 	}
 
+	requestClose = (e) => {
+		const stuffAfterClose = this.props.stuffAfterClose;
+		setTimeout(() => {this.removeAway()}, 200);
+		(typeof stuffAfterClose == 'function') && stuffAfterClose(e);
+
+	}
+
 	render() {
-		const {items, hierarchy, alignment, onRequestClose} = this.props;
+		const {items, hierarchy, alignment} = this.props;
 
 		return (
 			<ReactTransitionGroup component="div">
@@ -135,7 +142,7 @@ class Popover extends Component {
 						items={items}
 						hierarchy={hierarchy}
 						alignment={alignment}
-						onRequestClose={onRequestClose}
+						onRequestClose={this.requestClose}
 						onClickAway={this.removeAway}
 					/>}
 			</ReactTransitionGroup>
