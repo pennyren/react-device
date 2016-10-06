@@ -3,18 +3,18 @@ import Ripple from 'components/Ripple';
 import ClickAway from 'internals/ClickAway';
 import styles from './styles.css';
 
-class Dropdown extends Component {
+class SelectField extends Component {
 	state = {
 		value: this.props.menuItems[0]
 	}
 
 	open = () => {
-		this.dropdown.classList.add('is-selected');
+		this.selectfield.classList.add('is-selected');
 		setTimeout(() => this.menu.classList.add('show'), 100);
 	}
 
 	close = () => {
-		this.dropdown.classList.remove('is-selected');
+		this.selectfield.classList.remove('is-selected');
 		this.menu.classList.remove('show')
 	}
 
@@ -40,14 +40,14 @@ class Dropdown extends Component {
 
 		return (
 			<ClickAway onClickAway={this.close} hierarchy={0}>
-				<div className="dropdown"  ref={r => this.dropdown = r}>
+				<div className="selectfield"  ref={r => this.selectfield = r}>
 					<div onClick={this.open}>
-						<input className="dropdown-input"
+						<input className="selectfield-input"
 						   name={name} 
 						   value={this.state.value} 
 						   readOnly={true}
 						/>
-						<label className="dropdown-label">
+						<label className="selectfield-label">
 							<svg viewBox="0 0 24 24">
 								<path d="M7 10l5 5 5-5z"></path>
 							</svg>
@@ -65,4 +65,4 @@ class Dropdown extends Component {
 	}
 }
 
-export default Dropdown;
+export default SelectField;

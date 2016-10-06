@@ -3,6 +3,7 @@ import IconButton from 'components/IconButton';
 import IconPopover from 'components/IconPopover';
 import Drawer from 'components/Drawer';
 import IconTextField from 'components/IconTextField';
+import {index} from 'utils/dom';
 import {history} from 'routes';
 import styles from './styles.css';
 
@@ -11,49 +12,72 @@ class AppBar extends Component {
 		this.drawer.openDrawer();
 	}
 
-	accountMenuChange = (e) => {
-		const el = e.currentTarget.children[0];
-		const currentClass = el.classList.value.split(' ')[1];
+	manageAccount = (e) => {
+		const currentIndex = index(e.currentTarget);
 
-		if (currentClass == 'setting') {
+		if (!currentIndex) {
 			history.push('/setting');
-		} else if (currentClass == 'signout') {
-			//do stuff
-			history.push('/signin');
-			console.log(2);
+		} else {
+			// do stuff
+			setTimeout(() => history.push('/signin'), 200);
 		}
+	}
+
+	goNotification() {
+		history.push('/notifications');
+	}
+
+	openDialog() {
+
 	}
 
 	render() {
 		const setting = (
-			<div className="account-item setting" onClick={this.setAccount}>
+			<div className="account" onClick={this.setAccount}>
 				<i className="mdi mdi-settings"></i>设置
 			</div>
 		);
 
 		const signout = (
-			<div className="account-item signout" onClick={this.signout}>
+			<div className="account" onClick={this.signout}>
 				<i className="mdi mdi-signout"></i>登出
 			</div>
 		);
 
 		const accountMenu = [setting, signout];
 
-		const menuItems = ['hello react', 'hello react', 'hello react']
-		const drawerItems = [{icon: 'mdi-account', name: '用户'}, {icon: 'mdi-mac', name: '设备'}];
 		
+		const drawerItems = [{
+			url: '/users',
+			name: '用户',
+			icon: 'mdi-account'
+		}, {
+			url: '/equipment',
+			name: '设备',
+			icon: 'mdi-mac'
+		}];
+
 		return (
 			<div className="nav">
 				<header>
 					<IconButton icon="mdi-menu" color="#b4c5cd" onClick={this.openDrawer}/>
 					<div className="operate">
 						<IconTextField name="search" icon="mdi-search"/>
-						<IconButton icon="mdi-plus" color="#b4c5cd" />
-						<IconPopover menuItems={menuItems} icon="mdi-bell" hasBadge={true}/>
+						<IconButton 
+							icon="mdi-plus" 
+							color="#b4c5cd"
+							onClick={this.openDialog}
+						/>
+						<IconButton 
+							icon="mdi-bell" 
+							color="#b4c5cd"  
+							hasBadge={true}
+							onClick={this.goNotification}
+						/>
 						<IconPopover 
 							menuItems={accountMenu} 
 							icon="mdi-account-circle" 
-							stuffAfterClose={this.accountMenuChange}
+							onAfterClose={this.manageAccount}
 						/>
 					</div>
 				</header>

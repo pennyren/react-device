@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Link} from 'react-router';
 import Ripple from 'components/Ripple';
 import styles from './styles.css';
 
@@ -17,10 +18,12 @@ class Drawer extends Component {
 		const renderItems = drawerItems.map((item, index) => {
 			const className = 'mdi ' + item.icon;
 			return (
-				<li className="drawer-item" key={index}>
-					<i className={className}></i>
-					<Ripple color="#bababa"/>
-					{item.name}
+				<li className="drawer-item" key={index} onClick={this.closeDrawer}>
+					<Link to={item.url} className="drawer-link">
+						<i className={className}></i>
+						<Ripple color="#bababa"/>
+						{item.name}
+					</Link>
 				</li>
 			)
 		});

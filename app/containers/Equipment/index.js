@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
-import Dropdown from 'components/Dropdown';
+import SelectField from 'components/SelectField';
 
 class Equipment extends Component {
 	render() {
 		return (
 			<div className="container">
-				<Dropdown menuItems={['react', 'redux', 'router']} />
+				
 			</div>
 		)
 	}

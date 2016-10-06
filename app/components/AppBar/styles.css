@@ -29,7 +29,7 @@
 			& > .btn-icon, & > .icon-popover {
 				margin-right: 16px;
 			}
-			& .account-item {
+			& .account {
 				line-height: 48px;
 				& .mdi {
 					font-size: 2rem;

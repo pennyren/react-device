@@ -36,11 +36,11 @@ class TransitionItem extends Component {
 	}
 
 	initAnimation(callback) {
-		this.style = this.Popover.style;
-		this.shadowStyle = this.Popover.children[0].style;
-		this.contentStyle = this.Popover.children[1].style;
+		this.style = this.popover.style;
+		this.shadowStyle = this.popover.children[0].style;
+		this.contentStyle = this.popover.children[1].style;
 
-		this.style.height = this.Popover.children[1].clientHeight + 'px';
+		this.style.height = this.popover.children[1].clientHeight + 'px';
 		this.style.visiblity = 'hidden';
 
 		this.shadowStyle.transformOrigin = this.getTransformOrigin();
@@ -53,7 +53,7 @@ class TransitionItem extends Component {
 	}
 
 	applyClip() {
-		const popover = this.Popover.children[1].getBoundingClientRect();
+		const popover = this.popover.children[1].getBoundingClientRect();
 		const height = popover.height;
 		const width = popover.width;
 		
@@ -101,7 +101,7 @@ class TransitionItem extends Component {
 
 		return (
 			<ClickAway onClickAway={onClickAway} hierarchy={hierarchy}>
-				<div className="popover" ref={r => this.Popover = r}>
+				<div className="popover" ref={r => this.popover = r}>
 					<div className="shadow"></div>
 					<ul className="menu">
 						{lists}
@@ -126,9 +126,9 @@ class Popover extends Component {
 	}
 
 	requestClose = (e) => {
-		const stuffAfterClose = this.props.stuffAfterClose;
+		const onAfterClose = this.props.onAfterClose;
 		setTimeout(() => {this.removeAway()}, 200);
-		(typeof stuffAfterClose == 'function') && stuffAfterClose(e);
+		(typeof onAfterClose == 'function') && onAfterClose(e);
 
 	}
 
@@ -150,4 +150,4 @@ class Popover extends Component {
 	}
 }
 
-export default Popover; 
+export default Popover;

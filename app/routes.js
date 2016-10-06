@@ -6,7 +6,9 @@ import App from 'containers/App';
 import SignIn from 'containers/SignIn';
 import Dashboard from 'containers/Dashboard';
 import Equipment from'containers/Equipment';
+import Users from 'containers/Users';
 import Setting from'containers/Setting';
+import Notifications from'containers/Notifications';
 
 const routes = (
 	<Route path="/" component={App}>
@@ -15,8 +17,10 @@ const routes = (
 
 		<Route path="dashboard" onEnter={checkUserInfo} component={Dashboard} >
 			<IndexRoute component={Equipment} />
+			<Route path="/equipment" component={Equipment} />
+			<Route path="/users" componenkt={Users} />
 			<Route path="/setting" component={Setting} />
-			<Redirect from="setting" to="/setting" />
+			<Route path="/notifications" component={Notifications} />
 		</Route>
 	</Route>
 );

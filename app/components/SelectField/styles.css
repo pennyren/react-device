@@ -1,7 +1,7 @@
-.dropdown {
+.selectfield {
 	position: relative;
 	display: inline-block;
-	& .dropdown-input {
+	& .selectfield-input {
 		padding: 4px 0;
 		width: 100%;
 		font-size: 1.6rem;
@@ -11,7 +11,7 @@
     	background: none;
     	color: #2c3e50;
 	}
-	& .dropdown-label {
+	& .selectfield-label {
 		position: absolute;
 		bottom: 0;
 		left: 0;
@@ -39,13 +39,13 @@
     		cursor: pointer;
 		}
 	}
-	&.is-selected .dropdown-label:after {
+	&.is-selected .selectfield-label:after {
 		left: 0;
         width: 100%;
         visibility: visible;
         transition: all .2s cubic-bezier(.4,0,.2,1);
 	}
-	&.is-selected .dropdown-label svg {
+	&.is-selected .selectfield-label svg {
 		fill: #39b881;
 	}
 	& .menu-container {

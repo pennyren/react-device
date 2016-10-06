@@ -5,4 +5,13 @@ function isDescendant(el, target) {
   	return false;
 };
 
-export {isDescendant};
+function index(el) {
+	var arr = el.parentNode.children;
+	var i = arr.length;
+	while (i--) {
+		if (arr[i] === el) return i;
+	}
+	return -1;
+}
+
+export {isDescendant, index};

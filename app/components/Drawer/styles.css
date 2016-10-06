@@ -21,6 +21,7 @@
             line-height: 64px;
             border-bottom: 1px solid rgba(0,0,0,.04);
             cursor: pointer;
+            font-weight: 600;
         }
         & .drawer-lists {
             padding-top: 16px;
@@ -39,6 +40,11 @@
                     margin-right: 16px;
                     transform: translateY(3px);
                     color: #39b881;
+                }
+                & .drawer-link {
+                    display: inline-block;
+                    text-decoration: none;
+                    color: inherit;
                 }
             }
         }

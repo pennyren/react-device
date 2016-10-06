@@ -39,6 +39,17 @@ ul {
 	list-style-type: none;
 }
 
+.link {
+	position: relative;
+	display: inline-block;
+	padding: 3px 16px;
+	text-decoration: none;
+	color: #909090;
+	&.active {
+		color: #2c3e50;
+	}
+}
+
 .mdi {
 	display: inline-block;
 	font: normal normal normal 24px/1 "Material Design Icons";
@@ -80,5 +91,8 @@ ul {
 	}
 	&.mdi-signout:before {
 		content: "\f343";
+	}
+	&.mdi-check:before {
+		content: "\f12c";
 	}
 }
