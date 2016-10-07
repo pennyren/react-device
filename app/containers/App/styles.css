@@ -95,4 +95,16 @@ ul {
 	&.mdi-check:before {
 		content: "\f12c";
 	}
+	&.mdi-success:before {
+		content: "\f133";
+	}
+	&.mdi-info:before {
+		content: "\f2fc";
+	}
+	&.mdi-warning:before {
+		content: "\f028";
+	}
+	&.mdi-error:before {
+		content: "\f159";
+	}
 }

@@ -1,7 +1,8 @@
 import React from 'react';
 import TextField from 'components/TextField';
-import Verification from 'containers/Verification';
-
+import Snackbar from 'components/Snackbar';
+import Button from 'components/Button';
+import {history} from 'routes';
 import styles from './styles.css';
 
 class SignIn extends React.Component {
@@ -46,6 +47,18 @@ class SignIn extends React.Component {
         
         this.enterTimer = setTimeout(callback, 0);
     }
+
+    verify = () => {
+        const isMatched = true;
+
+        if (!isMatched) {
+            this.snackbar.open();
+        } else {
+            console.log(history);
+            history.push('/dashboard');
+        }   
+    }
+
 	render() {
 		return (
 			<div className="signin" ref={r => this.signin = r}>
@@ -61,9 +74,13 @@ class SignIn extends React.Component {
 						<i className="mdi mdi-lock-open"></i>
 						<TextField name="password" placeholder="Password" isFloat={true}/>
 					</div>
-					<Verification />
-					
-				</div>
+					<Button name="登录" isRaised={false} onClick={this.verify}/>
+                </div>
+                <Snackbar 
+                    message="用户名或密码错误"
+                    type="error"
+                    ref={r => this.snackbar = r}
+                 />
 			</div>
 		)
 	}

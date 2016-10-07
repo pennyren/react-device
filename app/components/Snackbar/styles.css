@@ -1,17 +1,50 @@
-.mdl-snackbar {
+.snackbar {
 	position: absolute;
 	left: 50%;
 	top: 0;
 	transform: translate(-50%);
-	background-color: rgba(252, 183, 56, 0.2);
-	color: #da5860;
 	padding: 0px 24px;
-    height: 48px;
-    line-height: 48px;
+    height: 40px;
+    line-height: 40px;
     border-radius: 2px;
     max-width: 568px;
     min-width: 288px;
-    text-align: center;
+    text-align: left;
     font-size: 1.6rem;
     display: inline-block;
+    color: #666;
+    font-weight: 300;
+    & .mdi {
+        margin-right: 12px;
+        transform: translateY(2px);
+        font-size: 2rem;
+    }
+    &.error {
+        border: 1px solid #fdc;
+        background-color: #ffeee6;
+       & .mdi {
+            color: #f50;
+        }
+    }
+    &.warning {
+        border: 1px solid #fec;
+        background-color: #fff7e6;
+        & .mdi {
+            color: #fa0;
+        }
+    }
+    &.info {
+        border: 1px solid #d5f1fd;
+        background-color: #eaf8fe;
+        & .mdi {
+            color: #2db7f5;
+        }
+    }
+    &.success {
+        border: 1px solid #e7f6e1;
+        background-color: #f3faf0;
+        & .mdi {
+            color: #87d068;
+        }
+    }
  }

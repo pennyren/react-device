@@ -18,14 +18,14 @@ class SnackbarInline extends Component {
     }
 
     componentWillLeave(callback) {
-        const style = this.SnackbarInline.style;
+        const style = this.snackbarInline.style;
         style.visibility = 'hidden';
         style.marginTop = '-48px';
         this.leaveTimer = setTimeout(callback, 400);
     }
 
     animate() {
-        const style = this.SnackbarInline.style;
+        const style = this.snackbarInline.style;
         const visibility = 'visibility 400ms cubic-bezier(0.23, 1, 0.32, 1) 0ms';
         const marginTop = 'margin-top 400ms cubic-bezier(0.23, 1, 0.32, 1) 0ms';
         style.visibility = 'visible';
@@ -35,32 +35,50 @@ class SnackbarInline extends Component {
     }
 
     initAnimation(callback) {
-        const style = this.SnackbarInline.style;
+        const style = this.snackbarInline.style;
         style.visibility = 'hidden';
         style.marginTop = '-48px';
         this.enterTimer = setTimeout(callback, 25);
     }
 
 	render() {
+        const {message, type} = this.props;
+        
+
+        const iconName = 'mdi ' + 'mdi-' + type;
+        const className= 'snackbar ' + type;
+
 		return (
-			<span className="mdl-snackbar" ref={r => this.SnackbarInline = r}>{this.props.message}</span>
+            <div className={className} ref={r => this.snackbarInline = r}>
+                <i className={iconName}></i>
+                <span>{message}</span>
+            </div>
 		);
 	}
 	
 }
 
+class Snackbar extends Component {
+    state = {
+        open: false
+    }
+    
+    open() {
+        this.setState({open: true});
+        setTimeout(() => this.setState({open: false}), 1000);
+    }
 
-function Snackbar(props){
-	const {open, message} = props;
-
-	return (
-		<Layer open={true}>
-			<ReactTransitionGroup component="div">
-				{open && <SnackbarInline message={message}/>}
-			</ReactTransitionGroup>
-		</Layer>
-	)
-	
+    render() {
+        const {message, type} = this.props;
+        
+        return (
+            <Layer open={true}>
+                <ReactTransitionGroup component="div">
+                    {this.state.open && <SnackbarInline message={message} type={type} />}
+                </ReactTransitionGroup>
+            </Layer>
+        );
+    }
 }
 
 export default Snackbar;
