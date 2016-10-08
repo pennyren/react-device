@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import IconButton from 'components/IconButton';
 import IconPopover from 'components/IconPopover';
 import Drawer from 'components/Drawer';
+import Dialog from 'components/Dialog';
 import IconTextField from 'components/IconTextField';
 import {index} from 'utils/dom';
 import {history} from 'routes';
@@ -27,8 +28,8 @@ class AppBar extends Component {
 		history.push('/notifications');
 	}
 
-	openDialog() {
-
+	add = () => {
+		this.dialog.open();
 	}
 
 	render() {
@@ -66,7 +67,7 @@ class AppBar extends Component {
 						<IconButton 
 							icon="mdi-plus" 
 							color="#b4c5cd"
-							onClick={this.openDialog}
+							onClick={this.add}
 						/>
 						<IconButton 
 							icon="mdi-bell" 
@@ -87,6 +88,7 @@ class AppBar extends Component {
 					drawerItems={drawerItems} 
 					ref={r => this.drawer = r} 
 				/>
+				<Dialog ref={r => this.dialog = r}/>
 			</div>
 		)
 	}

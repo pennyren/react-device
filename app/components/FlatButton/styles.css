@@ -1,0 +1,23 @@
+.flat-btn {
+	position: relative;
+	display: inline-block;
+    cursor: pointer;
+  	border: none;
+    outline: none;
+    color: #39b881;
+    font-size: 1.4rem;
+    font-weight: 400;
+    font-family: inherit;
+    letter-spacing: 2px;
+    height: 36px;
+    line-height: 36px;
+    min-width: 88px;
+   	border-radius: 2px;
+    background-color: rgba(0, 0, 0, 0);
+    text-align: center;
+   	user-select: none;
+   	transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+   	&:hover {
+   		background-color: rgba(153, 153, 153, 0.2);
+   	}
+}
