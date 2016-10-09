@@ -4,7 +4,7 @@ import styles from './styles.css';
 
 class Pagination extends Component {
 	state = {
-		total: 10,
+		total: 7,
 		current: 1
 	}
 
@@ -48,29 +48,40 @@ class Pagination extends Component {
 	}
 
 	render() {
-		const total = this.state.total;
-		const current = this.state.current;
-		const useJump =  total > 10 ? true : false; 
+		let total = this.state.total;
+		let current = this.state.current;
+		
 		const prev = current == 1 ? 'prev item disabled' : 'prev item';
 		const next = current == total ? 'next item disabled' : 'next item';
 
+		const leftJump = (current > 4) ? 1 : 0;
+		const rightJump = total > (current + 3) ? 1 : 0;
+
+		const result = total > 10 ? +parseInt('' + leftJump + rightJump, 2).toString(10) : 0;
 		let items = [];
 
-		if (!useJump) {
-			for (let i = 1; i < total + 1; i++) {
-				const className = current == i ? 'item active' : 'item';
-				items.push(
-					<li className={className} data-index={i} onClick={this.currentChange} key={i}>
-						<div className="circle"></div>
-						<span>{i}</span>
-					</li>
-				);
-			}
-		} else {
-			const leftJump = (current > 4) ? true : false;
-			const rightJump = total > (current + 3) ? true : false;
-			
+		switch (result) {
+			case 0:
+				for(let index = 1; index < total + 1; index++) {
+					const className = (current == index) ? 'item active' : 'item';
+					items.push(
+						<li className={className} data-index={index} onClick={this.currentChange} key={index}>
+							<div className="circle"></div>
+							<span>{index}</span>
+						</li>
+					);
+				}
+				break;
+			case 1:
+				break;
+			case 2:
+				break;
+			case 3:
+				break;
+			default:
+				break;
 		}
+		
 
 		return (
 			<section className="pagination-box">
