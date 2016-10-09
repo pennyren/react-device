@@ -50,6 +50,15 @@ ul {
 	}
 }
 
+.clearfix:after {
+	content: " ";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
+	overflow: hidden;
+}
+
 .mdi {
 	display: inline-block;
 	font: normal normal normal 24px/1 "Material Design Icons";
@@ -106,5 +115,11 @@ ul {
 	}
 	&.mdi-error:before {
 		content: "\f159";
+	}
+	&.mdi-left:before {
+		content: "\f141";
+	}
+	&.mdi-right:before {
+		content: "\f142";
 	}
 }

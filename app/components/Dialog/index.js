@@ -58,7 +58,7 @@ class DialogInline extends Component {
  					</div>
  					<div className="footer">
  						<FlatButton onClick={close}>取消</FlatButton>
- 						<FlatButton>保存</FlatButton>
+ 						<FlatButton>确定</FlatButton>
  					</div>
  				</div>
  			</div>

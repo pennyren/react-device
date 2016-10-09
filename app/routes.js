@@ -18,7 +18,7 @@ const routes = (
 		<Route path="dashboard" onEnter={checkUserInfo} component={Dashboard} >
 			<IndexRoute component={Equipment} />
 			<Route path="/equipment" component={Equipment} />
-			<Route path="/users" componenkt={Users} />
+			<Route path="/users" component={Users} />
 			<Route path="/setting" component={Setting} />
 			<Route path="/notifications" component={Notifications} />
 		</Route>

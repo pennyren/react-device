@@ -18,10 +18,20 @@ class TextField extends React.Component {
 		}
 	}
 
-	checkDirty = () => {
+	checkDirty = (e) => {
+		const {onChange} = this.props;
 		const val = this.input.value;
 		const classList = this.TextField.classList;
 		val ? classList.add('is-dirty') : classList.remove('is-dirty');
+		typeof onChange == 'function' && onChange(e);
+	}
+
+	keyUp = (e) => {
+		const {onEnter} = this.props;
+		const isFn = (typeof onEnter == 'function');
+		if (isFn && e.keyCode == 13) {
+			onEnter(e);
+		}
 	}
 
 	render() {
@@ -48,6 +58,7 @@ class TextField extends React.Component {
 					   onFocus={this.isFocus}
 					   onBlur={this.isBlur}
 					   onChange={this.checkDirty}
+					   onKeyUp={this.keyUp}
 					   ref={r => this.input = r}
 				/>
 				<label className="mdl-textfield-label" htmlFor={name}>{placeholder}</label>
