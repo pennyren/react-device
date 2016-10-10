@@ -4,7 +4,7 @@ import styles from './styles.css';
 
 class Pagination extends Component {
 	state = {
-		total: 7,
+		total: 10,
 		current: 1
 	}
 
@@ -28,7 +28,19 @@ class Pagination extends Component {
 
 	currentChange = (e) => {
 		const index = +e.currentTarget.getAttribute('data-index');
-		!(index == this.state.current) && this.setState({current: index});
+		const classList = e.currentTarget.classList;
+		if (index) {
+			!(index == this.state.current) && this.setState({current: index});
+		} else {
+			if (classList.contains('jump-prev')) {
+				let current = this.state.current - 5;
+				current < 1 ? this.setState({current: 1}) : this.setState({current: current});
+			} else if (classList.contains('jump-next')) {
+				let current = this.state.current + 5;
+				let total = this.state.total;
+				current > total ? this.setState({current: total}) : this.setState({current: current});
+			}
+		}
 	}
 
 	goto = (e) => {
@@ -47,6 +59,21 @@ class Pagination extends Component {
 		!(current == this.state.current) && this.setState({current: current});
 	}
 
+	iterateItems(items, start, end, index) {
+		index = index || start;
+		let current = this.state.current;
+		for (start; start <= end; start++) {
+			const className = (current == start) ? 'item active' : 'item';
+			items.push(
+				<li className={className} data-index={start} onClick={this.currentChange} key={index}>
+					<div className="circle"></div>
+					<span>{start}</span>
+				</li>
+			);
+			index++;
+		}
+	}
+
 	render() {
 		let total = this.state.total;
 		let current = this.state.current;
@@ -62,27 +89,78 @@ class Pagination extends Component {
 
 		switch (result) {
 			case 0:
-				for(let index = 1; index < total + 1; index++) {
-					const className = (current == index) ? 'item active' : 'item';
-					items.push(
-						<li className={className} data-index={index} onClick={this.currentChange} key={index}>
-							<div className="circle"></div>
-							<span>{index}</span>
-						</li>
-					);
-				}
+				this.iterateItems(items, 1, total);
 				break;
 			case 1:
+				let leftEnd = (current < 4) ? 5 : (current == 4) ? 6 : 0;
+				this.iterateItems(items, 1, leftEnd);
+				items.push(
+					<li className="item jump-next" onClick={this.currentChange} key={leftEnd + 1}>
+						<div className="circle"></div>
+						<span className="mdi mdi-dots"></span>
+					</li>
+				);
+				items.push(
+					<li className="item" data-index={total} onClick={this.currentChange} key={leftEnd + 2}>
+						<div className="circle"></div>
+						<span>{total}</span>
+					</li>
+				);
 				break;
 			case 2:
+				let diff = total - current;
+				let rightEnd = diff < 3 ? 5 : diff == 3 ? 6 : 0;
+
+				items.push(
+					<li className="item" data-index={1} onClick={this.currentChange} key={1}>
+						<div className="circle"></div>
+						<span>1</span>
+					</li>
+				)
+				items.push(
+					<li className="item jump-prev" onClick={this.currentChange} key={2}>
+						<div className="circle"></div>
+						<span className="mdi mdi-dots"></span>
+					</li>
+				);
+				this.iterateItems(items, (total - rightEnd + 1), total, 3);
 				break;
 			case 3:
+				let start = current - 2;
+				let end = current + 2;
+
+				items.push(
+					<li className="item" data-index={1} onClick={this.currentChange} key={1}>
+						<div className="circle"></div>
+						<span>1</span>
+					</li>
+				)
+				items.push(
+					<li className="item jump-prev" onClick={this.currentChange} key={2}>
+						<div className="circle"></div>
+						<span className="mdi mdi-dots"></span>
+					</li>
+				);
+
+				this.iterateItems(items, start, end, 3);
+
+				items.push(
+					<li className="item jump-next" onClick={this.currentChange} key={8}>
+						<div className="circle"></div>
+						<span className="mdi mdi-dots"></span>
+					</li>
+				);
+				items.push(
+					<li className="item" data-index={total} onClick={this.currentChange} key={9}>
+						<div className="circle"></div>
+						<span>{total}</span>
+					</li>
+				)
 				break;
 			default:
 				break;
 		}
 		
-
 		return (
 			<section className="pagination-box">
 				<ul className="pagination clearfix">

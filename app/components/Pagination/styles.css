@@ -1,14 +1,16 @@
 .pagination-box {
 	padding: 16px;
 	background-color: #fff;
-	font-size: 1.2rem;
+	font-size: 1.4rem;
 	color: #39b881;
 	user-select: none;
-	& .mdi {
+    text-align: center;
+	& .mdi:not(.mdi-dots) {
 		font-size: 1.8rem;
 		font-weight: 600;
 	}
 	& .pagination {
+        display: inline-block;
 		& .item {
 			position: relative;
 			display: flex;
@@ -55,6 +57,20 @@
     				transform: scale(1);
     			}
     		}
+            &.jump-prev {
+                &:hover {
+                    & .mdi:before {
+                        content: "\f13d";
+                    }
+                }
+            }
+            &.jump-next {
+                &:hover {
+                    & .mdi:before {
+                        content: "\f13e";
+                    }
+                }
+            }
 		}
 		& .options {
 			display: inline-block;

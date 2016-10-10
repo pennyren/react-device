@@ -122,4 +122,7 @@ ul {
 	&.mdi-right:before {
 		content: "\f142";
 	}
+	&.mdi-dots:before {
+		content: "\f1d8";
+	}
 }
