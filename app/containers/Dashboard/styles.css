@@ -20,12 +20,6 @@
 			position: relative;
 			min-height: 0;
 			overflow: hidden;
-			& .container {
-				height: calc(100vh - 96px);
-				margin: 16px;
-    			overflow: hidden;
-				background-color: #fff;
-			}
 		}
 	}
 }

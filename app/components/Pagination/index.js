@@ -87,6 +87,17 @@ class Pagination extends Component {
 		const result = total > 10 ? +parseInt('' + leftJump + rightJump, 2).toString(10) : 0;
 		let items = [];
 
+		const goto = (
+			<div className="options">
+				Goto
+				<TextField 
+					isFloat={false} 
+					onEnter={this.goto} 
+					ref={r => this.gotoField = r}
+				/>
+			</div>
+		);
+
 		switch (result) {
 			case 0:
 				this.iterateItems(items, 1, total);
@@ -175,14 +186,7 @@ class Pagination extends Component {
 						<div className="circle"></div>
 						<span className="mdi mdi-right"></span>
 					</li>
-					<div className="options">
-						Goto
-						<TextField 
-							isFloat={false} 
-							onEnter={this.goto} 
-							ref={r => this.gotoField = r}
-						/>
-					</div>
+					{total > 20 && goto}
 				</ul>
 			</section>
 		)
