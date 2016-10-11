@@ -3,7 +3,6 @@ import IconButton from 'components/IconButton';
 import IconPopover from 'components/IconPopover';
 import Drawer from 'components/Drawer';
 import Dialog from 'components/Dialog';
-import IconTextField from 'components/IconTextField';
 import {index} from 'utils/dom';
 import {history} from 'routes';
 import styles from './styles.css';
@@ -63,7 +62,6 @@ class AppBar extends Component {
 				<header>
 					<IconButton icon="mdi-menu" color="#b4c5cd" onClick={this.openDrawer}/>
 					<div className="operate">
-						<IconTextField name="search" icon="mdi-search"/>
 						<IconButton 
 							icon="mdi-plus" 
 							color="#b4c5cd"

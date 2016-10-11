@@ -1,0 +1,19 @@
+.header {
+	padding: 0 16px;
+	& .title {
+		font-size: 2rem;
+		font-weight: 600;
+		color: #909090;
+	}
+	& .btn-icon:not(.action) {
+		float: right;	
+	}
+	& .mdl-textfield {
+		float: right;
+		width: 260px;
+		transform: translateY(8px);
+	}
+	& .action {
+		margin-left: 24px;
+	}
+}
