@@ -8,6 +8,12 @@ class Table extends Component {
 			<div className="table-scroll">
 				<div className="table-header">
 					<table>
+						<colgroup>
+							<col />
+							<col style={{with: '33.3%', minWidth: '33.3%'}}/>
+							<col style={{with: '33.3%', minWidth: '33.3%'}}/>
+							<col style={{with: '33.3%', minWidth: '33.3%'}}/>
+						</colgroup>
 						<thead>
 							<tr>
 								<th className="selection-column"><Checkbox /></th>
@@ -20,15 +26,49 @@ class Table extends Component {
 				</div>
 				<div className="table-body">
 					<table>
+						<colgroup>
+							<col />
+							<col style={{with: '33.3%', minWidth: '33.3%'}}/>
+							<col style={{with: '33.3%', minWidth: '33.3%'}}/>
+							<col style={{with: '33.3%', minWidth: '33.3%'}}/>
+						</colgroup>
 						<tbody>
-							<tr className="row"><td className="selection-column"></td><td>hello react redux</td><td>3</td><td>3</td></tr>
-							<tr className="row"><td className="selection-column"></td><td>3</td><td>3</td><td>3</td></tr>
-							<tr className="row"><td className="selection-column"></td><td>3</td><td>3</td><td>3</td></tr>
-							<tr className="row"><td className="selection-column"></td><td>3</td><td>3</td><td>3</td></tr>
-							<tr className="row"><td className="selection-column"></td><td>3</td><td>3</td><td>3</td></tr>
-							<tr className="row"><td className="selection-column"></td><td>3</td><td>3</td><td>3</td></tr>
-							<tr className="row"><td className="selection-column"></td><td>3</td><td>3</td><td>3</td></tr>
-							<tr className="row"><td className="selection-column"></td><td>3</td><td>3</td><td>3</td></tr>
+							<tr className="row">
+								<td className="selection-column"><Checkbox /></td>
+								<td>hello react redux</td>
+								<td>3</td>
+								<td>3</td>
+							</tr>
+							<tr className="row">
+								<td className="selection-column"><Checkbox /></td>
+								<td>3</td>
+								<td>3</td>
+								<td>3</td>
+							</tr>
+							<tr className="row">
+								<td className="selection-column"><Checkbox /></td>
+								<td>3</td>
+								<td>3</td>
+								<td>3</td>
+							</tr>
+							<tr className="row">
+								<td className="selection-column"><Checkbox /></td>
+								<td>3</td>
+								<td>3</td>
+								<td>3</td>
+							</tr>
+							<tr className="row">
+								<td className="selection-column"><Checkbox /></td>
+								<td>3</td>
+								<td>3</td>
+								<td>3</td>
+							</tr>
+							<tr className="row">
+								<td className="selection-column"><Checkbox /></td>
+								<td>3</td>
+								<td>3</td>
+								<td>3</td>
+							</tr>
 						</tbody>
 					</table>
 				</div>

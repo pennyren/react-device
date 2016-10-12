@@ -15,6 +15,11 @@ class Header extends Component {
 					action={true}
 				/>
 				<IconButton 
+					icon="mdi-minus" 
+					centerRipple={false}
+					action={true}
+				/>
+				<IconButton 
 					icon="mdi-search" 
 					color="#b4c5cd"
 				/>
