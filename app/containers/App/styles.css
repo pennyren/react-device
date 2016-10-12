@@ -147,4 +147,7 @@ ul {
 	&.mdi-dots:before {
 		content: "\f1d8";
 	}
+	&.mdi-minus:before {
+		content: "\f374";
+	}
 }
