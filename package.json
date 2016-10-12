@@ -36,6 +36,7 @@
     "redux": "^3.6.0"
   },
   "devDependencies": {
+    "babel-core": "latest",
     "babel-loader": "latest",
     "babel-preset-latest": "latest",
     "babel-preset-react": "latest",
