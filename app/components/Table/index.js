@@ -3,7 +3,42 @@ import Checkbox from 'components/Checkbox';
 import styles from './styles.css';
 
 class Table extends Component {
+	static defaultProps = {
+		isScrolled: false,
+		isChecked: false
+	}
+
+	batchChecked(isChecked) {
+
+	}
+
 	render() {
+		const {columns, dataSource, scrolled, checked} = this.props;
+		
+		let thead = (
+			<thead>
+				<tr>
+					{checked && 
+						<th className="selection-column">
+							<Checkbox onChange={this.batchChecked}/>
+						</th>}
+					{columns.map((item, index) => <th key={index}>{item.title}</th>)}
+				</tr>
+			</thead>
+		);
+
+		let tbody = (
+
+		);
+
+		let table = (
+			<table>
+				<colgroup>
+					<col>
+				</colgroup>
+			</table>
+		);
+
 		return (
 			<div className="table-scroll">
 				<div className="table-header">
@@ -16,7 +51,7 @@ class Table extends Component {
 						</colgroup>
 						<thead>
 							<tr>
-								<th className="selection-column"><Checkbox /></th>
+								
 								<th>Name</th>
 								<th>Age</th>
 								<th>Address</th>
