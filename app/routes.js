@@ -1,6 +1,5 @@
 import React from 'react';
 import {Route, IndexRoute, Redirect, useRouterHistory} from 'react-router';
-import * as router from 'react-router';
 import {createHashHistory} from 'history';
 import App from 'containers/App';
 import SignIn from 'containers/SignIn';

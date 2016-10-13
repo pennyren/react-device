@@ -150,4 +150,10 @@ ul {
 	&.mdi-minus:before {
 		content: "\f374";
 	}
+	&.mdi-pen:before {
+		content: "\f64f";
+	}
+	&.mdi-del:before {
+		content: "\f1c0";
+	}
 }

@@ -1,7 +1,7 @@
 .table-scroll {
 	padding: 16px;
-    overflow: hidden;
-	& table {
+    overflow: auto;
+    & table {
 		width: 100%;
     	border-collapse: separate;
     	border-spacing: 0;
@@ -16,6 +16,9 @@
                     text-align: left;
                     word-break: break-all;
                 }
+                & .action {
+                    width: 120px;
+                }
             }
         }
 
@@ -27,9 +30,19 @@
                     background: rgba(234, 248, 254, 0.5);
                 }
                 & td {
-                    padding: 16px 8px;
+                    padding: 8px;
                     border-bottom: 1px solid #e9e9e9;
                     word-break: break-all;
+                }
+                & .action {
+                    width: 120px;
+                    & .btn-icon {
+                        height: 32px;
+                        width: 32px;
+                        & .mdi {
+                            font-size: 1.8rem;
+                        }
+                    }
                 }
             }
         }

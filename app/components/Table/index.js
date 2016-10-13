@@ -1,112 +1,31 @@
 import React, {Component} from 'react';
-import Checkbox from 'components/Checkbox';
+import TableBody from './TableBody';
+import TableHeader from './TableHeader';
 import styles from './styles.css';
 
 class Table extends Component {
 	static defaultProps = {
-		isScrolled: false,
-		isChecked: false
+		checked: false,
+		action: true
 	}
-
-	batchChecked(isChecked) {
-
-	}
-
+	
 	render() {
-		const {columns, dataSource, scrolled, checked} = this.props;
-		
-		let thead = (
-			<thead>
-				<tr>
-					{checked && 
-						<th className="selection-column">
-							<Checkbox onChange={this.batchChecked}/>
-						</th>}
-					{columns.map((item, index) => <th key={index}>{item.title}</th>)}
-				</tr>
-			</thead>
-		);
-
-		let tbody = (
-
-		);
-
-		let table = (
-			<table>
-				<colgroup>
-					<col>
-				</colgroup>
-			</table>
-		);
-
+		const {columns, dataSource, checked, action} = this.props;
+		let numRow = columns.length;
+		checked && numRow++;
+		let col = [];
+		for (let i = 0; i < numRow; i++) {
+			col.push(<col key={i}></col>);
+		}
 		return (
 			<div className="table-scroll">
-				<div className="table-header">
-					<table>
-						<colgroup>
-							<col />
-							<col style={{with: '33.3%', minWidth: '33.3%'}}/>
-							<col style={{with: '33.3%', minWidth: '33.3%'}}/>
-							<col style={{with: '33.3%', minWidth: '33.3%'}}/>
-						</colgroup>
-						<thead>
-							<tr>
-								
-								<th>Name</th>
-								<th>Age</th>
-								<th>Address</th>
-							</tr>
-						</thead>
-					</table>
-				</div>
-				<div className="table-body">
-					<table>
-						<colgroup>
-							<col />
-							<col style={{with: '33.3%', minWidth: '33.3%'}}/>
-							<col style={{with: '33.3%', minWidth: '33.3%'}}/>
-							<col style={{with: '33.3%', minWidth: '33.3%'}}/>
-						</colgroup>
-						<tbody>
-							<tr className="row">
-								<td className="selection-column"><Checkbox /></td>
-								<td>hello react redux</td>
-								<td>3</td>
-								<td>3</td>
-							</tr>
-							<tr className="row">
-								<td className="selection-column"><Checkbox /></td>
-								<td>3</td>
-								<td>3</td>
-								<td>3</td>
-							</tr>
-							<tr className="row">
-								<td className="selection-column"><Checkbox /></td>
-								<td>3</td>
-								<td>3</td>
-								<td>3</td>
-							</tr>
-							<tr className="row">
-								<td className="selection-column"><Checkbox /></td>
-								<td>3</td>
-								<td>3</td>
-								<td>3</td>
-							</tr>
-							<tr className="row">
-								<td className="selection-column"><Checkbox /></td>
-								<td>3</td>
-								<td>3</td>
-								<td>3</td>
-							</tr>
-							<tr className="row">
-								<td className="selection-column"><Checkbox /></td>
-								<td>3</td>
-								<td>3</td>
-								<td>3</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
+				<table>
+					<colgroup>
+						{col}
+					</colgroup>
+					<TableHeader columns={columns} checked={checked} action={action} />
+					<TableBody dataSource={dataSource} checked={checked} action={action} />
+				</table>
 			</div>
 		)
 	}

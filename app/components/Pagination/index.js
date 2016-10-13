@@ -4,7 +4,7 @@ import styles from './styles.css';
 
 class Pagination extends Component {
 	state = {
-		total: 10,
+		total: 20,
 		current: 1
 	}
 

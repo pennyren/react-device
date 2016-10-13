@@ -6,10 +6,12 @@ import styles from './styles.css';
 
 class Users extends Component {
 	render() {
+		let columns =[{title: 'Name'}, {title: 'Age'}, {title: 'Action'}];
+		let dataSource = [{name: 'bob', age: '3'}, {name: 'bob', age: '3'}, {name: 'bob', age: '3'}, {name: 'bob', age: '3'}, {name: 'bob', age: '3'}, {name: 'bob', age: '3'}];
 		return (
 			<div className="users">
 				<Header title="用户"/>
-				<Table />
+				<Table columns={columns} dataSource={dataSource} checked={true} />
 				<Pagination />
 			</div>
 		);
