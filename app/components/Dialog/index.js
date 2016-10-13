@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import FlatButton from 'components/FlatButton';
 import Layer from 'internals/Layer';
+import ClickAway from 'internals/ClickAway';
 import ReactTransitionGroup from 'react-addons-transition-group';
 import styles from './styles.css';
 
@@ -47,21 +48,23 @@ class DialogInline extends Component {
     }
 
 	render() {
-		const {close} = this.props;
+		const {close, onClickAway, hierarchy} = this.props;
         return (
             <div className="dialog-wrap">
- 				<div className="layer" ref={r => this.layer = r}></div>
- 				<div className="dialog" ref={r => this.dialog = r}>
- 					<h3 className="title">Dialog Title</h3>
- 					<div className="content">
- 						This is dialog content.
- 					</div>
- 					<div className="footer">
- 						<FlatButton onClick={close}>取消</FlatButton>
- 						<FlatButton>确定</FlatButton>
- 					</div>
- 				</div>
- 			</div>
+                <div className="layer" ref={r => this.layer = r}></div>
+                <ClickAway onClickAway={onClickAway} hierarchy={hierarchy}>
+                    <div className="dialog" ref={r => this.dialog = r}>
+                        <h3 className="title">Dialog Title</h3>
+                        <div className="content">
+                            This is dialog content.
+                        </div>
+                        <div className="footer">
+                            <FlatButton onClick={close}>取消</FlatButton>
+                            <FlatButton>确定</FlatButton>
+                        </div>
+                    </div>
+                </ClickAway>
+            </div>
 		);
 	}
 }
@@ -83,7 +86,7 @@ class Dialog extends Component {
 		return (
 			<Layer open={true}>
                 <ReactTransitionGroup component="div">
-                    {this.state.open && <DialogInline close={this.close}/>}
+                    {this.state.open && <DialogInline close={this.close} onClickAway={this.close} hierarchy={0}/>}
                 </ReactTransitionGroup>
             </Layer>
 		)
