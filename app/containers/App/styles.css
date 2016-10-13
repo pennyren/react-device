@@ -156,4 +156,7 @@ ul {
 	&.mdi-del:before {
 		content: "\f1c0";
 	}
+	&.mdi-grid:before {
+		content: "\f2C1";
+	}
 }
