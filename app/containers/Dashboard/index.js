@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import AppBar from 'components/AppBar';
-import Debug from 'components/Debug';
+import Grid from 'components/Grid';
 import styles from './styles.css';
 
 class Dashboard extends Component {
@@ -56,7 +56,7 @@ class Dashboard extends Component {
 						{this.props.children}
 					</div>
 				</div>
-				<Debug />
+				<Grid />
 			</div>
 		)
 	}

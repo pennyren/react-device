@@ -1,14 +1,14 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
-import Gtx from 'internals/Gtx';
+import Gtx from 'utils/gtx';
 import styles from './styles.css';
 
-class Debug extends Component {
-	destoryGrid() {
+class Grid extends Component {
+	destoryGrid = () => {
 		this.system.style.display = "none";
 	}
 
-	drawGrid() {
+	drawGrid = () => {
 		this.system.style.display = "block";
 
 		let unitWidth = 8;
@@ -18,7 +18,7 @@ class Debug extends Component {
 		gtx.fitParent();
 
 		let width = this.canvas.clientWidth;
-		let height = this.canvas.clientWidth;
+		let height = this.canvas.clientHeight;
 
 		gtx.setStrokeStyle("#ddd");
 		gtx.lineWidth(1);
@@ -39,14 +39,14 @@ class Debug extends Component {
 	
 	render() {
 		return (
-			<div className="debug-grid-system">
-				<div className="debug-grid-system-canvas" style={{display: "none"}} ref={r => this.system = r}>
-					<canvas ref={r => this.canvas = r} onClick={this.destoryGrid.bind(this)}></canvas>
+			<div className="grid-system">
+				<div className="grid-canvas" style={{display: "none"}} ref={r => this.system = r}>
+					<canvas ref={r => this.canvas = r} onClick={this.destoryGrid}></canvas>
 				</div>
-				<i className="toggle-grid mdi mdi-grid" onClick={this.drawGrid.bind(this)}></i>
+				<i className="toggle-grid mdi mdi-grid" onClick={this.drawGrid}></i>
 			</div>
 		);
 	}
 }
 
-export default Debug;
+export default Grid;
