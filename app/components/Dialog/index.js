@@ -49,9 +49,10 @@ class DialogInline extends Component {
 
 	render() {
 		const {close, hasLayer, onClickAway, hierarchy} = this.props;
+        const style = hasLayer ? {className: 'layer'} : {style: {display: 'none'}};
         return (
             <div className="dialog-wrap">
-                <div className={hasLayer ? "layer" : ""} ref={r => this.layer = r}></div>
+                <div {...style} ref={r => this.layer = r}></div>
                 <ClickAway onClickAway={onClickAway} hierarchy={hierarchy}>
                     <div className="dialog" ref={r => this.dialog = r}>
                         <h3 className="title">Dialog Title</h3>
@@ -70,6 +71,10 @@ class DialogInline extends Component {
 }
 
 class Dialog extends Component {
+    static defaultProps = {
+        hasLayer: true
+    }
+
 	state = {
 		open: false
 	}
@@ -83,13 +88,15 @@ class Dialog extends Component {
 	}
 
 	render() {
-        // show the layer of dialog as default
-        const hasLayer =  (typeof this.props.hasLayer === "undefined") ? true : this.props.hasLayer;
-
-		return (
+        return (
 			<Layer open={true}>
                 <ReactTransitionGroup component="div">
-                    {this.state.open && <DialogInline close={this.close} hasLayer={hasLayer} onClickAway={this.close} hierarchy={0}/>}
+                    {this.state.open && <DialogInline 
+                                            close={this.close}
+                                            hasLayer={this.props.hasLayer}
+                                            onClickAway={this.close}
+                                            hierarchy={0}
+                                        />}
                 </ReactTransitionGroup>
             </Layer>
 		)

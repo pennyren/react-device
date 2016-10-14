@@ -86,7 +86,7 @@ class AppBar extends Component {
 					drawerItems={drawerItems} 
 					ref={r => this.drawer = r} 
 				/>
-				<Dialog ref={r => this.dialog = r}/>
+				<Dialog ref={r => this.dialog = r} />
 			</div>
 		)
 	}
