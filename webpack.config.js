@@ -3,6 +3,7 @@ const webpack = require('webpack');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const OpenBrowserPlugin = require('open-browser-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const NODE_ENV = process.env.NODE_ENV;
 
@@ -40,7 +41,11 @@ let config = {
         new HtmlWebpackPlugin({
             inject: true,
             template: path.resolve(__dirname, 'app/index.html')
-        })
+        }),
+         new CopyWebpackPlugin([
+            { from: './app/api', to: 'api' },
+            { from: './app/resources', to: 'resources' }
+	    ])
     ],
     resolve: {
         modulesDirectories: ['app', 'node_modules'],
