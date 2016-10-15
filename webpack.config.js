@@ -4,6 +4,7 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const OpenBrowserPlugin = require('open-browser-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const NODE_ENV = process.env.NODE_ENV;
 
@@ -24,8 +25,8 @@ let config = {
             test: /\.json$/,
             loader: 'json-loader'
         }, {
-            test: /\.(scss|css)$/,
-            loader: 'style-loader!css-loader!postcss-loader'
+            test: /\.(scss|less|css)$/,
+            loader: ExtractTextPlugin.extract('style-loader', 'css-loader!postcss-loader')
         }, {
             test: /\.(jpg|png|gif|eot|svg|ttf|woff|woff2)$/,
             loader: 'url-loader?limit=8192'
@@ -40,12 +41,13 @@ let config = {
         }),
         new HtmlWebpackPlugin({
             inject: true,
+            favicon: 'app/favicon.ico',
             template: path.resolve(__dirname, 'app/index.html')
         }),
-         new CopyWebpackPlugin([
-            { from: './app/api', to: 'api' },
-            { from: './app/resources', to: 'resources' }
-	    ])
+        new CopyWebpackPlugin([
+            { from: './app/static', to: 'static' }
+        ]),
+        new ExtractTextPlugin('[name].css')
     ],
     resolve: {
         modulesDirectories: ['app', 'node_modules'],

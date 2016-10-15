@@ -44,6 +44,7 @@
     "copy-webpack-plugin": "latest",
     "cross-env": "latest",
     "css-loader": "latest",
+    "extract-text-webpack-plugin": "latest",
     "file-loader": "latest",
     "html-webpack-plugin": "latest",
     "open-browser-webpack-plugin": "latest",
