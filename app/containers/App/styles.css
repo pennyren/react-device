@@ -162,4 +162,10 @@ ul {
 	&.mdi-laptop:before {
 		content: "\f322"
 	}
+	&.mdi-approval:before {
+		content: "\f14c";
+	}
+	&.mdi-todo:before {
+		content: "\f648";
+	}
 }

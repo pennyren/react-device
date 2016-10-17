@@ -1,0 +1,23 @@
+.stepper {
+	max-width: 380px;
+    margin: auto;
+	& .stepper-content {
+		display: flex;
+	    flex-direction: column;
+	    align-content: center;
+	    align-items: stretch;
+	    justify-content: space-between;
+		& .stepper-item {
+			& .title {
+
+			}
+			& .wrap {
+				border-left: 1px solid rgb(189, 189, 189);
+				& .info {
+
+				}
+			}
+		}
+	}
+
+}

@@ -55,6 +55,14 @@ class AppBar extends Component {
 			url: '/equipment',
 			name: '设备',
 			icon: 'mdi-mac'
+		}, {
+			url: '/approval',
+			name: '审批',
+			icon: 'mdi-approval'
+		}, {
+			url: '/todo',
+			name: '待办',
+			icon: 'mdi-todo'
 		}];
 
 		return (
