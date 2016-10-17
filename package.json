@@ -41,8 +41,10 @@
     "babel-preset-latest": "latest",
     "babel-preset-react": "latest",
     "babel-preset-stage-0": "latest",
+    "copy-webpack-plugin": "latest",
     "cross-env": "latest",
     "css-loader": "latest",
+    "extract-text-webpack-plugin": "latest",
     "file-loader": "latest",
     "html-webpack-plugin": "latest",
     "open-browser-webpack-plugin": "latest",
@@ -51,6 +53,7 @@
     "style-loader": "latest",
     "url-loader": "latest",
     "webpack": "latest",
-    "webpack-dev-server": "latest"
+    "webpack-dev-server": "latest",
+    "whatwg-fetch": "latest"
   }
 }
