@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Button from 'components/Button';
 import FlatButton from 'components/FlatButton';
+import TextField from 'components/TextField';
 import styles from './styles.css';
 
 class Stepper extends Component {
@@ -20,8 +21,12 @@ class Stepper extends Component {
 	getOperated() {
 		return (
 			<div className="operable">
-				<Button isRaised={true}>同意</Button>
-				<FlatButton>否决</FlatButton>
+				<TextField name="reason" placeholder="意见" multiLine={true}/>
+				<div className="btn-wrap">
+					<Button isRaised={true}>同意</Button>
+					<FlatButton>否决</FlatButton>
+				</div>
+				
 			</div>
 		)
 	}

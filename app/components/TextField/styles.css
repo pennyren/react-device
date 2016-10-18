@@ -12,10 +12,16 @@
         width: 100%;
         text-align: left;
         outline: none;
+        &.is-textarea {
+             resize: none;
+             padding: 0;
+             height: 49px;
+             line-height: 24px;
+        }
     }
     & .mdl-textfield-label {
         position: absolute;
-        top: 0;
+        top: 3px;
         left: 0;
         right: 0;
         bottom: 0;
@@ -26,8 +32,7 @@
         overflow: hidden;
         white-space: nowrap;
         text-align: left;
-        margin-top: 3px;
-        transition-property: margin-top, color, font-size;
+        transition-property: top, color, font-size;
         transition-duration: .2s;
         transition-timing-function: cubic-bezier(.4,0,.2,1);
         &:after {
@@ -48,7 +53,7 @@
         visibility: visible;
     }
     &.is-float .mdl-textfield-label{
-        margin-top: -18px;
+        top: -18px;
         color: #39b881;
         font-size: 1.2rem;
     }

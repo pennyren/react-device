@@ -41,6 +41,12 @@
     				& .mdl-btn {
     					margin-right: 16px;
     				}
+    				& .btn-wrap {
+    					margin-top: 16px;
+    				}
+    				& .flat-btn {
+    					color: rgb(244, 67, 54);
+    				}
     			}
 			}
 			&.unread {
