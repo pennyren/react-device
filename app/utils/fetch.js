@@ -31,7 +31,7 @@ const fetchDao = {
 		return new Promise(function (resolve, reject) {
 			fetch(url, {
 				method: method,
-				body: JSON.stringify(params),
+				body: params,
 				headers: {
 					"Content-Type": "application/json"
 				},
