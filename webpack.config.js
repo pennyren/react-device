@@ -13,7 +13,7 @@ let config = {
         bundle: path.resolve(__dirname, 'app/app.js')
     },
     output: {
-        path: path.resolve(__dirname, 'dist'),
+        path: path.resolve(__dirname, 'web'),
         filename: '[name].js'
     },
     module: {

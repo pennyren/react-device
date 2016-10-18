@@ -1,0 +1,10 @@
+[
+	{
+		"method": "get",
+		"url": "/getUserList",
+		"query": {
+			"entity": "ems_user",
+			"id": "list"
+		}
+	}
+]
