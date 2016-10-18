@@ -74,7 +74,7 @@ class SignIn extends React.Component {
 						<i className="mdi mdi-lock-open"></i>
 						<TextField name="password" placeholder="Password" isFloat={true}/>
 					</div>
-					<Button isRaised={false} onClick={this.verify}/>登陆</Button>
+					<Button isRaised={false} onClick={this.verify}>登陆</Button>
                 </div>
                 <Snackbar 
                     message="用户名或密码错误"

@@ -20,7 +20,7 @@ class Stepper extends Component {
 	getOperated() {
 		return (
 			<div className="operable">
-				<Button>同意</Button>
+				<Button isRaised={true}>同意</Button>
 				<FlatButton>否决</FlatButton>
 			</div>
 		)

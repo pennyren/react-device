@@ -6,7 +6,8 @@ class Approval extends Component {
 	render() {
 		const info = [{
 			title: '科室审批',
-			status: 'agreed'
+			status: 'agreed',
+			content: '通过'
 		}, {
 			title: '管理员审批',
 			status: 'unread'
