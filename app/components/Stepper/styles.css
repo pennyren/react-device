@@ -47,6 +47,9 @@
     				& .flat-btn {
     					color: rgb(244, 67, 54);
     				}
+    				& .mdl-textfield {
+    					width: 230px;
+    				}
     			}
 			}
 			&.unread {

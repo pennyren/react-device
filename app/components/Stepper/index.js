@@ -5,7 +5,13 @@ import TextField from 'components/TextField';
 import styles from './styles.css';
 
 class Stepper extends Component {
-	getCurrentStepIcon(status, index) {
+	state = {
+		currentContent: '',
+		currentStatus: 'unread',
+		currentStep : 1
+	}
+
+	getStepIcon(status, index) {
 		switch (status) {
 			case 'unread':
 				return <i className="number">{index + 1}</i>;
@@ -21,26 +27,40 @@ class Stepper extends Component {
 	getOperated() {
 		return (
 			<div className="operable">
-				<TextField name="reason" placeholder="意见" multiLine={true}/>
+				<TextField name="reason" placeholder="意见" multiLine={true} ref={r => this.textfield = r}/>
 				<div className="btn-wrap">
-					<Button isRaised={true}>同意</Button>
-					<FlatButton>否决</FlatButton>
+					<Button isRaised={true} onClick={this.agreed}>同意</Button>
+					<FlatButton onClick={this.disagreed}>否决</FlatButton>
 				</div>
-				
 			</div>
 		)
 	}
 
+	agreed = (e) => {
+		let val = this.textfield.input.value.trim();
+		const content = val == '' ? '通过' : val;
+		this.setState({currentContent: content, currentStatus: 'agreed'});
+	}
+
+	disagreed = (e) => {
+		let val = this.textfield.input.value.trim();
+		const content = val == '' ? '未通过' : val;
+		this.setState({currentContent: content, currentStatus: 'disagreed'});
+	}
+
 	render() {
 		const {info} = this.props;
+		const {currentContent, currentStatus, currentStep} = this.state;
 		const lastStep = info.length - 1;
-		const currentStep = 1;
 		
 		let items = info.map((item, index) => {
-			const status = item.status;
-			const className = 'stepper-item ' + status;
+			const status = (currentStep == index) ? currentStatus : item.status;
 			const showLastStepInfo = (currentStep == lastStep || status != 'disabled') ? true : false;
-			let icon = this.getCurrentStepIcon(status, index);
+			const showCurrentContent = (currentStep == index && currentContent != '') ? true : false;
+			const showOperate = (currentStep == index && currentContent == '') ? true : false;
+			const className = 'stepper-item ' + status;
+
+			let icon = this.getStepIcon(status, index);
 
 			return (
 				<li className={className} key={index}>
@@ -50,8 +70,8 @@ class Stepper extends Component {
 					</span>
 					{showLastStepInfo && (
 						<div className="info">
-							{item.content}
-							{(currentStep == index) && this.getOperated()}
+							{showCurrentContent ? currentContent : item.content}
+							{showOperate && this.getOperated()}
 						</div>
 					)}
 				</li>

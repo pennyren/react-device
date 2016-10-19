@@ -15,8 +15,6 @@
         &.is-textarea {
              resize: none;
              padding: 0;
-             height: 49px;
-             line-height: 24px;
         }
     }
     & .mdl-textfield-label {

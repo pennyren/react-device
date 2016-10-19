@@ -24,11 +24,6 @@ class TextField extends React.Component {
 		const val = this.input.value;
 		const classList = this.TextField.classList;
 		val ? classList.add('is-dirty') : classList.remove('is-dirty');
-		if (multiLine) {
-			const newHeight = (this.input.scrollHeight + 1) + 'px';
-			this.input.style.height = newHeight;
-		}
-
 		typeof onChange == 'function' && onChange(e);
 	}
 
@@ -68,7 +63,7 @@ class TextField extends React.Component {
 
 		return (
 			<div className={classList.join(' ')} ref={v => this.TextField = v}>
-				{!multiLine ? <input {...fieldProps} /> : <textarea {...fieldProps} />}
+				{!multiLine ? <input {...fieldProps} /> : <textarea {...fieldProps} rows={3}/>}
 				<label className="mdl-textfield-label" htmlFor={name}>{placeholder}</label>
 			</div>
 		)
