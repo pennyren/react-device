@@ -168,4 +168,7 @@ ul {
 	&.mdi-todo:before {
 		content: "\f648";
 	}
+	&.mdi-calendar:before {
+		content: "\f0ee";
+	}
 }

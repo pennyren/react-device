@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Stepper from 'components/Stepper';
+import DatePicker from 'components/DatePicker';
 import styles from './styles.css';
 
 class Approval extends Component {
@@ -21,6 +22,7 @@ class Approval extends Component {
 		return (
 			<div className="approval">
 				<Stepper info={info}/>
+				<DatePicker />
 			</div>
 		)
 	}
