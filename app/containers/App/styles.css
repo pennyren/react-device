@@ -171,4 +171,10 @@ ul {
 	&.mdi-calendar:before {
 		content: "\f0ee";
 	}
+	&.mdi-double-left:before {
+		content: "\f13d";
+	}
+	&.mdi-double-right:before {
+		content: "\f13e";
+	}
 }

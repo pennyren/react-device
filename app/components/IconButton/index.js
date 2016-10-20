@@ -16,7 +16,7 @@ function IconButton(props) {
 	return (
 		<button {...btnProps} onClick={onClick}>
 			<i className={classIcon}></i>
-			<Ripple centerRipple={defaultCenter} color={color}/>
+			<Ripple centerRipple={defaultCenter} color="#b4c5cd"/>
 		</button>
 	)
 }
