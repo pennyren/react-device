@@ -21,7 +21,6 @@ class Approval extends Component {
 		}];
 		return (
 			<div className="approval">
-				<Stepper info={info}/>
 				<DatePicker />
 			</div>
 		)
