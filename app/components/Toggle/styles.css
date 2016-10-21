@@ -1,0 +1,82 @@
+.toggle-wrapper{
+	position: relative;
+	width: 100%;
+	height: auto;
+	& input{
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		opacity: 0;
+		cursor: pointer;
+	}
+	& .toggle{
+		display: flex;
+		align-items: center;
+		width: 100%;
+		height: 100%;
+
+		& .slide-wrapper{
+			position: relative;
+			display: block;
+			flex-shrink: 0;
+			width: 36px;
+			margin-right: 0px;
+			margin-left: 8px;
+			padding: 4px 0px 6px 2px;
+			transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+			cursor: pointer;
+
+			& .bar{
+				ransition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+				width: 100%;
+				height: 14px;
+				border-radius: 30px;
+				background-color: rgb(189, 189, 189);
+			}
+			& .circle-box{
+				color: rgba(0, 0, 0, 0.870588);
+				background-color: rgb(245, 245, 245);
+				transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+				-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+				box-shadow: rgba(0, 0, 0, 0.117647) 0px 1px 6px, rgba(0, 0, 0, 0.117647) 0px 1px 4px;
+				border-radius: 50%;
+				position: absolute;
+				top: 1px;
+				left: 0px;
+				width: 20px;
+				height: 20px;
+				line-height: 24px;
+			}
+		}
+	}
+
+	&.checked{
+		& .toggle{
+			& .slide-wrapper{
+				& .bar{
+					background-color: rgba(57, 184, 129, .5);
+				}
+				& .circle-box{
+					background-color: rgb(57, 184, 129);
+					position: absolute;
+					top: 1px;
+					left: 100%;
+					margin-left: -20px;
+				}
+			}
+		}
+	}
+
+	&.disabled{
+		pointer-events: none;
+		& .toggle{
+			& .slide-wrapper{
+				& .circle-box{
+					background-color: rgb(224, 224, 224);
+				}
+			}
+		}
+	}
+}
