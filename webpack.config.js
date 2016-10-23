@@ -2,8 +2,6 @@ const path = require('path');
 const webpack = require('webpack');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const OpenBrowserPlugin = require('open-browser-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const NODE_ENV = process.env.NODE_ENV;
@@ -13,7 +11,8 @@ let config = {
         bundle: path.resolve(__dirname, 'app/app.js')
     },
     output: {
-        path: path.resolve(__dirname, 'web'),
+        publicPath: '/',
+        path: path.resolve(__dirname, 'dist'),
         filename: '[name].js'
     },
     module: {
@@ -44,9 +43,6 @@ let config = {
             favicon: 'app/favicon.ico',
             template: path.resolve(__dirname, 'app/index.html')
         }),
-        new CopyWebpackPlugin([
-            { from: './app/static', to: 'static' }
-        ]),
         new ExtractTextPlugin('[name].css')
     ],
     resolve: {
@@ -64,14 +60,6 @@ if (NODE_ENV === 'production') {
         }),
         new webpack.optimize.OccurrenceOrderPlugin(),
         new webpack.optimize.DedupePlugin()
-    );
-}
-
-if (NODE_ENV === 'development') {
-    config.plugins.push(
-        new OpenBrowserPlugin({
-            url: 'http://localhost:8080'
-        })
     );
 }
 
