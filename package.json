@@ -34,6 +34,7 @@
     "compression": "^1.6.2",
     "cookie-parser": "^1.4.3",
     "express": "^4.14.0",
+    "pg": "^6.1.0",
     "react": "^15.3.1",
     "react-addons-transition-group": "^15.3.1",
     "react-dom": "^15.3.1",
