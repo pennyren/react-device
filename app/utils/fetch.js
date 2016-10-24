@@ -27,7 +27,14 @@ const fetchDao = {
 
 	request: function(method, url, params){
 		const self = this;
-		
+
+		if (method !== "Post") {
+			url += '?';
+			for (let p in params) {
+				url += p + '=' + params[p] + '&';
+			}
+		}
+
 		return new Promise(function (resolve, reject) {
 			fetch(url, {
 				method: method,
