@@ -27,11 +27,11 @@ const fetchDao = {
 
 	request: function(method, url, params){
 		const self = this;
-
+		
 		return new Promise(function (resolve, reject) {
 			fetch(url, {
 				method: method,
-				body: params,
+				body: JSON.stringify(params),
 				headers: {
 					"Content-Type": "application/json"
 				},
