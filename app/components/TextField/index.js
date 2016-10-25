@@ -2,7 +2,8 @@ import React from 'react';
 import styls from './styles.css';
 class TextField extends React.Component {
 	static defaultProps = {
-		isFloat: true
+		isFloat: true,
+		multiLine: false
 	}
 
 	isFocus = () => {
@@ -19,7 +20,7 @@ class TextField extends React.Component {
 	}
 
 	checkDirty = (e) => {
-		const {onChange} = this.props;
+		const {onChange, multiLine} = this.props;
 		const val = this.input.value;
 		const classList = this.TextField.classList;
 		val ? classList.add('is-dirty') : classList.remove('is-dirty');
@@ -35,7 +36,7 @@ class TextField extends React.Component {
 	}
 
 	render() {
-		const {name, value, placeholder, isFloat} = this.props;
+		const {name, value, placeholder, isFloat, multiLine} = this.props;
 		let classList = ['mdl-textfield'];
 		isFloat && classList.push('mdl-textfield-float');
 
@@ -47,20 +48,22 @@ class TextField extends React.Component {
 		}
 
 		const type = (name == 'password') ? 'password' : 'text';
+		const fieldProps = {
+			className: 'mdl-textfield-input' + (multiLine ? ' is-textarea' : ''),
+			type: type,
+			name: name,
+			id: name,
+		   	defaultValue: value,
+		   	onFocus: this.isFocus,
+		   	onBlur: this.isBlur,
+		   	onChange: this.checkDirty,
+		   	onKeyUp: this.keyUp,
+		   	ref: r => this.input = r
+		}
 
 		return (
 			<div className={classList.join(' ')} ref={v => this.TextField = v}>
-				<input className="mdl-textfield-input" 
-					   type={type}
-					   name={name} 
-					   id={name}
-					   defaultValue={value}
-					   onFocus={this.isFocus}
-					   onBlur={this.isBlur}
-					   onChange={this.checkDirty}
-					   onKeyUp={this.keyUp}
-					   ref={r => this.input = r}
-				/>
+				{!multiLine ? <input {...fieldProps} /> : <textarea {...fieldProps} rows={3}/>}
 				<label className="mdl-textfield-label" htmlFor={name}>{placeholder}</label>
 			</div>
 		)

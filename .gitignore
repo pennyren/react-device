@@ -3,9 +3,13 @@ node_modules
 
 # Bundle
 dist
+web
 
 # npm debug log
 npm-debug.log
 
 # debug log
 debug.log
+
+# matera id
+.materia

@@ -1,0 +1,87 @@
+.stepper {
+	max-width: 380px;
+    margin: auto;
+	& .stepper-content {
+		display: flex;
+	    flex-direction: column;
+	    align-content: center;
+	    align-items: stretch;
+	    justify-content: space-between;
+		& .stepper-item {
+			& .title {
+				display: flex;
+    			margin-left: -10px;
+    			color: rgba(0, 0, 0, 0.870588);
+    			align-items: center;
+    			font-size: 1.5rem;
+			   	& .mdi {
+    				font-size: 2.2rem;
+    				margin-right: 6px;
+    			}
+    			& .number {
+    				display: inline-block;
+    				height: 20px;
+    				width: 20px;
+    				border-radius: 50%;
+    				color: #fff;
+    				margin-right: 6px;
+    				font-style: normal;
+    				font-size: 1.4rem;
+    				font-weight: normal;
+    				text-align: center;
+    				line-height: 20px;
+    			}
+			}
+			& .info {
+				border-left: 1px solid rgb(189, 189, 189);
+				margin: 8px 0;
+    			padding: 16px;
+    			word-break: break-all;
+    			& .operable {
+    				& .mdl-btn {
+    					margin-right: 16px;
+    				}
+    				& .btn-wrap {
+    					margin-top: 16px;
+    				}
+    				& .flat-btn {
+    					color: rgb(244, 67, 54);
+    				}
+    				& .mdl-textfield {
+    					width: 230px;
+    				}
+    			}
+			}
+			&.unread {
+				& .title {
+					font-weight: 600;
+				 	& .number {
+				 		background-color: #39b881;
+				 	}
+				}
+			}
+			&.disabled {
+				& .title {
+					color: rgba(0, 0, 0, 0.258824);
+					cursor: not-allowed;
+					& .number {
+						background-color: rgb(158, 158, 158);
+					}
+				}
+			}
+			&.agreed {
+				& .title {
+					font-weight: normal;
+					& .mdi {
+				 		color: #39b881;
+				 	}
+				}
+			}
+			&.disagreed {
+				& .title {
+					color: rgb(244, 67, 54);
+				}
+			}
+		}
+	}
+}

@@ -3,54 +3,20 @@ import TextField from 'components/TextField';
 import Snackbar from 'components/Snackbar';
 import Button from 'components/Button';
 import {history} from 'routes';
+import fetch from 'utils/fetch';
 import styles from './styles.css';
 
 class SignIn extends React.Component {
-	componentWillUnmount() {
-        clearTimeout(this.enterTimer);
-        clearTimeout(this.leaveTimer);
-    }
-
-    componentWillAppear(callback) {
-        this.initAnimation(callback);
-    }
-
-    componentWillEnter(callback) {
-        this.initAnimation(callback);
-    }
-
-    componentDidAppear() {
-        this.animate();
-    }
-
-    componentDidEnter() {
-        this.animate();
-    }
-
-    componentWillLeave(callback) {
-        const style = this.signin.style;
-        style.opacity = 0;
-        console.log(1);
-        this.leaveTimer = setTimeout(callback, 0);
-    }
-
-    animate() {
-        const style = this.signin.style;
-        const opacity = 'opacity 2000ms cubic-bezier(0.23, 1, 0.32, 1) 0ms';
-        style.opacity = 1;
-        style.transition = opacity;
-    }
-
-    initAnimation(callback) {
-        const style = this.signin.style;
-        style.opacity = 0;
-        
-        this.enterTimer = setTimeout(callback, 0);
-    }
-
-    verify = () => {
+	verify = () => {
         const isMatched = true;
-
+        const props = {
+            username: this.username.input.value,
+            password: this.password.input.value
+        }
+        fetch.doPost('user/signin', props).then((data) => {
+            console.log(data);
+        });
+        return;
         if (!isMatched) {
             this.snackbar.open();
         } else {
@@ -68,13 +34,23 @@ class SignIn extends React.Component {
 					</div>
 					<div className="textfield">
 						<i className="mdi mdi-account"></i>
-						<TextField name="username" placeholder="Username" isFloat={true}/>
+						<TextField 
+                            name="username" 
+                            placeholder="Username" 
+                            isFloat={true} 
+                            ref={r => this.username = r}
+                        />
 					</div>
 					<div className="textfield">
 						<i className="mdi mdi-lock-open"></i>
-						<TextField name="password" placeholder="Password" isFloat={true}/>
+						<TextField 
+                            name="password" 
+                            placeholder="Password" 
+                            isFloat={true} 
+                            ref={r => this.password =r}
+                        />
 					</div>
-					<Button name="登录" isRaised={false} onClick={this.verify}/>
+					<Button isRaised={false} onClick={this.verify}>登陆</Button>
                 </div>
                 <Snackbar 
                     message="用户名或密码错误"

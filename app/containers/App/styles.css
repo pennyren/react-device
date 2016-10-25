@@ -1,7 +1,6 @@
 @font-face {
 	font-family: "Material Design Icons";
-	src: url("../../static/fonts/materialdesignicons-webfont.eot");
-    src: url("../../static/fonts/materialdesignicons-webfont.eot") format("embedded-opentype"), url("../../static/fonts/materialdesignicons-webfont.woff2") format("woff2"), url("../../static/fonts/materialdesignicons-webfont.woff") format("woff"), url("../../static/fonts/materialdesignicons-webfont.ttf") format("truetype"), url("../../static/fonts/materialdesignicons-webfont.svg") format("svg");
+	src: url("../../../public/fonts/materialdesignicons-webfont.woff2");
     font-weight: normal;
     font-style: normal;
 }
@@ -161,5 +160,20 @@ ul {
 	}
 	&.mdi-laptop:before {
 		content: "\f322"
+	}
+	&.mdi-approval:before {
+		content: "\f14c";
+	}
+	&.mdi-todo:before {
+		content: "\f648";
+	}
+	&.mdi-calendar:before {
+		content: "\f0ee";
+	}
+	&.mdi-double-left:before {
+		content: "\f13d";
+	}
+	&.mdi-double-right:before {
+		content: "\f13e";
 	}
 }

@@ -11,7 +11,7 @@ class Setting extends Component {
 				<TextField name="password" placeholder="旧密码" />
 				<TextField name="password" placeholder="新密码" />
 				<TextField name="password" placeholder="确认新密码" />
-				<Button name="保存" isRaised={false}/>
+				<Button isRaised={false}>保存</Button>
 			</div>
 		)
 	}
