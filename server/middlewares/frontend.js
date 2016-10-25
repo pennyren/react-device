@@ -16,20 +16,9 @@ const addDevMiddleware = (app, webpackConfig) => {
 		stats: 'errors-only'
 	});
 
-	//app use middleware
+	//app use webpack middleware
 	app.use(middleware);
 	app.use(webpackHotMiddleware(compiler));
-
-	const fs = middleware.fileSystem;
-	app.get('*', (req, res) => {
-		fs.readFile(path.join(compiler.outputPath, 'index.html'), (err, file) => {
-			if (err) {
-				res.sendStatus(404);
-			} else {
-				res.send(file.toString());
-			}
-		})
-	});
 }
 
 //Production middlewares
@@ -37,10 +26,9 @@ const addProdMiddleware = (app, opts) => {
 	const publicPath = opts.publicPath || '/';
 	const outputPath = opts.outputPath || path.resolve(process.cwd(), 'dist');
 
+	//use static middleware
 	app.use(compression());
-	app.use(publicPath, express.static(outputPath));
-
-	app.get('*', (req, res) => res.sendFile(path.resolve(outputPath, 'index.html')));
+	app.use(express.static(outputPath));
 }
 
 module.exports = (app, opts) => {

@@ -1,12 +1,11 @@
 const express = require('express');
-const http = require('http');
-const reload = require('reload');
 
 const setup = require('./middlewares/frontend');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const startRoutes = require('./routes');
 const resolve = require('path').resolve;
+const isDev = process.env.NODE_ENV == 'development';
 
 const app = express();
 app.set('port', process.env.PROT || 8080);
@@ -26,10 +25,19 @@ setup(app, {
 
 startRoutes(app);
 
-//reload
-const server = http.createServer(app);
-reload(server, app);
+if (isDev) {
+	//reload
+	const http = require('http');
+	const reload = require('reload');
+	const server = http.createServer(app);
+	reload(server, app);
 
-server.listen(app.get('port'), () => {
-	console.log('Express started on http://localhost:' + app.get('port') + '; press Ctrl-C to terminate.')
-});
+	server.listen(app.get('port'), () => {
+		console.log('Express started on http://localhost:' + app.get('port') + ' in development environment.')
+	});
+
+} else {
+	app.listen(app.get('port'), () => {
+		console.log('Express started on http://localhost:' + app.get('port') + ' in production environment.')
+	});
+}

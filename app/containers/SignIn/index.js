@@ -9,13 +9,16 @@ import styles from './styles.css';
 class SignIn extends React.Component {
 	verify = () => {
         const isMatched = true;
-        const props = {
+
+        const params = {
             username: this.username.input.value,
             password: this.password.input.value
         }
-        fetch.doPost('user/signin', props).then((data) => {
+
+        fetch.doPost('user/signin', params).then(function (data) {
             console.log(data);
         });
+
         return;
         if (!isMatched) {
             this.snackbar.open();

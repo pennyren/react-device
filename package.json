@@ -4,9 +4,9 @@
   "description": "equipment management system by react",
   "scripts": {
     "start": "npm run dev",
-    "start:production": "npm run build && npm run start:prod",
-    "dev": "cross-env NODE_ENV=development node server",
-    "start:prod": "cross-env NODE_ENV=production node server",
+    "start:prod": "npm run build && npm run start:production",
+    "dev": "cross-env NODE_ENV=development supervisor -i app docs public -w server server",
+    "start:production": "cross-env NODE_ENV=production node server",
     "build": "cross-env NODE_ENV=production webpack -p --config webpack.config.js"
   },
   "babel": {

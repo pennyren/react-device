@@ -4,11 +4,18 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-const NODE_ENV = process.env.NODE_ENV;
+const env = process.env.NODE_ENV;
+const entryPath = path.resolve(__dirname, 'app/app.js');
+const hotMiddlewareScript = 'webpack-hot-middleware/client?reload=true';
+
+const entry = {
+    development: [entryPath, hotMiddlewareScript],
+    production: entryPath
+};
 
 let config = {
     entry: {
-        bundle: path.resolve(__dirname, 'app/app.js')
+        bundle: entry[env]
     },
     output: {
         publicPath: '/',
@@ -35,7 +42,7 @@ let config = {
     plugins: [
         new webpack.DefinePlugin({
             'process.env': {
-                NODE_ENV: JSON.stringify(NODE_ENV)
+                NODE_ENV: JSON.stringify(env)
             }
         }),
         new HtmlWebpackPlugin({
@@ -43,6 +50,7 @@ let config = {
             favicon: 'app/favicon.ico',
             template: path.resolve(__dirname, 'app/index.html')
         }),
+        new webpack.optimize.OccurrenceOrderPlugin(),
         new ExtractTextPlugin('[name].css')
     ],
     resolve: {
@@ -51,15 +59,21 @@ let config = {
     }
 };
 
-if (NODE_ENV === 'production') {
+if (env === 'production') {
     config.plugins.push(
         new webpack.optimize.UglifyJsPlugin({
             compress: {
                 warnings: false
             }
         }),
-        new webpack.optimize.OccurrenceOrderPlugin(),
         new webpack.optimize.DedupePlugin()
+    );
+}
+
+if (env === 'development') {
+    config.plugins.push(
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.NoErrorsPlugin()
     );
 }
 
