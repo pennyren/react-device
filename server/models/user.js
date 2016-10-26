@@ -3,7 +3,7 @@ const BaseModel = require('./base');
 
 class UserModel extends BaseModel {
 	constructor() {
-		super();
+		super('user');
 	}
 }
 
