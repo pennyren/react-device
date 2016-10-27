@@ -6,12 +6,9 @@ class UserDao extends BaseDao {
 		super('user');
 	}
 	
-	findUser(username, password) {
-		const sql = `select count(*) from user`;
-		const result = executeQuery(sql);
-		console.log(2)
-		return result;
-		
+	findUser = (username, password) => {
+		const sql = `select * from public.user`;
+		return executeQuery(sql);
 	}
 }
 
