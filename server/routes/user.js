@@ -1,9 +1,15 @@
-const express = require('express');
-const user = express.Router();
-const UserModel = require('./models/user');
+import express from 'express';
+import UserDao from '../dao/user';
 
-user.post('/signin', (req, res) => {
-	res.send(req.body);	
+const userRoute = express.Router();
+const userDao = new UserDao();
+
+userRoute.post('/signin', (req, res) => {
+	const {username, password} = req.body;
+	
+	const isMatched = userDao.findUser(username, password);
+	console.log(3);
+	res.send(isMatched);	
 });
 
-module.exports = user;
+export default userRoute;

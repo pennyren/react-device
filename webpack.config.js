@@ -1,8 +1,8 @@
-const path = require('path');
-const webpack = require('webpack');
-
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+import path from 'path';
+import webpack from 'webpack';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import ExtractTextPlugin from 'extract-text-webpack-plugin';
+import CSSNext from 'postcss-cssnext';
 
 const env = process.env.NODE_ENV;
 const entryPath = path.resolve(__dirname, 'app/app.js');
@@ -38,7 +38,7 @@ let config = {
             loader: 'url-loader?limit=8192'
         }]
     },
-    postcss: () => ([require('postcss-cssnext')]),
+    postcss: () => ([CSSNext]),
     plugins: [
         new webpack.DefinePlugin({
             'process.env': {
@@ -77,4 +77,4 @@ if (env === 'development') {
     );
 }
 
-module.exports = config;
+export default config;

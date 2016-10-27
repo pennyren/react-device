@@ -1,3 +1,8 @@
-module.exports = (app) => {
-	app.use('/user', require('./user'));
+import userRoute from './user';
+
+const startRoutes = (app) => {
+	app.use('/user', userRoute);
 }
+
+export default startRoutes;
+

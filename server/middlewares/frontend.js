@@ -1,10 +1,12 @@
-const express = require('express');
-const path = require('path');
-const compression = require('compression');
+import express from 'express';
+import path from 'path';
+import compression from 'compression';
 
-const webpack = require('webpack');
-const webpackDevMiddleware = require('webpack-dev-middleware');
-const webpackHotMiddleware = require('webpack-hot-middleware');
+import webpack from 'webpack';
+import webpackDevMiddleware from 'webpack-dev-middleware';
+import webpackHotMiddleware from 'webpack-hot-middleware';
+
+import webpackConfig from '../../webpack.config';
 
 //Dev middleware
 const addDevMiddleware = (app, webpackConfig) => {
@@ -31,12 +33,13 @@ const addProdMiddleware = (app, opts) => {
 	app.use(express.static(outputPath));
 }
 
-module.exports = (app, opts) => {
+const setup = (app, opts) => {
 	const isDev = process.env.NODE_ENV == 'development';
 	if (isDev) {
-		const webpackConfig = require('../../webpack.config');
 		addDevMiddleware(app, webpackConfig);
 	} else {
 		addProdMiddleware(app, opts);
 	}
-};
+}
+
+export default setup;

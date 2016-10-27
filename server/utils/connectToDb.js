@@ -1,4 +1,5 @@
-const PgPool = require('pg').Pool;
+import {Pool} from 'pg';
+
 const config = {
 	host: 'localhost',
     port: 5432,
@@ -6,10 +7,14 @@ const config = {
     password: '1213',
     database: 'reactEMS'
 }
-const pool = new PgPool(config);
 
-pool.on('error', (err, client) => {
+process.on('unhandledRejection', function(e) {
+  	console.log(e.message, e.stack);
+});
+
+const pgPool = new Pool(config);
+pgPool.on('error', (err, client) => {
 	throw err;
 });
 
-module.exports = pool;
+export default pgPool;
