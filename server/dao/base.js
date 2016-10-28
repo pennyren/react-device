@@ -5,9 +5,10 @@ class BaseDao {
 		this.entity = entity;
 	}
 
-	get(id) {
-		const sql = `select * from ${this.entity} where id=${id}`;
-		const result = executeQuery(sql);
+	get = async (id) => {
+		const sql = `select * from public.${this.entity} where id=${id}`;
+		const result = await executeQuery(sql);
+		return result.rows;
 	}
 
 	create(entity) {
