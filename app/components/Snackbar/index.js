@@ -65,7 +65,7 @@ class Snackbar extends Component {
     
     open() {
         this.setState({open: true});
-        setTimeout(() => this.setState({open: false}), 1000);
+        setTimeout(() => this.setState({open: false}), 2500);
     }
 
     render() {

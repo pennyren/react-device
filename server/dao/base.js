@@ -6,7 +6,7 @@ class BaseDao {
 	}
 
 	get = async (id) => {
-		const sql = `select * from public.${this.entity} where id=${id}`;
+		const sql = `select * from "${this.entity}" where id=${id}`;
 		const result = await executeQuery(sql);
 		return result.rows;
 	}
@@ -30,7 +30,6 @@ class BaseDao {
 	count(filter) {
 
 	}
-
 }
 
 export default BaseDao;

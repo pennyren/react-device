@@ -8,24 +8,20 @@ import styles from './styles.css';
 
 class SignIn extends React.Component {
 	verify = () => {
-        const isMatched = true;
-
         const params = {
             username: this.username.input.value,
-            password: this.password.input.value
+            pwd: this.password.input.value
         }
-
-        fetch.doPost('user/signin', params).then(function (data) {
-            console.log(data);
+        const currentComponent = this;
+        
+        fetch.doPost('user/signin', params).then((data) => {
+            const isMatched = data.result;
+            if (data.result) {
+                 history.push('/dashboard');
+            } else {
+                currentComponent.snackbar.open();
+            }
         });
-
-        return;
-        if (!isMatched) {
-            this.snackbar.open();
-        } else {
-            console.log(history);
-            history.push('/dashboard');
-        }   
     }
 
 	render() {

@@ -1,0 +1,2 @@
+DROP DATABASE IF EXISTS reactEMS;
+CREATE DATABASE reactEMS owner postgres ENCODING = 'UTF-8';
