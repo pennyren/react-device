@@ -11,24 +11,42 @@ class BaseDao {
 		return result.rows;
 	}
 
-	create(entity) {
-
+	create = async (entity) => {
+		const keys = Object.keys(entity);
+		const values = keys.map((key, index) => entity[key])
+		const sql = `insert into "${this.entity}" (${keys.join(',')}) values (${values.join(',')})`;
+		const result = await executeQuery(sql);
+		return result.rows;
 	}
 
 	update(id, entity) {
-
+		const keys = Object.keys(entity);
+		const values = keys.map((key, index) => `${key}=${entity[key]}`)
+		const sql = `update "${this.entity}" set ${values} where id=${id}`
+		const result = await executeQuery(sql);
+		return result.rows;
 	}
 
 	delete(id) {
-
+		const sql = `delete from "${this.entity}" where id=${id}`;
+		const result = await executeQuery(sql);
+		return result.rows;
 	}
 
-	list(filter, pageIdx, pageSize, orderBy) {
-
+	list(filter, pageIdx, pageSize) {
+		const finalFilter = filter ? 'where ' + filter : '';
+		const finalPageSize = pageSize || 10;
+		const limitOffset = pageIdx ? `limit ${finalPageSize} offset ${pageIdx*finalPageSize}` : '';
+		const sql = `select * from "${this.entity} ${finalFilter} ${limitOffset}"`;
+		const result = await executeQuery(sql);
+		return result.rows;
 	}
 
 	count(filter) {
-
+		const finalFilter = filter ? 'where ' + filter : '';
+		const sql = `select count(*) from "${this.entity}" ${finalFilter}`;
+		const result = await executeQuery(sql);
+		return result.rows;
 	}
 }
 
