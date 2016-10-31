@@ -19,21 +19,21 @@ class BaseDao {
 		return result.rows;
 	}
 
-	update(id, entity) {
+	update = async (id, entity) => {
 		const keys = Object.keys(entity);
-		const values = keys.map((key, index) => `${key}=${entity[key]}`)
-		const sql = `update "${this.entity}" set ${values} where id=${id}`
+		const values = keys.map((key, index) => `${key}=${entity[key]}`);
+		const sql = `update "${this.entity}" set ${values.join(',')} where id=${id}`;
 		const result = await executeQuery(sql);
 		return result.rows;
 	}
 
-	delete(id) {
+	delete = async (id) => {
 		const sql = `delete from "${this.entity}" where id=${id}`;
 		const result = await executeQuery(sql);
 		return result.rows;
 	}
 
-	list(filter, pageIdx, pageSize) {
+	list = async (filter, pageIdx, pageSize) => {
 		const finalFilter = filter ? 'where ' + filter : '';
 		const finalPageSize = pageSize || 10;
 		const limitOffset = pageIdx ? `limit ${finalPageSize} offset ${pageIdx*finalPageSize}` : '';
@@ -42,7 +42,7 @@ class BaseDao {
 		return result.rows;
 	}
 
-	count(filter) {
+	count = async (filter) => {
 		const finalFilter = filter ? 'where ' + filter : '';
 		const sql = `select count(*) from "${this.entity}" ${finalFilter}`;
 		const result = await executeQuery(sql);

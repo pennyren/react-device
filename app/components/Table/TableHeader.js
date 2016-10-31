@@ -13,9 +13,9 @@ class TableHeader extends Component {
 			<thead>
 				<tr>
 					{checked && <th className="selection-column"><Checkbox onChange={this.selectAll} /></th>}
-					{columns.map((item, index) => {
+					{columns.map((title, index) => {
 						const className = action && (numCol == index) ? {className: 'action'} : {};
-						return <th {...className} key={index}>{item.title}</th>;
+						return <th {...className} key={index}>{title}</th>;
 					})}
 				</tr>
 			</thead>
