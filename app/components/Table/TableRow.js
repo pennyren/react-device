@@ -41,7 +41,9 @@ class TableRow extends Component {
 		
 		return (
 			<tr className="row" data-id={row.id}>
-				{checked && <td className="selection-column"><Checkbox onChange={this.selected} /></td>}
+				{checked && <td className="selection-column">
+								<Checkbox onChange={this.selected} ref={r => this.checkbox = r}/>
+							</td>}
 				{keys.map((prop, index) => {
 					return (<td key={index}>{row[prop]}</td>)
 				})}

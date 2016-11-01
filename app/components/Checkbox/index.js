@@ -4,14 +4,24 @@ import styles from './styles.css';
 
 class Checkbox extends Component {
 	toggle = () => {
-		if (this.checkbox.classList.contains('disabled')) {
+		const classList = this.checkbox.classList;
+		if (classList.contains('disabled')) {
 			return;
 		}
 		const isChecked = this.rawCheck.checked;
 		const onChange = this.props.onChange;
-		this.checkbox.classList.toggle('checked');
+		classList.toggle('checked');
 		this.rawCheck.checked = !isChecked;
 		typeof onChange == 'function' && onChange(!isChecked)
+	}
+
+	checked = (isChecked) => {
+		const classList = this.checkbox.classList;
+		if (classList.contains('disabled')) {
+			return;
+		}
+		this.rawCheck.checked = isChecked;
+		isChecked ? classList.add('checked') : classList.remove('checked');
 	}
 
 	render() {

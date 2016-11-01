@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import TableBody from './TableBody';
+import TableRow from './TableRow';
 import TableHeader from './TableHeader';
 import styles from './styles.css';
 
@@ -10,13 +10,11 @@ class Table extends Component {
 	}
 	
 	selectAll = () => {
-		const checkbox = this.tableHeader.checkbox;
-		const checked = checkbox.rawCheck.checked;
-		if (checked) {
-
-		} else {
-
-		}
+		const batchCheckbox = this.tableHeader.checkbox;
+		const isChecked = batchCheckbox.rawCheck.checked;
+		this.rows.forEach((row) => {
+			row.checkbox.checked(isChecked);
+		});
 	}
 
 	isCheckedAll() {
@@ -25,7 +23,8 @@ class Table extends Component {
 
 	render() {
 		const {columns, dataSource, ...others} = this.props;
-		
+		this.rows = [];
+
 		return (
 			<div className="table-scroll">
 				<table>
@@ -35,12 +34,18 @@ class Table extends Component {
 						ref={r => this.tableHeader = r}
 						{...others}
 					/>
-
-					<TableBody 
-						dataSource={dataSource}
-						ref={r => this.tableBody = r}
-						{...others}
-					/>
+					<tbody>
+						{dataSource.map((row, index) => {
+							return (
+								<TableRow 
+									row={row}
+									key={index}
+									ref={r => this.rows.push(r)}
+									{...others}
+								/>
+							);
+						})}
+					</tbody>
 				</table>
 			</div>
 		)
