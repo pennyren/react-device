@@ -5,26 +5,42 @@ import styles from './styles.css';
 
 class Table extends Component {
 	static defaultProps = {
-		checked: false,
+		checked: true,
 		action: true
 	}
 	
-	render() {
-		const {columns, dataSource, checked, action} = this.props;
-		let numRow = columns.length;
-		checked && numRow++;
-		let col = [];
-		for (let i = 0; i < numRow; i++) {
-			col.push(<col key={i}></col>);
+	selectAll = () => {
+		const checkbox = this.tableHeader.checkbox;
+		const checked = checkbox.rawCheck.checked;
+		if (checked) {
+
+		} else {
+
 		}
+	}
+
+	isCheckedAll() {
+
+	}
+
+	render() {
+		const {columns, dataSource, ...others} = this.props;
+		
 		return (
 			<div className="table-scroll">
 				<table>
-					<colgroup>
-						{col}
-					</colgroup>
-					<TableHeader columns={columns} checked={checked} action={action} />
-					<TableBody dataSource={dataSource} checked={checked} action={action} />
+					<TableHeader 
+						columns={columns}
+						selectAll={this.selectAll}
+						ref={r => this.tableHeader = r}
+						{...others}
+					/>
+
+					<TableBody 
+						dataSource={dataSource}
+						ref={r => this.tableBody = r}
+						{...others}
+					/>
 				</table>
 			</div>
 		)

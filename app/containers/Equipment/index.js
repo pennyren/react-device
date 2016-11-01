@@ -6,8 +6,8 @@ import styles from './styles.css';
 
 class Equipment extends Component {
 	render() {
-		let columns =[{title: 'Name'}, {title: 'Age'}, {title: 'Action'}];
-		let dataSource = [{name: 'bob', age: '3'}, {name: 'bob', age: '3'}, {name: 'bob', age: '3'}];
+		let columns =['Name', 'Age', 'Action'];
+		let dataSource = [{id: 1, name: 'bob', age: '3'}, {id: 1, name: 'bob', age: '3'}, {id: 1, name: 'bob', age: '3'}];
 		return (
 			<div className="equipment">
 				<Header title="设备"/>

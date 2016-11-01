@@ -3,11 +3,11 @@ import TableRow from './TableRow';
 
 class TableBody extends Component {
 	render() {
-		const {dataSource, checked, action} = this.props;
+		const {dataSource, ...others} = this.props;
 		return (
 			<tbody>
 				{dataSource.map((row, index) => {
-					return <TableRow row={row} checked={checked} action={action} key={index} />;
+					return <TableRow row={row} key={index} {...others} />;
 				})}
 			</tbody>
 		)

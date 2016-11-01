@@ -15,7 +15,7 @@ class TableRow extends Component {
 
 	}
 
-	withAction() {
+	ownAction() {
 		const action = this.props.action;
 		if (action) {
 			return (
@@ -37,15 +37,15 @@ class TableRow extends Component {
 
 	render() {
 		const {row, checked} = this.props;
-		let keys = Object.keys(row);
-		let finalKeys = keys.slice(1);
+		let keys = Object.keys(row).slice(1);
+		
 		return (
 			<tr className="row" data-id={row.id}>
 				{checked && <td className="selection-column"><Checkbox onChange={this.selected} /></td>}
 				{keys.map((prop, index) => {
 					return (<td key={index}>{row[prop]}</td>)
 				})}
-				{this.withAction()}
+				{this.ownAction()}
 			</tr>
 		)
 	}
