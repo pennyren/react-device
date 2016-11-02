@@ -1,0 +1,58 @@
+.popconfirm-container {
+	position: fixed;
+	height: 88px;
+	width: 210px;
+	box-shadow: 0 1px 6px rgba(0,0,0,.2);
+	background: #fff;
+	border-radius: 2px;
+	& .arrow {
+		position: absolute;
+		left: 16px;
+		top: -7px;
+	    display: block;
+	    width: 0;
+	    height: 0;
+	    border: 7px solid transparent;
+	   	border-top-width: 0;
+	    border-bottom-color: hsla(0,0%,85%,.7);
+	    &:after {
+	    	position: absolute;
+	    	top: 1px;
+	    	content: "";
+	    	display: block;
+    		width: 0;
+    		height: 0;
+    		border: 6px solid transparent;
+   			margin-left: -5px;
+    		border-top-width: 0;
+    		border-bottom-color: #fff;
+	    }
+	}
+	& .popconfirm {
+		height: 100%;
+		width: 100%;
+		padding: 8px 16px;
+    	color: #666;
+    	& .content {
+    		padding: 8px 0 16px;
+    		font-size: 1.2rem;
+    		text-align: center;	
+    		& .mdi {
+    			color: #fa0;
+    			font-size: 1.6rem;
+    			margin-right: 8px;
+    		}
+    	}
+    	& .footer .flat-btn {
+    		font-size: 1.2rem;
+    		min-width: 37px;
+    		line-height: 25px;
+   			height: 25px;
+    		float: right;
+    		&:last-child {
+    			margin-right: 8px;
+    			color: #666;
+    		}
+    	}
+	}
+}

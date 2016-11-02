@@ -3,8 +3,9 @@ import IconButton from 'components/IconButton';
 import Checkbox from 'components/Checkbox';
 
 class TableRow extends Component {
-	selected() {
-
+	onSelectSingle = () => {
+		const {selectSingle} = this.props;
+		selectSingle();
 	}
 
 	modify() {
@@ -42,7 +43,7 @@ class TableRow extends Component {
 		return (
 			<tr className="row" data-id={row.id}>
 				{checked && <td className="selection-column">
-								<Checkbox onChange={this.selected} ref={r => this.checkbox = r}/>
+								<Checkbox onChange={this.onSelectSingle} ref={r => this.checkbox = r}/>
 							</td>}
 				{keys.map((prop, index) => {
 					return (<td key={index}>{row[prop]}</td>)

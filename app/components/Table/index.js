@@ -17,8 +17,16 @@ class Table extends Component {
 		});
 	}
 
-	isCheckedAll() {
+	selectSingle = () => {
+		const total = this.rows.length;
+		const batchCheckbox = this.tableHeader.checkbox;
+		let checked = 0;
+		this.rows.forEach((row) => {
+			const isChecked = row.checkbox.rawCheck.checked;
+			isChecked && checked++;
+		});
 
+		(total == checked) ?  batchCheckbox.checked(true) : batchCheckbox.checked(false);
 	}
 
 	render() {
@@ -34,12 +42,13 @@ class Table extends Component {
 						ref={r => this.tableHeader = r}
 						{...others}
 					/>
-					<tbody>
+					<tbody ref={r => this.tableBody = r}>
 						{dataSource.map((row, index) => {
 							return (
 								<TableRow 
 									row={row}
 									key={index}
+									selectSingle={this.selectSingle}
 									ref={r => this.rows.push(r)}
 									{...others}
 								/>

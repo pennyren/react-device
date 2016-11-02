@@ -4,6 +4,11 @@ import {on, off} from 'utils/events';
 import {isDescendant} from 'utils/dom';
 
 class ClickAway extends Component {
+	static defaultProps = {
+		onClickKeepElement: null,
+		hierarchy: 0
+	}
+
 	componentDidMount() {
 		let hierarchy = this.props.hierarchy;
 		this.isCurrentlyMounted = true;
@@ -25,10 +30,12 @@ class ClickAway extends Component {
       		return;
     	}
 
+    	const {onClickAway} = this.props;
+
     	if (this.isCurrentlyMounted) {
     		const el = this.comparedNode;
     		if (document.documentElement.contains(e.target) && !isDescendant(el, e.target)) {
-    			this.props.onClickAway(e);
+    			onClickAway(e);
       		}
     	}
 	}
@@ -42,7 +49,8 @@ class ClickAway extends Component {
 
 ClickAway.propTypes = {
 	onClickAway: React.PropTypes.func,
-	hierarchy: React.PropTypes.number
+	hierarchy: React.PropTypes.number,
+	onClickKeepElement: object
 }
 
 */
