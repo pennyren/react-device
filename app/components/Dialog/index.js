@@ -47,21 +47,26 @@ class DialogInline extends Component {
         this.enterTimer = setTimeout(callback, 25);
     }
 
+    confirm = () => {
+        this.props.onConfirm(this.dialogContent);
+    }
+
 	render() {
-		const {close, hasLayer, onClickAway, hierarchy} = this.props;
-        const style = hasLayer ? {className: 'layer'} : {style: {display: 'none'}};
+		const {close, hasLayer, onClickAway, title, customClassName} = this.props;
+        const layerStyle = hasLayer ? {className: 'layer'} : {style: {display: 'none'}};
+        const dialogStyle = customClassName ? 'dialog-wrap ' + customClassName : 'dialog-wrap';
         return (
-            <div className="dialog-wrap">
-                <div {...style} ref={r => this.layer = r}></div>
-                <ClickAway onClickAway={onClickAway} hierarchy={hierarchy}>
+            <div className={dialogStyle}>
+                <div {...layerStyle} ref={r => this.layer = r}></div>
+                <ClickAway onClickAway={onClickAway}>
                     <div className="dialog" ref={r => this.dialog = r}>
-                        <h3 className="title">Dialog Title</h3>
-                        <div className="content">
-                            This is dialog content.
+                        <h3 className="title">{title}</h3>
+                        <div className="content" ref={r => this.dialogContent = r}>
+                            {this.props.children}
                         </div>
                         <div className="footer">
                             <FlatButton onClick={close}>取消</FlatButton>
-                            <FlatButton>确定</FlatButton>
+                            <FlatButton onClick={this.confirm}>确定</FlatButton>
                         </div>
                     </div>
                 </ClickAway>
@@ -93,10 +98,11 @@ class Dialog extends Component {
                 <ReactTransitionGroup component="div">
                     {this.state.open && <DialogInline 
                                             close={this.close}
-                                            hasLayer={this.props.hasLayer}
                                             onClickAway={this.close}
-                                            hierarchy={0}
-                                        />}
+                                            {...this.props}
+                                        >
+                                            {this.props.children}
+                                        </DialogInline>}
                 </ReactTransitionGroup>
             </Layer>
 		)

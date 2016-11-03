@@ -10,3 +10,15 @@
 		height: calc(100% - 100px);
 	}
 }
+
+.user-dialog .dialog {
+	width: 30%;
+	& .mdl-textfield {
+		width: 100%;
+		margin-top: 32px;
+	}
+
+	& .selectfield {
+		width: 100%;
+	}
+}

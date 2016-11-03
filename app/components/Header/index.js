@@ -14,6 +14,11 @@ class Header extends Component {
 		onAdd();
 	}
 
+	search = () => {
+		const {onSearch} = this.props;
+		onSearch();
+	}
+
 	render() {
 		const {title} = this.props;
 		return (
@@ -34,8 +39,14 @@ class Header extends Component {
 				<IconButton 
 					icon="mdi-search" 
 					color="#b4c5cd"
+					onClick={this.search}
 				/>
-				<TextField name="search" isFloat={false} placeholder="search"/>
+				<TextField 
+					name="search" 
+					isFloat={false} 
+					placeholder="search"
+					onEnter={this.search}
+					ref={r => this.textfield = r}/>
 			</div>
 		);
 	}

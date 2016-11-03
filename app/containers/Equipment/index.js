@@ -4,6 +4,7 @@ import Table from 'components/Table';
 import Pagination from 'components/Pagination';
 import Snackbar from 'components/Snackbar';
 import Popconfirm from 'components/Popconfirm';
+import Dialog from 'components/Dialog';
 import styles from './styles.css';
 
 class Equipment extends Component {
@@ -30,18 +31,39 @@ class Equipment extends Component {
 	}
 
 	onAdd = () => {
+		this.dialog.open();
+	}
 
+	onSearch = () => {
+		const value = this.header.textfield.input.value.trim();
+		
 	}
 
 	render() {
-		let columns =['Name', 'Age', 'Action'];
-		let dataSource = [{id: 1, name: 'bob', age: '3'}, {id: 2, name: 'bob', age: '3'}, {id: 3, name: 'bob', age: '3'}];
+		let columns =['编号', '名称', '型号', '类型', '状态', '操作'];
+		let dataSource = [{
+			id: 1,
+			serialNumber: 233,
+			name: 'dell',
+			model: 'YN',
+			type: '耗材',
+			status: '可领'
+		}, {
+			id: 2,
+			serialNumber: 233,
+			name: 'dell',
+			model: 'YN',
+			type: '耗材',
+			status: '可领'
+		}];
 		return (
 			<div className="equipment">
 				<Header
 					title="设备"
 					onBatchDelete={this.onBatchDelete}
 					onAdd={this.onAdd}
+					onSearch={this.onSearch}
+					ref={r => this.header = r}
 				/>
 				<Table 
 					columns={columns}
@@ -55,6 +77,7 @@ class Equipment extends Component {
                     ref={r => this.snackbar = r}
                  />
                 <Popconfirm message="你确定要删除选择的内容吗?" ref={r => this.popconfirm = r}/>
+                <Dialog ref={r => this.dialog = r} />
 			</div>
 		)
 	}
