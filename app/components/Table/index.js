@@ -12,6 +12,10 @@ class Table extends Component {
 	selectAll = () => {
 		const batchCheckbox = this.tableHeader.checkbox;
 		const isChecked = batchCheckbox.rawCheck.checked;
+		if (!this.rows.length) {
+			return;
+		}
+		
 		this.rows.forEach((row) => {
 			row.checkbox.checked(isChecked);
 		});

@@ -1,4 +1,5 @@
 import React from 'react';
+import polyfill from 'babel-polyfill';
 import styles from './styles.css';
 function App(props) {
 	return (

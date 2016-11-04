@@ -1,8 +1,8 @@
 import {combineReducers} from 'redux';
 import usersReducer from 'containers/Users/reducer';
 
-const reactEMS = combineReducers({
+const appReducers = combineReducers({
 	users: usersReducer
 });
 
-export default reactEMS;
+export default appReducers;

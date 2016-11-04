@@ -1,12 +1,18 @@
-import fetch from 'utils/fetch';
+/*import fetch from 'utils/fetch';*/
 
 /*fetch.doGet('/getUsers').then((data) => {
 	
 })*/
 
-const initState = [];
+const initUsers = {
+	isInitialized: false,
+	isFiltered: false,
+	currentPage: 1,
+	totalPage: 0,
+	list: []
+};
 
-const usersReducer = function(state = initState, action) {
+const usersReducer = function(state = initUsers, action) {
 	switch (action.type) {
 		default:
 			return state;

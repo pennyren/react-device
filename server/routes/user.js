@@ -13,4 +13,8 @@ userRoute.post('/signin', async (req, res) => {
 	});	
 });
 
+userRoute.post('/createUser', async (req, res) => {
+	console.log(req.body);
+})
+
 export default userRoute;

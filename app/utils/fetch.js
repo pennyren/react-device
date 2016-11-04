@@ -1,24 +1,14 @@
-import polyfill from 'whatwg-fetch';
-
-/*for example: 
-*	fetch.doGet("api/user_login.json").then(function(userInfo){
-*		userInfo -> return data
-*	}, function(error){
-*		error -> error info
-*	});
-*/
-
-const fetchDao = {
+const http = {
 	doGet: function(url, params){
-		return this.request("GET", url, params);
+		return http.request("GET", url, params);
 	},
 
 	doPost: function(url, params){
-		return this.request("POST", url, params);
+		return http.request("POST", url, params);
 	},
 	
 	request: function(method, url, params){
-		const self = this;
+		const self = http;
 		let opts = {
 			method: method,
 			headers: {
@@ -28,13 +18,12 @@ const fetchDao = {
 		}
 
 		if (method == 'GET' && typeof params !== 'undefined') {
-			url = this.getUrlQuery(url, params);
+			url = self.getUrlQuery(url, params);
 		}
 
 		if (method == 'POST') {
 			opts.body = JSON.stringify(params);
 		}
-		
 		return new Promise(function (resolve, reject) {
 			fetch(url, opts)
 				.then(self.checkStatus)
@@ -64,4 +53,4 @@ const fetchDao = {
 	}
 };
 
-export default fetchDao;
+export default http;

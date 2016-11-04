@@ -8,9 +8,17 @@ import Dialog from 'components/Dialog'
 import TextField from 'components/TextField'; 
 import SelectField from 'components/SelectField';
 import getPropsFromInputs from 'utils/form';
+
+import {connect} from 'react-redux';
+import store from 'store';
+
 import styles from './styles.css';
 
 class Users extends Component {
+	componentDidMount() {
+
+	}
+
 	onBatchDelete = (e) => {
 		if (this.popconfirm.isOpen()) {
 			this.popconfirm.close();
@@ -43,15 +51,16 @@ class Users extends Component {
 	}
 
 	onConfirm = (dialogContent) => {
-		const props = getPropsFromInputs(dialogContent);
-		console.log(props);
+		const user = getPropsFromInputs(dialogContent);
+		store.dispatch({type: 'ADD_USER_REQ', user: user});
 		this.dialog.close();
 	}
 
 	render() {
-		const columns =['姓名', '角色', '创建时间', '操作'];
+		const columns =['姓名', '角色', '创建时间'];
 		const menuItems =['教师', '主任', '院长', '经费管理员', '系统管理员'];
-		let dataSource = [{id: 1, name: 'bob', age: '3', time: '2016-1-1'}, {id: 1, name: 'bob', age: '3', time: '2016-1-1'}, {id: 1, name: 'bob', age: '3', time: '2016-1-1'}, {id: 1, name: 'bob', age: '3', time: '2016-1-1'}, {id: 1, name: 'bob', age: '3', time: '2016-1-1'}];
+		let dataSource = [];
+	
 		return (
 			<div className="users">
 				<Header
@@ -64,6 +73,7 @@ class Users extends Component {
 				<Table 
 					columns={columns}
 					dataSource={dataSource}
+					action={false}
 					ref={r => this.table = r}
 				/>
 				<Pagination />
@@ -88,4 +98,13 @@ class Users extends Component {
 	}
 }
 
-export default Users;
+const mapStateToProps = function(store) {
+	const {currentPage, totalPage, list} = store.users;
+	return {
+		current: currentPage,
+		total: totalPage,
+		list: list
+	}
+}
+
+export default connect(mapStateToProps)(Users);
