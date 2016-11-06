@@ -8,15 +8,19 @@ class BaseDao {
 	get = async (id) => {
 		const sql = `select * from "${this.entity}" where id=${id}`;
 		const result = await executeQuery(sql);
-		return result.rows;
+		return result.rows[0];
 	}
 
 	create = async (entity) => {
 		const keys = Object.keys(entity);
-		const values = keys.map((key, index) => entity[key])
+		const values = keys.map((key, index) => {
+			let val = entity[key];
+			return typeof val == 'string' ? `'${val}'` : val;
+		});
 		const sql = `insert into "${this.entity}" (${keys.join(',')}) values (${values.join(',')})`;
-		const result = await executeQuery(sql);
-		return result.rows;
+		await executeQuery(sql);
+		const result = await executeQuery(`select * from "${this.entity}" order by id desc limit 1`);
+		return result.rows[0];
 	}
 
 	update = async (id, entity) => {
@@ -24,6 +28,7 @@ class BaseDao {
 		const values = keys.map((key, index) => `${key}=${entity[key]}`);
 		const sql = `update "${this.entity}" set ${values.join(',')} where id=${id}`;
 		const result = await executeQuery(sql);
+
 		return result.rows;
 	}
 
@@ -47,6 +52,14 @@ class BaseDao {
 		const sql = `select count(*) from "${this.entity}" ${finalFilter}`;
 		const result = await executeQuery(sql);
 		return result.rows;
+	}
+
+	totalPage = async (pageSize = 10) => {
+		const sql = `select count(*) from "${this.entity}"`;
+		const result = await executeQuery(sql);
+		const count = result.row[0].count;
+		const totalPage = parseInt(count / pageSize);
+		return (count % pageSize == 0) ? totalPage : totalPage + 1;
 	}
 }
 

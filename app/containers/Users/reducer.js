@@ -8,8 +8,9 @@ const initUsers = {
 	isInitialized: false,
 	isFiltered: false,
 	currentPage: 1,
-	totalPage: 0,
-	list: []
+	totalPage: 1 ,
+	firtList: [],
+	currentList: []
 };
 
 const usersReducer = function(state = initUsers, action) {

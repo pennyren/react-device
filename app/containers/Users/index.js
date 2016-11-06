@@ -8,6 +8,7 @@ import Dialog from 'components/Dialog'
 import TextField from 'components/TextField'; 
 import SelectField from 'components/SelectField';
 import getPropsFromInputs from 'utils/form';
+import getEnumVal from 'utils/enums';
 
 import {connect} from 'react-redux';
 import store from 'store';
@@ -47,13 +48,13 @@ class Users extends Component {
 
 	onSearch = () => {
 		const value = this.header.textfield.input.value.trim();
-		
 	}
 
 	onConfirm = (dialogContent) => {
 		const user = getPropsFromInputs(dialogContent);
-		store.dispatch({type: 'ADD_USER_REQ', user: user});
+		user.role = getEnumVal('userRole', user.role);
 		this.dialog.close();
+		store.dispatch({type: 'ADD_USER_REQ', user: user});
 	}
 
 	render() {
@@ -91,7 +92,7 @@ class Users extends Component {
                 >
                 	<SelectField name="role" menuItems={menuItems} />
                 	<TextField name="username" placeholder="姓名" />
-                	<TextField name="password" placeholder="初始密码" />
+                	<TextField name="pwd" placeholder="初始密码" />
                 </Dialog>
 			</div>
 		);
