@@ -15,8 +15,8 @@ class SignIn extends React.Component {
         const currentComponent = this;
         
         fetch.doPost('user/signin', params).then((data) => {
-            const isMatched = data.result;
-            if (data.result) {
+            const isMatched = data.result.isMatched;
+            if (isMatched) {
                  history.push('/dashboard');
             } else {
                 currentComponent.snackbar.open();

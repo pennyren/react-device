@@ -37,8 +37,8 @@ baseRoute.post('/delete', async (req, res) => {
 baseRoute.post('/list', async (req, res) => {
 	const entityName = req.baseUrl.slice(1);
 	const baseDao = new BaseDao(entityName);
-	let {pageIdx, pageSize, orderBy, filter} = req.body;
-	const list = await baseDao.list(pageIdx, pageSize, orderBy, filter);
+	let {filter, pageIdx, pageSize, orderBy} = req.body;
+	const list = await baseDao.list(filter, pageIdx, pageSize, orderBy);
 	res.send(resetResponse(true, list));
 });
 
@@ -52,8 +52,8 @@ baseRoute.post('/count', async (req, res) => {
 baseRoute.get('/totalPage', async (req, res) => {
 	const entityName = req.baseUrl.slice(1);
 	const baseDao = new BaseDao(entityName);
-	const pageSize = await baseDao.totalPage(+req.query.pageSize);
-	res.send(resetResponse(true, pageSize));
+	const totalPage = await baseDao.totalPage(+req.query.pageSize);
+	res.send(resetResponse(true, totalPage));
 });
 
 export default baseRoute;

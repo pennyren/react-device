@@ -4,7 +4,7 @@ import Table from 'components/Table';
 import Pagination from 'components/Pagination';
 import Snackbar from 'components/Snackbar';
 import Popconfirm from 'components/Popconfirm';
-import Dialog from 'components/Dialog'
+import Dialog from 'components/Dialog';
 import TextField from 'components/TextField'; 
 import SelectField from 'components/SelectField';
 import getPropsFromInputs from 'utils/form';
@@ -51,6 +51,7 @@ class Users extends Component {
 
 	onBatchDeleteConfirm = () => {
 		const ids = this.checkedIds;
+		this.popconfirm.close();
 		store.dispatch({type: 'BATCH_DELETE_USERS_REQ', ids: ids});
 	}
 

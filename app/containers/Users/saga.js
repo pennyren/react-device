@@ -9,14 +9,10 @@ const {doGet, doPost} = fetch;
 
 function* initUsers(action) {
 	try {
-		const res = yield call(doPost, '/user/initUsers', {filter: {id: 1}});
-		const {totalPage, users} = res.result;
-		const filterUsers = users.map((user, index) => {
-			const {role, ctime} = user;
-			user.role = getEnumVal('userRole', role);
-			user.ctime = moment.get(ctime, 'YYYY-MM-DD');
-			return user;
-		});
+		const response = yield call(doPost, '/user/initUsers', {filter: {id: 1}});
+		let {totalPage, users} = response.result;
+		const len = users.length;
+		const filterUsers = len == 0 ? [] : filterUserInfo(users);
 		yield put({type: 'INIT_USERS', users: filterUsers, totalPage});
 	} catch (e) {
 		yield put({type: 'FETCH_FAILED'})
@@ -26,22 +22,15 @@ function* initUsers(action) {
 
 function* addUser(action) {
 	try {
-		const res = yield call(doPost, 'user/create', action.user);
 		const {currentPage, totalPage, list} = store.getState().users;
-		const currentRows = list.length;
-		if (currentPage !== totalPage) {
-			return;
-		} else {
-			if (currentRows < 10) {
-				let user = res.result;
-				const {role, ctime} = user;
-				user.role = getEnumVal('userRole', role);
-				user.ctime = moment.get(ctime, 'YYYY-MM-DD');
-				yield put({type: 'ADD_USER', user: user});
-			} else {
-				yield put({type: 'INCREASE_TOTAL', total: totalPage + 1});
-			}
-		}
+		const response = yield call(doPost, 'user/create', action.user);
+
+		let user = response.result;
+		
+		if (currentPage == totalPage) {
+			yield list.length < 10 ? put({type: 'ADD_USER', user: filterUserInfo([user])[0]}) :
+				  put({type: 'INCREASE_TOTAL', total: totalPage + 1})
+		} 
 	} catch (e) {
 		yield put({type: 'FETCH_FAILED'})
 	}
@@ -49,7 +38,15 @@ function* addUser(action) {
 
 function* batchDeleteUsers(action) {
 	try {
-		const res = yield call(doPost, 'user/batchDeleteUsers', {ids: action.ids});
+		const props = {
+			ids: action.ids,
+			currentPage: store.getState().users.currentPage	
+		};
+		const response = yield call(doPost, 'user/batchDeleteUsers', props);
+		let {currentPage, totalPage, users} = response.result;
+		const len = users.length;
+		const filterUsers = len == 0 ? [] : filterUserInfo(users);
+		yield put({type: 'BATCH_DELETE_USERS', users: filterUserInfo(users), currentPage, totalPage});
 	} catch (e) {
 		yield put({type: 'FETCH_FAILED'})
 	}
@@ -67,6 +64,16 @@ function* userSaga() {
 		takeEvery('BATCH_DELETE_USERS_REQ', batchDeleteUsers),
 		takeEvery('UNMOUNT_USERS', unmountUsers)
 	];
+}
+
+function filterUserInfo(users) {
+	const newUsers = users.map((user, index) => {
+		const {role, ctime} = user;
+		user.role = getEnumVal('userRole', role);
+		user.ctime = moment.get(ctime, 'YYYY-MM-DD');
+		return user;
+	});
+	return newUsers
 }
 
 export default userSaga;

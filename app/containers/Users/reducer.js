@@ -25,6 +25,13 @@ const usersReducer = function(state = initUsers, action) {
 			addState.list = [...addState.list];
 			addState.list.push(action.user);
 			return addState;
+		case 'BATCH_DELETE_USERS':
+			const {currentPage, totalPage, users} = action;
+			let batchDeleteState = Object.assign({}, state);
+			batchDeleteState.currentPage = currentPage;
+			batchDeleteState.totalPage = totalPage;
+			batchDeleteState.list = users;
+			return batchDeleteState;
 		case 'INCREASE_TOTAL':
 			let totalState = Object.assign({}, state);
 			totalState.totalPage = action.total;

@@ -41,7 +41,7 @@ class BaseDao {
 		return result.rows;
 	}
 
-	list = async (pageIdx = 1, pageSize = 10, orderBy = 'asc', filter = '') => {
+	list = async (filter = '', pageIdx = 1, pageSize = 10, orderBy = 'asc') => {
 		let filterMap = null;
 		let finalFilter = '';
 		if (filter) {
