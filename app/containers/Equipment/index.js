@@ -40,7 +40,8 @@ class Equipment extends Component {
 	}
 
 	render() {
-		let columns =['编号', '名称', '型号', '类型', '状态', '操作'];
+		const columns =['编号', '名称', '型号', '类型', '状态', '操作'];
+		const display = ['serialNumber', 'name', 'model', 'type', 'status'];
 		let dataSource = [{
 			id: 1,
 			serialNumber: 233,
@@ -68,6 +69,7 @@ class Equipment extends Component {
 				<Table 
 					columns={columns}
 					dataSource={dataSource}
+					display={display}
 					ref={r => this.table = r}
 				/>
 				<Pagination />

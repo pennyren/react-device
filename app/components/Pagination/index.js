@@ -4,8 +4,8 @@ import styles from './styles.css';
 
 class Pagination extends Component {
 	state = {
-		total: 20,
-		current: 1
+		total: this.props.total,
+		current: this.props.current
 	}
 
 	prev = () => {
@@ -77,7 +77,10 @@ class Pagination extends Component {
 	render() {
 		let total = this.state.total;
 		let current = this.state.current;
-		
+		if (!total ||total < 2) {
+			return null; 
+		}
+
 		const prev = current == 1 ? 'prev item disabled' : 'prev item';
 		const next = current == total ? 'next item disabled' : 'next item';
 

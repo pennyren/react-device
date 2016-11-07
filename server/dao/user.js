@@ -12,6 +12,12 @@ class UserDao extends BaseDao {
 		const count = result.rows[0].count;
 		return count == '1' ? true : false;
 	}
+
+	batchDelete = async (ids) => {
+		const sql = `delete from "user" where id in (${ids.join(', ')})`;
+		const result = await executeQuery(sql);
+		console.log(result);
+	}
 }
 
 export default UserDao;

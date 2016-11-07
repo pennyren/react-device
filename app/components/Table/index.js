@@ -34,9 +34,9 @@ class Table extends Component {
 	}
 
 	render() {
-		const {columns, dataSource, ...others} = this.props;
+		const {columns, dataSource, display, ...others} = this.props;
 		this.rows = [];
-
+		
 		return (
 			<div className="table-scroll">
 				<table>
@@ -53,6 +53,7 @@ class Table extends Component {
 									row={row}
 									key={index}
 									selectSingle={this.selectSingle}
+									display={display}
 									ref={r => this.rows.push(r)}
 									{...others}
 								/>

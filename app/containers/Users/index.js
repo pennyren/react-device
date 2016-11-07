@@ -9,6 +9,7 @@ import TextField from 'components/TextField';
 import SelectField from 'components/SelectField';
 import getPropsFromInputs from 'utils/form';
 import getEnumVal from 'utils/enums';
+import moment from 'utils/date';
 
 import {connect} from 'react-redux';
 import store from 'store';
@@ -17,7 +18,11 @@ import styles from './styles.css';
 
 class Users extends Component {
 	componentDidMount() {
+		store.dispatch({type: 'INIT_USERS_REQ'});
+	}
 
+	componentWillUnmount() {
+		store.dispatch({type: 'UNMOUNT_USERS'});
 	}
 
 	onBatchDelete = (e) => {
@@ -36,10 +41,17 @@ class Users extends Component {
 		}
 		
 		if (ids.length) {
+			this.checkedIds = ids;
 			this.popconfirm.open(e);
 		} else {
+			this.checkedIds = [];
 			this.snackbar.open()
 		}
+	}
+
+	onBatchDeleteConfirm = () => {
+		const ids = this.checkedIds;
+		store.dispatch({type: 'BATCH_DELETE_USERS_REQ', ids: ids});
 	}
 
 	onAdd = () => {
@@ -53,15 +65,17 @@ class Users extends Component {
 	onConfirm = (dialogContent) => {
 		const user = getPropsFromInputs(dialogContent);
 		user.role = getEnumVal('userRole', user.role);
+		user.ctime = moment.get();
 		this.dialog.close();
 		store.dispatch({type: 'ADD_USER_REQ', user: user});
 	}
 
 	render() {
-		const columns =['姓名', '角色', '创建时间'];
+		const columns =['姓名', '角色', '创建时间', '操作'];
+		const display = ['username', 'role', 'ctime'];
 		const menuItems =['教师', '主任', '院长', '经费管理员', '系统管理员'];
-		let dataSource = [];
-	
+		const {current, total, list} = this.props; 
+		
 		return (
 			<div className="users">
 				<Header
@@ -73,17 +87,24 @@ class Users extends Component {
 				/>
 				<Table 
 					columns={columns}
-					dataSource={dataSource}
-					action={false}
+					dataSource={list}
+					display={display}
+					action={true}
 					ref={r => this.table = r}
 				/>
-				<Pagination />
+				<Pagination
+					total={total}
+					current={current}
+				/>
 				<Snackbar 
                     message="请选择要删除的内容!"
                     type="warning"
                     ref={r => this.snackbar = r}
                 />
-                <Popconfirm message="你确定要删除选择的内容吗?" ref={r => this.popconfirm = r}/>
+                <Popconfirm 
+                	message="你确定要删除选择的内容吗?"
+                	onConfirm={this.onBatchDeleteConfirm}
+                	ref={r => this.popconfirm = r}/>
                 <Dialog
                 	title="添加用户"
                 	customClassName="user-dialog"
@@ -100,11 +121,11 @@ class Users extends Component {
 }
 
 const mapStateToProps = function(store) {
-	const {currentPage, totalPage, list} = store.users;
+	const {currentPage, totalPage, list, isInitialized} = store.users;
 	return {
 		current: currentPage,
 		total: totalPage,
-		list: list
+		list: isInitialized ? list : []
 	}
 }
 
