@@ -21,10 +21,6 @@ class Users extends Component {
 		store.dispatch({type: 'INIT_USERS_REQ'});
 	}
 
-	componentWillUnmount() {
-		store.dispatch({type: 'UNMOUNT_USERS'});
-	}
-
 	onBatchDelete = (e) => {
 		if (this.popconfirm.isOpen()) {
 			this.popconfirm.close();
@@ -61,6 +57,7 @@ class Users extends Component {
 
 	onSearch = () => {
 		const value = this.header.textfield.input.value.trim();
+		store.dispatch({type: 'SEARCH_USERS_REQ', search: value});
 	}
 
 	onConfirm = (dialogContent) => {
@@ -122,11 +119,11 @@ class Users extends Component {
 }
 
 const mapStateToProps = function(store) {
-	const {currentPage, totalPage, list, isInitialized} = store.users;
+	const {currentPage, totalPage, list} = store.users;
 	return {
 		current: currentPage,
 		total: totalPage,
-		list: isInitialized ? list : []
+		list: list
 	}
 }
 

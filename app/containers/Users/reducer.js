@@ -1,5 +1,4 @@
 const initUsers = {
-	isInitialized: false,
 	isFiltered: false,
 	currentPage: 1,
 	totalPage: 1 ,
@@ -10,16 +9,10 @@ const usersReducer = function(state = initUsers, action) {
 	switch (action.type) {
 		case 'INIT_USERS':
 			let initState = Object.assign({}, state);
-			initState.isInitialized = true;
 			initState.currentPage = 1;
 			initState.totalPage = action.totalPage;
 			initState.list = action.users;
 			return initState;
-		case 'UNMOUNT_USERS':
-			let unmountState = Object.assign({}, state);
-			unmountState.isInitialized = false;
-			unmountState.isFiltered = false;
-			return unmountState;
 		case 'ADD_USER':
 			let addState = Object.assign({}, state);
 			addState.list = [...addState.list];
@@ -27,11 +20,16 @@ const usersReducer = function(state = initUsers, action) {
 			return addState;
 		case 'BATCH_DELETE_USERS':
 			const {currentPage, totalPage, users} = action;
-			let batchDeleteState = Object.assign({}, state);
-			batchDeleteState.currentPage = currentPage;
-			batchDeleteState.totalPage = totalPage;
-			batchDeleteState.list = users;
-			return batchDeleteState;
+			let delState = Object.assign({}, state);
+			delState.currentPage = currentPage;
+			delState.totalPage = totalPage;
+			delState.list = users;
+			return delState;
+		case 'SEARCH_USERS':
+			let searchState = Object.assign({}, state);
+			searchState.totalPage = action.totalPage;
+			searchState.list = action.list;
+			return searchState;
 		case 'INCREASE_TOTAL':
 			let totalState = Object.assign({}, state);
 			totalState.totalPage = action.total;
@@ -39,6 +37,10 @@ const usersReducer = function(state = initUsers, action) {
 		default:
 			return state;
 	}
+}
+
+function diffUsersState(state, newState) {
+	const shallowCloneState = Object.assign({}, state);
 }
 
 export default usersReducer;

@@ -46,15 +46,24 @@ function* batchDeleteUsers(action) {
 		let {currentPage, totalPage, users} = response.result;
 		const len = users.length;
 		const filterUsers = len == 0 ? [] : filterUserInfo(users);
-		yield put({type: 'BATCH_DELETE_USERS', users: filterUserInfo(users), currentPage, totalPage});
+		yield put({type: 'BATCH_DELETE_USERS', users: filterUsers, currentPage, totalPage});
 	} catch (e) {
 		yield put({type: 'FETCH_FAILED'})
 	}
 }
 
-function* unmountUsers(action) {
-	yield put({type: 'UNMOUNT_USERS'});
+function* searchUsers(action) {
+	try {
+		const response = yield call(doPost, 'user/searchUsers', {search: action.search});
+		const {totalPage, list} = response.result;
+		const finalList = list.length == 0 ? [] : filterUserInfo(list);
+		yield put({type: 'SEARCH_USERS', list: finalList, totalPage});
+	} catch (e) {
+		yield put({type: 'FETCH_FAILED'});
+	}
 }
+
+
 
 //watch user async action
 function* userSaga() {
@@ -62,7 +71,7 @@ function* userSaga() {
 		takeEvery('INIT_USERS_REQ', initUsers),
 		takeEvery('ADD_USER_REQ', addUser),
 		takeEvery('BATCH_DELETE_USERS_REQ', batchDeleteUsers),
-		takeEvery('UNMOUNT_USERS', unmountUsers)
+		takeEvery('SEARCH_USERS_REQ', searchUsers)
 	];
 }
 

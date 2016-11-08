@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import TableRow from './TableRow';
 import TableHeader from './TableHeader';
+import shortId from 'shortid';
 import styles from './styles.css';
 
 class Table extends Component {
@@ -12,31 +13,31 @@ class Table extends Component {
 	selectAll = () => {
 		const batchCheckbox = this.tableHeader.checkbox;
 		const isChecked = batchCheckbox.rawCheck.checked;
-		if (!this.rows.length) {
+		const checkboxes = this.tableBody.querySelectorAll('.row .checkbox');
+
+		if (!checkboxes.length) {
 			return;
 		}
 		
-		this.rows.forEach((row) => {
-			row.checkbox.checked(isChecked);
-		});
+		for (const checkbox of checkboxes) {
+			const classList = checkbox.classList;
+			if (!classList.contains('disabled')) {
+				checkbox.querySelector('input').checked = isChecked;
+				isChecked ? classList.add('checked') : classList.remove('checked');
+			}
+		}
+		
 	}
 
 	selectSingle = () => {
-		const total = this.rows.length;
+		const total = this.tableBody.querySelectorAll('.row').length;
+		const checked = this.tableBody.querySelectorAll('.row .checkbox input:checked').length;
 		const batchCheckbox = this.tableHeader.checkbox;
-		let checked = 0;
-		this.rows.forEach((row) => {
-			const isChecked = row.checkbox.rawCheck.checked;
-			isChecked && checked++;
-		});
-
 		(total == checked) ?  batchCheckbox.checked(true) : batchCheckbox.checked(false);
 	}
 
 	render() {
 		const {columns, dataSource, display, ...others} = this.props;
-		this.rows = [];
-		
 		return (
 			<div className="table-scroll">
 				<table>
@@ -47,14 +48,13 @@ class Table extends Component {
 						{...others}
 					/>
 					<tbody ref={r => this.tableBody = r}>
-						{dataSource.map((row, index) => {
+						{dataSource.map((row) => {
 							return (
 								<TableRow 
 									row={row}
-									key={index}
+									key={shortId.generate()}
 									selectSingle={this.selectSingle}
 									display={display}
-									ref={r => this.rows.push(r)}
 									{...others}
 								/>
 							);

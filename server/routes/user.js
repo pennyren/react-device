@@ -26,6 +26,12 @@ userRoute.post('/batchDeleteUsers', async (req, res) => {
 	const totalPage = await userDao.totalPage();
 	const users = await userDao.list({id: 1}, currentPage);
 	res.send(resetResponse(true, {currentPage, totalPage, users}));
+});
+
+userRoute.post('/searchUsers', async (req, res) => {
+	const searchVal = req.body.search;
+	const result = await userDao.search(searchVal);
+	res.send(resetResponse(true, result));
 })
 
 export default userRoute;
