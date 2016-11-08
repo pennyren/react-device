@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import IconButton from 'components/IconButton';
+
 import Checkbox from 'components/Checkbox';
 
 class TableRow extends Component {
@@ -7,30 +7,13 @@ class TableRow extends Component {
 		const {selectSingle} = this.props;
 		selectSingle();
 	}
-
-	modify() {
-
-	}
-
-	delete() {
-
-	}
-
+	
 	ownAction() {
-		const action = this.props.action;
+		const {action, children} = this.props;
 		if (action) {
 			return (
 				<td className="action">
-					<IconButton 
-						icon="mdi-pen" 
-						color="#b4c5cd"
-						onClick={this.modify}
-					/>
-					<IconButton 
-						icon="mdi-del" 
-						color="#b4c5cd"
-						onClick={this.delete}
-					/>
+					{children}
 				</td>
 			);
 		}

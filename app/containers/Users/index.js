@@ -7,8 +7,10 @@ import Popconfirm from 'components/Popconfirm';
 import Dialog from 'components/Dialog';
 import TextField from 'components/TextField'; 
 import SelectField from 'components/SelectField';
+import IconButton from 'components/IconButton';
 import getPropsFromInputs from 'utils/form';
 import getEnumVal from 'utils/enums';
+import {closest} from 'utils/dom';
 import moment from 'utils/date';
 
 import {connect} from 'react-redux';
@@ -68,6 +70,12 @@ class Users extends Component {
 		store.dispatch({type: 'ADD_USER_REQ', user: user});
 	}
 
+	onModify = (e) => {
+		const currentRow = closest(e.currentTarget, '.row');
+		const id = +currentRow.getAttribute('data-id');
+		console.log(currentRow);
+	}
+
 	render() {
 		const columns =['姓名', '角色', '创建时间', '操作'];
 		const display = ['username', 'role', 'ctime'];
@@ -83,26 +91,36 @@ class Users extends Component {
 					onSearch={this.onSearch}
 					ref={r => this.header = r}
 				/>
+
 				<Table 
 					columns={columns}
 					dataSource={list}
 					display={display}
 					action={true}
 					ref={r => this.table = r}
-				/>
+				>
+					<div>
+						<IconButton icon="mdi-pen" color="#b4c5cd" onClick={this.onModify} tooltip={'编辑'}/>
+					</div>
+				</Table>
+
 				<Pagination
 					total={total}
 					current={current}
 				/>
+
 				<Snackbar 
                     message="请选择要删除的内容!"
                     type="warning"
                     ref={r => this.snackbar = r}
                 />
+
                 <Popconfirm 
                 	message="你确定要删除选择的内容吗?"
                 	onConfirm={this.onBatchDeleteConfirm}
-                	ref={r => this.popconfirm = r}/>
+                	ref={r => this.popconfirm = r}
+                />
+
                 <Dialog
                 	title="添加用户"
                 	customClassName="user-dialog"

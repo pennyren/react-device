@@ -14,4 +14,15 @@ function index(el) {
 	return -1;
 }
 
-export {isDescendant, index};
+function closest(el, selector) {
+	while (el) {
+		if (el.matches(selector)) {
+			return el;
+		} else {
+			el = el.parentElement;
+		}
+	}
+	return null;
+}
+
+export {isDescendant, index, closest};
