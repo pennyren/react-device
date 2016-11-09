@@ -10,25 +10,63 @@ import SelectField from 'components/SelectField';
 import IconButton from 'components/IconButton';
 import getPropsFromInputs from 'utils/form';
 import getEnumVal from 'utils/enums';
+import fetch from 'utils/fetch';
 import {closest} from 'utils/dom';
 import moment from 'utils/date';
-
 import {connect} from 'react-redux';
 import store from 'store';
 
 import styles from './styles.css';
 
-class Users extends Component {
-	componentDidMount() {
-		store.dispatch({type: 'INIT_USERS_REQ'});
+class UserDialog extends Component {
+	state = {
+		isEdit: false,
+		user: {}
 	}
 
-	onBatchDelete = (e) => {
-		if (this.popconfirm.isOpen()) {
-			this.popconfirm.close();
-			return;
+	open(config) {
+		const {isEdit, user, title} = config;
+		this.setState({isEdit: isEdit, user: user});
+		this.dialog.open(title);
+	}
+
+	onConfirm = (dialogContent) => {
+		const user = getPropsFromInputs(dialogContent);
+		const isEdit = this.state.isEdit;
+		user.role = getEnumVal('userRole', user.role);
+		if (isEdit) {
+			user.utime = moment.get();
+			store.dispatch({type: 'UPDATE_USER_ASYNC', user: {id: this.state.user.id, entity: user}})
+		} else {
+			user.ctime = moment.get();
+			store.dispatch({type: 'ADD_USER_ASYNC', user: user})
 		}
-		
+		this.dialog.close();
+	}
+
+	render() {
+		const menuItems =['教师', '主任', '院长', '经费管理员', '系统管理员'];
+		const {username, pwd, role} = this.state.user;
+		return (
+			<Dialog
+                	customClassName="user-dialog"
+                	onConfirm={this.onConfirm}
+                	ref={r => this.dialog = r}
+                >
+            	<SelectField name="role" menuItems={menuItems} value={role}/>
+            	<TextField name="username" placeholder="姓名" value={username}/>
+            	<TextField name="pwd" placeholder="初始密码"value={pwd} />
+            </Dialog>
+		)
+	}
+}
+
+class Users extends Component {
+	componentDidMount() {
+		store.dispatch({type: 'INIT_USERS_ASYNC'});
+	}
+	
+	onBatchDelete = (e) => {
 		const rows = this.table.tableBody.getElementsByClassName('row');
 		const ids = [];
 		let len = rows.length;
@@ -37,7 +75,6 @@ class Users extends Component {
 			const isChecked = row.querySelector('input[type=checkbox]').checked;
 			isChecked && ids.push(+row.getAttribute('data-id'))
 		}
-		
 		if (ids.length) {
 			this.checkedIds = ids;
 			this.popconfirm.open(e);
@@ -50,36 +87,36 @@ class Users extends Component {
 	onBatchDeleteConfirm = () => {
 		const ids = this.checkedIds;
 		this.popconfirm.close();
-		store.dispatch({type: 'BATCH_DELETE_USERS_REQ', ids: ids});
+		store.dispatch({type: 'BATCH_DELETE_USERS_ASYNC', ids: ids});
 	}
 
 	onAdd = () => {
-		this.dialog.open();
+		this.userDialog.open({title: '添加用户', user: {}, isEdit: false});
 	}
 
 	onSearch = () => {
 		const value = this.header.textfield.input.value.trim();
-		store.dispatch({type: 'SEARCH_USERS_REQ', search: value});
-	}
-
-	onConfirm = (dialogContent) => {
-		const user = getPropsFromInputs(dialogContent);
-		user.role = getEnumVal('userRole', user.role);
-		user.ctime = moment.get();
-		this.dialog.close();
-		store.dispatch({type: 'ADD_USER_REQ', user: user});
+		store.dispatch({type: 'SEARCH_USERS_ASYNC', search: value});
 	}
 
 	onModify = (e) => {
 		const currentRow = closest(e.currentTarget, '.row');
-		const id = +currentRow.getAttribute('data-id');
-		console.log(currentRow);
+		const id = currentRow.getAttribute('data-id');
+		const usersList = store.getState().users.list;
+		let currentUser = null;
+		let i = usersList.length;
+		while (i--) {
+			if (usersList[i].id == id) {
+				currentUser = usersList[i];
+				break;
+			} 
+		}
+		this.userDialog.open({title: '编辑用户', user: currentUser, isEdit: true});
 	}
 
 	render() {
 		const columns =['姓名', '角色', '创建时间', '操作'];
 		const display = ['username', 'role', 'ctime'];
-		const menuItems =['教师', '主任', '院长', '经费管理员', '系统管理员'];
 		const {current, total, list} = this.props; 
 		
 		return (
@@ -99,9 +136,7 @@ class Users extends Component {
 					action={true}
 					ref={r => this.table = r}
 				>
-					<div>
-						<IconButton icon="mdi-pen" color="#b4c5cd" onClick={this.onModify} tooltip={'编辑'}/>
-					</div>
+					<IconButton icon="mdi-pen" color="#b4c5cd" onClick={this.onModify} tooltip={'编辑'}/>
 				</Table>
 
 				<Pagination
@@ -121,17 +156,8 @@ class Users extends Component {
                 	ref={r => this.popconfirm = r}
                 />
 
-                <Dialog
-                	title="添加用户"
-                	customClassName="user-dialog"
-                	onConfirm={this.onConfirm}
-                	ref={r => this.dialog = r}
-                >
-                	<SelectField name="role" menuItems={menuItems} />
-                	<TextField name="username" placeholder="姓名" />
-                	<TextField name="pwd" placeholder="初始密码" />
-                </Dialog>
-			</div>
+                <UserDialog ref={r => this.userDialog = r} />
+            </div>
 		);
 	}
 }

@@ -63,15 +63,25 @@ function* searchUsers(action) {
 	}
 }
 
+function* updateUser(action) {
+	try {
+		const response = yield call(doPost, 'user/update', action.user);
+		const newUser = response.result;
+		yield put({type: 'UPDATE_USER', user: filterUserInfo([newUser])[0]});
+	} catch (e) {
+		yield put({type: 'FETCH_FAILED'});
+	}
+}
 
 
 //watch user async action
 function* userSaga() {
 	yield [
-		takeEvery('INIT_USERS_REQ', initUsers),
-		takeEvery('ADD_USER_REQ', addUser),
-		takeEvery('BATCH_DELETE_USERS_REQ', batchDeleteUsers),
-		takeEvery('SEARCH_USERS_REQ', searchUsers)
+		takeEvery('INIT_USERS_ASYNC', initUsers),
+		takeEvery('ADD_USER_ASYNC', addUser),
+		takeEvery('BATCH_DELETE_USERS_ASYNC', batchDeleteUsers),
+		takeEvery('SEARCH_USERS_ASYNC', searchUsers),
+		takeEvery('UPDATE_USER_ASYNC', updateUser)
 	];
 }
 

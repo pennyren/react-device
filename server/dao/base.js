@@ -25,11 +25,12 @@ class BaseDao {
 
 	update = async (id, entity) => {
 		const keys = Object.keys(entity);
-		const values = keys.map((key, index) => {
+		const entityMap = keys.map((key, index) => {
 			let val = entity[key];
-			return typeof val == 'string' ? `'${val}'` : val;
+			const newVal = typeof val == 'string' ? `'${val}'` : val;
+			return `${key} = ${newVal}`;
 		});
-		const sql = `update "${this.entity}" set ${values.join(',')} where id = ${id}`;
+		const sql = `update "${this.entity}" set ${entityMap.join(',')} where id = ${id}`;
 		await executeQuery(sql);
 		const result = await executeQuery(`select * from "${this.entity}" where id = ${id}`);
 		return result.rows[0];

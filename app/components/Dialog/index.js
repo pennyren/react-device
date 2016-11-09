@@ -84,7 +84,8 @@ class Dialog extends Component {
 		open: false
 	}
 
-	open() {
+	open(title) {
+        this.title = title;
 		this.setState({open: true});
 	}
 
@@ -98,11 +99,10 @@ class Dialog extends Component {
                 <ReactTransitionGroup component="div">
                     {this.state.open && <DialogInline 
                                             close={this.close}
+                                            title={this.title}
                                             onClickAway={this.close}
                                             {...this.props}
-                                        >
-                                            {this.props.children}
-                                        </DialogInline>}
+                                        />}
                 </ReactTransitionGroup>
             </Layer>
 		)

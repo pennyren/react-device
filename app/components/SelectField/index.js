@@ -5,7 +5,7 @@ import styles from './styles.css';
 
 class SelectField extends Component {
 	state = {
-		value: this.props.menuItems[0]
+		value: this.props.value ? this.props.value : this.props.menuItems[0]
 	}
 
 	open = () => {

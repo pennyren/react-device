@@ -8,39 +8,46 @@ const initUsers = {
 const usersReducer = function(state = initUsers, action) {
 	switch (action.type) {
 		case 'INIT_USERS':
-			let initState = Object.assign({}, state);
-			initState.currentPage = 1;
-			initState.totalPage = action.totalPage;
-			initState.list = action.users;
-			return initState;
+			return diffUsersState(state, {
+				currentPage: 1,
+				totalPage: action.totalPage,
+				list: action.users
+			});
 		case 'ADD_USER':
-			let addState = Object.assign({}, state);
-			addState.list = [...addState.list];
-			addState.list.push(action.user);
-			return addState;
+			return diffUsersState(state, {
+				list: [...state.list, action.user]
+			});
 		case 'BATCH_DELETE_USERS':
-			const {currentPage, totalPage, users} = action;
-			let delState = Object.assign({}, state);
-			delState.currentPage = currentPage;
-			delState.totalPage = totalPage;
-			delState.list = users;
-			return delState;
+			return diffUsersState(state, {
+				currentPage: action.currentPage,
+				totalPage: action.totalPage,
+				list: action.users
+			});
 		case 'SEARCH_USERS':
-			let searchState = Object.assign({}, state);
-			searchState.totalPage = action.totalPage;
-			searchState.list = action.list;
-			return searchState;
+			return diffUsersState(state, {
+				totalPage: action.totalPage,
+				list: action.list
+			});
+		case 'UPDATE_USER':
+			return diffUsersState(state, {
+				list: action.list
+			});
 		case 'INCREASE_TOTAL':
-			let totalState = Object.assign({}, state);
-			totalState.totalPage = action.total;
-			return totalState;
+			return diffUsersState(state, {
+				totalPage: action.totalPage,
+			});
 		default:
 			return state;
 	}
 }
 
-function diffUsersState(state, newState) {
-	const shallowCloneState = Object.assign({}, state);
+function diffUsersState(state, diff) {
+	const newState = Object.assign({}, state);
+	const keys = Object.keys(diff);
+	keys.map((key) => {
+		(newState[key] !== diff[key]) && (newState[key] = diff[key]);
+	});
+	return newState;
 }
 
 export default usersReducer;
