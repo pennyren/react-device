@@ -11,14 +11,14 @@ userRoute.post('/signin', async (req, res) => {
 	res.send(resetResponse(true, {isMatched}));	
 });
 
-userRoute.post('/initUsers', async (req, res) => {
+userRoute.post('/getUsers', async (req, res) => {
 	const {filter} = req.body;
 	const totalPage = await userDao.totalPage();
 	const users = await userDao.list(filter);
 	res.send(resetResponse(true, {totalPage, users}));
 });
 
-userRoute.post('/batchDeleteUsers', async (req, res) => {
+userRoute.post('/deleteUsers', async (req, res) => {
 	const filter = {id: 1};
 	let {currentPage, ids} = req.body;
 	ids.length == 10 && currentPage--;
@@ -29,8 +29,8 @@ userRoute.post('/batchDeleteUsers', async (req, res) => {
 });
 
 userRoute.post('/searchUsers', async (req, res) => {
-	const searchVal = req.body.search;
-	const result = await userDao.search(searchVal);
+	const {search, filter, currentPage} = req.body.search;
+	const result = await userDao.search(search, filter, currentPage);
 	res.send(resetResponse(true, result));
 })
 

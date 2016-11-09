@@ -63,31 +63,28 @@ class UserDialog extends Component {
 
 class Users extends Component {
 	componentDidMount() {
-		store.dispatch({type: 'INIT_USERS_ASYNC'});
+		store.dispatch({type: 'GET_USERS_ASYNC'});
 	}
 	
-	onBatchDelete = (e) => {
-		const rows = this.table.tableBody.getElementsByClassName('row');
-		const ids = [];
-		let len = rows.length;
-		while (len --) {
-			const row = rows[len];
-			const isChecked = row.querySelector('input[type=checkbox]').checked;
-			isChecked && ids.push(+row.getAttribute('data-id'))
-		}
-		if (ids.length) {
-			this.checkedIds = ids;
-			this.popconfirm.open(e);
-		} else {
-			this.checkedIds = [];
-			this.snackbar.open()
-		}
+	onDelete = (e) => {
+		const checkedRows = this.table.tableBody.querySelectorAll('.row .checkbox.checked');
+		const i = checkedRows.length;
+		i ? this.popconfirm.open(e) : this.snackbar.open();
 	}
 
-	onBatchDeleteConfirm = () => {
-		const ids = this.checkedIds;
+	onDeleteConfirm = () => {
+		const checkedRows = this.table.tableBody.querySelectorAll('.row .checkbox.checked');
+		const i = checkedRows.length;
+		let checkedIds = [];
+		if (i == 0) {
+			this.snackbar.open();
+			return;
+		}
+		for (const row of checkedRows) {
+			checkedIds.push(+closest(row, '.row').getAttribute('data-id'))
+		}
 		this.popconfirm.close();
-		store.dispatch({type: 'BATCH_DELETE_USERS_ASYNC', ids: ids});
+		store.dispatch({type: 'DELETE_USERS_ASYNC', ids: checkedIds});
 	}
 
 	onAdd = () => {
@@ -123,7 +120,7 @@ class Users extends Component {
 			<div className="users">
 				<Header
 					title="用户"
-					onBatchDelete={this.onBatchDelete}
+					onBatchDelete={this.onDelete}
 					onAdd={this.onAdd}
 					onSearch={this.onSearch}
 					ref={r => this.header = r}
@@ -152,7 +149,7 @@ class Users extends Component {
 
                 <Popconfirm 
                 	message="你确定要删除选择的内容吗?"
-                	onConfirm={this.onBatchDeleteConfirm}
+                	onConfirm={this.onDeleteConfirm}
                 	ref={r => this.popconfirm = r}
                 />
 

@@ -7,7 +7,7 @@ const initUsers = {
 
 const usersReducer = function(state = initUsers, action) {
 	switch (action.type) {
-		case 'INIT_USERS':
+		case 'GET_USERS':
 			return diffUsersState(state, {
 				currentPage: 1,
 				totalPage: action.totalPage,
@@ -17,7 +17,7 @@ const usersReducer = function(state = initUsers, action) {
 			return diffUsersState(state, {
 				list: [...state.list, action.user]
 			});
-		case 'BATCH_DELETE_USERS':
+		case 'DELETE_USERS':
 			return diffUsersState(state, {
 				currentPage: action.currentPage,
 				totalPage: action.totalPage,
@@ -30,9 +30,13 @@ const usersReducer = function(state = initUsers, action) {
 			});
 		case 'UPDATE_USER':
 			return diffUsersState(state, {
-				list: action.list
+				list: state.list.map((user) => (user.id == action.user.id) ? action.user : user)
 			});
-		case 'INCREASE_TOTAL':
+		case 'ON_FILTERED':
+			return diffUsersState(state, {
+				isFiltered: action.isFiltered
+			});
+		case 'INCREASE_TOTAL_PAGE':
 			return diffUsersState(state, {
 				totalPage: action.totalPage,
 			});
@@ -44,7 +48,7 @@ const usersReducer = function(state = initUsers, action) {
 function diffUsersState(state, diff) {
 	const newState = Object.assign({}, state);
 	const keys = Object.keys(diff);
-	keys.map((key) => {
+	keys.forEach((key) => {
 		(newState[key] !== diff[key]) && (newState[key] = diff[key]);
 	});
 	return newState;

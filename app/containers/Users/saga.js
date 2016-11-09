@@ -7,13 +7,18 @@ import store from 'store';
 
 const {doGet, doPost} = fetch;
 
-function* initUsers(action) {
+function* getUsers(action) {
 	try {
-		const response = yield call(doPost, '/user/initUsers', {filter: {id: 1}});
+		const props = {
+			currentPage: action.currentPage,
+			isInitialized: action.isInitialized,
+			filter: {id: 1}
+		}
+		const response = yield call(doPost, '/user/getUsers', props);
 		let {totalPage, users} = response.result;
 		const len = users.length;
 		const filterUsers = len == 0 ? [] : filterUserInfo(users);
-		yield put({type: 'INIT_USERS', users: filterUsers, totalPage});
+		yield put({type: 'GET_USERS', users: filterUsers, totalPage});
 	} catch (e) {
 		yield put({type: 'FETCH_FAILED'})
 	}
@@ -36,30 +41,19 @@ function* addUser(action) {
 	}
 }
 
-function* batchDeleteUsers(action) {
+function* deleteUsers(action) {
 	try {
 		const props = {
 			ids: action.ids,
 			currentPage: store.getState().users.currentPage	
 		};
-		const response = yield call(doPost, 'user/batchDeleteUsers', props);
+		const response = yield call(doPost, 'user/deleteUsers', props);
 		let {currentPage, totalPage, users} = response.result;
 		const len = users.length;
 		const filterUsers = len == 0 ? [] : filterUserInfo(users);
 		yield put({type: 'BATCH_DELETE_USERS', users: filterUsers, currentPage, totalPage});
 	} catch (e) {
 		yield put({type: 'FETCH_FAILED'})
-	}
-}
-
-function* searchUsers(action) {
-	try {
-		const response = yield call(doPost, 'user/searchUsers', {search: action.search});
-		const {totalPage, list} = response.result;
-		const finalList = list.length == 0 ? [] : filterUserInfo(list);
-		yield put({type: 'SEARCH_USERS', list: finalList, totalPage});
-	} catch (e) {
-		yield put({type: 'FETCH_FAILED'});
 	}
 }
 
@@ -73,15 +67,32 @@ function* updateUser(action) {
 	}
 }
 
+function* searchUsers(action) {
+	try {
+		const props = {
+			search: action.search,
+			filter: {id: 1},
+			currentPage: action.currentPage || 1
+		};
+		const response = yield call(doPost, 'user/searchUsers', props);
+		const {currentPage, totalPage, list} = response.result;
+		const finalList = list.length == 0 ? [] : filterUserInfo(list);
+		yield put({type: 'ON_FILTERED', isFiltered: (action.search == '') ? false : true});
+		yield put({type: 'SEARCH_USERS', list: finalList, currentPage, totalPage});
+	} catch (e) {
+		yield put({type: 'FETCH_FAILED'});
+	}
+}
+
 
 //watch user async action
 function* userSaga() {
 	yield [
-		takeEvery('INIT_USERS_ASYNC', initUsers),
+		takeEvery('GET_USERS_ASYNC', getUsers),
 		takeEvery('ADD_USER_ASYNC', addUser),
-		takeEvery('BATCH_DELETE_USERS_ASYNC', batchDeleteUsers),
+		takeEvery('DELETE_USERS_ASYNC', deleteUsers),
+		takeEvery('UPDATE_USER_ASYNC', updateUser),
 		takeEvery('SEARCH_USERS_ASYNC', searchUsers),
-		takeEvery('UPDATE_USER_ASYNC', updateUser)
 	];
 }
 
