@@ -33,6 +33,7 @@ class Header extends Component {
 				<IconButton 
 					icon="mdi-minus" 
 					centerRipple={false}
+					customClassName="btn-delete"
 					onClick={this.batchDelete}
 					action={true}
 				/>

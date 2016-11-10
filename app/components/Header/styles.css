@@ -13,6 +13,9 @@
 		width: 260px;
 		transform: translateY(8px);
 	}
+	& .btn-delete {
+		background-color: #da5860;
+	}
 	& .action {
 		margin-left: 24px;
 	}

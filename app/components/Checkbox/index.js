@@ -3,7 +3,7 @@ import Ripple from 'components/Ripple';
 import styles from './styles.css';
 
 class Checkbox extends Component {
-	toggle = () => {
+	toggle = (e) => {
 		const classList = this.checkbox.classList;
 		if (classList.contains('disabled')) {
 			return;
@@ -12,7 +12,7 @@ class Checkbox extends Component {
 		const onChange = this.props.onChange;
 		classList.toggle('checked');
 		this.rawCheck.checked = !isChecked;
-		typeof onChange == 'function' && onChange(!isChecked)
+		typeof onChange == 'function' && onChange(e, !isChecked)
 	}
 
 	checked = (isChecked) => {

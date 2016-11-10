@@ -3,9 +3,9 @@ import React, {Component} from 'react';
 import Checkbox from 'components/Checkbox';
 
 class TableRow extends Component {
-	onSelectSingle = () => {
+	onSelectSingle = (e, isChecked) => {
 		const {selectSingle} = this.props;
-		selectSingle();
+		selectSingle(e, isChecked);
 	}
 	
 	ownAction() {
