@@ -1,5 +1,5 @@
 const initUsers = {
-	isFiltered: false,
+	search: '',
 	currentPage: 1,
 	totalPage: 1 ,
 	list: []
@@ -9,9 +9,9 @@ const usersReducer = function(state = initUsers, action) {
 	switch (action.type) {
 		case 'GET_USERS':
 			return diffUsersState(state, {
-				currentPage: 1,
+				currentPage: action.currentPage,
 				totalPage: action.totalPage,
-				list: action.users
+				list: action.list
 			});
 		case 'ADD_USER':
 			return diffUsersState(state, {
@@ -21,22 +21,13 @@ const usersReducer = function(state = initUsers, action) {
 			return diffUsersState(state, {
 				currentPage: action.currentPage,
 				totalPage: action.totalPage,
-				list: action.users
-			});
-		case 'SEARCH_USERS':
-			return diffUsersState(state, {
-				totalPage: action.totalPage,
 				list: action.list
 			});
 		case 'UPDATE_USER':
 			return diffUsersState(state, {
 				list: state.list.map((user) => (user.id == action.user.id) ? action.user : user)
 			});
-		case 'ON_FILTERED':
-			return diffUsersState(state, {
-				isFiltered: action.isFiltered
-			});
-		case 'INCREASE_TOTAL_PAGE':
+		case 'INCREASE_TOTAL':
 			return diffUsersState(state, {
 				totalPage: action.totalPage,
 			});

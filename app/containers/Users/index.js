@@ -63,7 +63,7 @@ class UserDialog extends Component {
 
 class Users extends Component {
 	componentDidMount() {
-		store.dispatch({type: 'GET_USERS_ASYNC'});
+		store.dispatch({type: 'GET_USERS_ASYNC', isInitialized: true});
 	}
 	
 	onDelete = (e) => {
@@ -93,7 +93,8 @@ class Users extends Component {
 
 	onSearch = () => {
 		const value = this.header.textfield.input.value.trim();
-		store.dispatch({type: 'SEARCH_USERS_ASYNC', search: value});
+		store.getState().users.search = value;
+		store.dispatch({type: 'GET_USERS_ASYNC', isInitialized: true});
 	}
 
 	onModify = (e) => {
@@ -111,11 +112,14 @@ class Users extends Component {
 		this.userDialog.open({title: '编辑用户', user: currentUser, isEdit: true});
 	}
 
+	onPaginated = (currentPage) => {
+		store.dispatch({type: 'GET_USERS_ASYNC', isInitialized: false, currentPage});
+	}
+
 	render() {
 		const columns =['姓名', '角色', '创建时间', '操作'];
 		const display = ['username', 'role', 'ctime'];
 		const {current, total, list} = this.props; 
-		
 		return (
 			<div className="users">
 				<Header
@@ -137,8 +141,9 @@ class Users extends Component {
 				</Table>
 
 				<Pagination
-					total={total}
 					current={current}
+					total={total}
+					onChange={this.onPaginated}
 				/>
 
 				<Snackbar 

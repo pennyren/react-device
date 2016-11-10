@@ -12,26 +12,30 @@ userRoute.post('/signin', async (req, res) => {
 });
 
 userRoute.post('/getUsers', async (req, res) => {
-	const {filter} = req.body;
-	const totalPage = await userDao.totalPage();
-	const users = await userDao.list(filter);
-	res.send(resetResponse(true, {totalPage, users}));
+	const {currentPage, isInitialized, filter} = req.body;
+	const totalPage = isInitialized ? await userDao.totalPage(filter) : -1;
+	const list = await userDao.list(filter, currentPage);
+	res.send(resetResponse(true, {totalPage, list}));
+});
+
+userRoute.post('/addUser', async (req, res) => {
+	const {entity, filter, isLastPage} = req.body;
+	const count = await userDao.count(filter);
+	const newEntity = await userDao.create(entity);
+	const isIncrease = (isLastPage && (count % 10) == 0) ? true : false;
+	res.send(resetResponse(true, {user: newEntity, isIncrease}));
 });
 
 userRoute.post('/deleteUsers', async (req, res) => {
-	const filter = {id: 1};
-	let {currentPage, ids} = req.body;
-	ids.length == 10 && currentPage--;
+	let {currentPage, totalPage, ids, filter} = req.body;
+	const count = await userDao.count(filter);
 	await userDao.batchDelete(ids);
-	const totalPage = await userDao.totalPage();
-	const users = await userDao.list({id: 1}, currentPage);
-	res.send(resetResponse(true, {currentPage, totalPage, users}));
+	const newTotalPage = await userDao.totalPage(filter);
+	if ((currentPage !== totalPage && ids.length == 10) || (currentPage == totalPage && ids.length == (count % 10))) {
+		currentPage --;
+	}
+	const list = await userDao.list(filter, currentPage);
+	res.send(resetResponse(true, {totalPage: newTotalPage, currentPage, list}));
 });
-
-userRoute.post('/searchUsers', async (req, res) => {
-	const {search, filter, currentPage} = req.body.search;
-	const result = await userDao.search(search, filter, currentPage);
-	res.send(resetResponse(true, result));
-})
 
 export default userRoute;

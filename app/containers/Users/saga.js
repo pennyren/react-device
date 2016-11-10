@@ -9,33 +9,38 @@ const {doGet, doPost} = fetch;
 
 function* getUsers(action) {
 	try {
+		let {isInitialized, currentPage} = action;
+		currentPage= currentPage || 1;
 		const props = {
-			currentPage: action.currentPage,
-			isInitialized: action.isInitialized,
-			filter: {id: 1}
-		}
+			currentPage: currentPage,
+			isInitialized: isInitialized,
+			filter: getFilter()
+		};
+
 		const response = yield call(doPost, '/user/getUsers', props);
-		let {totalPage, users} = response.result;
-		const len = users.length;
-		const filterUsers = len == 0 ? [] : filterUserInfo(users);
-		yield put({type: 'GET_USERS', users: filterUsers, totalPage});
+		let {totalPage, list} = response.result;
+		(totalPage == -1) && (totalPage = store.getState().users.totalPage);
+		const finalList = list.length == 0 ? [] : filterUserInfo(list);
+
+		yield put({type: 'GET_USERS', list: finalList, totalPage, currentPage});
 	} catch (e) {
 		yield put({type: 'FETCH_FAILED'})
 	}
 }
 
-
+      
 function* addUser(action) {
 	try {
 		const {currentPage, totalPage, list} = store.getState().users;
-		const response = yield call(doPost, 'user/create', action.user);
-
-		let user = response.result;
-		
-		if (currentPage == totalPage) {
-			yield list.length < 10 ? put({type: 'ADD_USER', user: filterUserInfo([user])[0]}) :
-				  put({type: 'INCREASE_TOTAL', total: totalPage + 1})
-		} 
+		const isLastPage = currentPage == totalPage;
+		const props = {
+			entity: action.user,
+			filter: getFilter(),
+			isLastPage
+		}
+		const response = yield call(doPost, 'user/addUser', props);
+		const {user, isIncrease} = response.result;
+		yield isIncrease ? put({type: 'INCREASE_TOTAL', totalPage: totalPage + 1}) : put({type: 'ADD_USER', user: filterUserInfo([user])[0]});
 	} catch (e) {
 		yield put({type: 'FETCH_FAILED'})
 	}
@@ -45,13 +50,16 @@ function* deleteUsers(action) {
 	try {
 		const props = {
 			ids: action.ids,
-			currentPage: store.getState().users.currentPage	
+			currentPage: store.getState().users.currentPage,
+			totalPage: store.getState().users.totalPage,
+			filter: getFilter()
 		};
+		
 		const response = yield call(doPost, 'user/deleteUsers', props);
-		let {currentPage, totalPage, users} = response.result;
-		const len = users.length;
-		const filterUsers = len == 0 ? [] : filterUserInfo(users);
-		yield put({type: 'BATCH_DELETE_USERS', users: filterUsers, currentPage, totalPage});
+		
+		let {currentPage, totalPage, list} = response.result;
+		const finalList = list.length == 0 ? [] : filterUserInfo(list);
+		yield put({type: 'DELETE_USERS', list: finalList, currentPage, totalPage});
 	} catch (e) {
 		yield put({type: 'FETCH_FAILED'})
 	}
@@ -67,32 +75,13 @@ function* updateUser(action) {
 	}
 }
 
-function* searchUsers(action) {
-	try {
-		const props = {
-			search: action.search,
-			filter: {id: 1},
-			currentPage: action.currentPage || 1
-		};
-		const response = yield call(doPost, 'user/searchUsers', props);
-		const {currentPage, totalPage, list} = response.result;
-		const finalList = list.length == 0 ? [] : filterUserInfo(list);
-		yield put({type: 'ON_FILTERED', isFiltered: (action.search == '') ? false : true});
-		yield put({type: 'SEARCH_USERS', list: finalList, currentPage, totalPage});
-	} catch (e) {
-		yield put({type: 'FETCH_FAILED'});
-	}
-}
-
-
 //watch user async action
 function* userSaga() {
 	yield [
 		takeEvery('GET_USERS_ASYNC', getUsers),
 		takeEvery('ADD_USER_ASYNC', addUser),
 		takeEvery('DELETE_USERS_ASYNC', deleteUsers),
-		takeEvery('UPDATE_USER_ASYNC', updateUser),
-		takeEvery('SEARCH_USERS_ASYNC', searchUsers),
+		takeEvery('UPDATE_USER_ASYNC', updateUser)
 	];
 }
 
@@ -106,6 +95,18 @@ function filterUserInfo(users) {
 	return newUsers
 }
 
+function getFilter() {
+	const search = store.getState().users.search;
+	const filter = [{
+		key: 'id',
+		val: 1,
+		operator: ' != '
+	}, {
+		key: 'username',
+		val: `'%${search}%'`,
+		operator: ' ilike '
+	}];
+	return filter;
+}
+
 export default userSaga;
-
-

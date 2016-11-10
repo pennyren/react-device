@@ -3,65 +3,61 @@ import TextField from 'components/TextField';
 import styles from './styles.css';
 
 class Pagination extends Component {
-	state = {
-		total: this.props.total,
-		current: this.props.current
-	}
-
 	prev = () => {
-		let current = this.state.current;
-		if (current == 1) {
-			return;
-		} else {
-			this.setState({current: --current});
-		}
+		let {onChange, current} = this.props;
+		current !== 1 &&  onChange(--current)
 	}
 
 	next = () => {
-		let current = this.state.current;
-		if (current == this.state.total) {
-			return;
-		} else {
-			this.setState({current: ++current});
-		}
+		let {onChange, current, total} = this.props;
+		current !== total && onChange(++current)
 	}
 
 	currentChange = (e) => {
+		const {onChange, current, total} = this.props;
 		const index = +e.currentTarget.getAttribute('data-index');
 		const classList = e.currentTarget.classList;
-		if (index) {
-			!(index == this.state.current) && this.setState({current: index});
+		let finalCurrent = current;
+		let isChanged = false;
+
+		if (current !== index) {
+			finalCurrent = index;
+			isChanged = true;
 		} else {
 			if (classList.contains('jump-prev')) {
-				let current = this.state.current - 5;
-				current < 1 ? this.setState({current: 1}) : this.setState({current: current});
+				const jumpCurrent = current - 5;
+				finalCurrent = jumpCurrent < 1 ? 1 : jumpCurrent;
+				isChanged = true;
 			} else if (classList.contains('jump-next')) {
-				let current = this.state.current + 5;
-				let total = this.state.total;
-				current > total ? this.setState({current: total}) : this.setState({current: current});
+				const jumpCurrent = current + 5;
+				finalCurrent = jumpCurrent > total ? total : jumpCurrent;
+				isChanged = true;
 			}
 		}
+
+		isChanged && onChange(finalCurrent);
 	}
 
 	goto = (e) => {
+		const {onChange, total, current} = this.props;
 		const textfield = this.gotoField.input;
-		let current = this.state.current;
 		const val = +textfield.value;
+		let finalCurrent = current;
+
 		if (isNaN(val)) {
 			textfield.value = '';
-		} else if (val < 1 || val > this.state.total) {
-			textfield.value = this.state.total;
-			current = this.state.total
+		} else if (val < 1 || val > total) {
+			textfield.value = total;
+			finalCurrent = total
 		} else {
-			current = val;
+			finalCurrent = val;
 		}
-
-		!(current == this.state.current) && this.setState({current: current});
+		(finalCurrent !== current) && onChange(current);
 	}
 
 	iterateItems(items, start, end, index) {
 		index = index || start;
-		let current = this.state.current;
+		let current = this.props.current;
 		for (start; start <= end; start++) {
 			const className = (current == start) ? 'item active' : 'item';
 			items.push(
@@ -75,9 +71,8 @@ class Pagination extends Component {
 	}
 
 	render() {
-		let total = this.state.total;
-		let current = this.state.current;
-		if (!total ||total < 2) {
+		const {total, current} = this.props;
+		if (!total || total < 2) {
 			return null; 
 		}
 

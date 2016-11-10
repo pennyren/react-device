@@ -17,23 +17,6 @@ class UserDao extends BaseDao {
 		const sql = `delete from "user" where id in (${ids.join(', ')})`;
 		await executeQuery(sql);
 	}
-
-	search = async (search, filter, pageIdx = 1, pageSize = 10) => {
-		const totalSql = `select count(*) from "user" where username ilike '%${search}%'`;
-		const limitOffset = `limit ${pageSize} offset ${(pageIdx - 1) * pageSize}`
-		const condition = `where username ilike '%${search}%' and id != ${filter.id}`;
-		const listSql = `select * from "user" ${condition} order by id asc ${limitOffset}`;
-		const totalResult = await executeQuery(totalSql);
-		const listResult = await executeQuery(listSql);
-		const count = +totalResult.rows[0].count;
-		const totalPage = parseInt(count / pageSize);
-		const finalTotalPage = (count % pageSize == 0) ? totalPage : totalPage + 1;
-		return {
-			currentPage: pageIdx,
-			totalPage: finalTotalPage,
-			list: listResult.rows
-		}
-	}
 }
 
 export default UserDao;
