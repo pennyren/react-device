@@ -47,7 +47,7 @@ class Table extends Component {
 	}
 
 	render() {
-		const {columns, dataSource, display, ...others} = this.props;
+		const {columns, dataSource, display, columnFactory, ...others} = this.props;
 		return (
 			<div className="table-scroll">
 				<table>
@@ -65,6 +65,7 @@ class Table extends Component {
 									key={shortId.generate()}
 									selectSingle={this.selectSingle}
 									display={display}
+									columnFactory={columnFactory}
 									{...others}
 								/>
 							);

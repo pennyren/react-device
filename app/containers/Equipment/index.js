@@ -5,6 +5,7 @@ import Pagination from 'components/Pagination';
 import Snackbar from 'components/Snackbar';
 import Popconfirm from 'components/Popconfirm';
 import Dialog from 'components/Dialog';
+import {Link} from 'react-router';
 import styles from './styles.css';
 
 class Equipment extends Component {
@@ -39,21 +40,30 @@ class Equipment extends Component {
 		
 	}
 
+	makeLink = (row, prop) => {
+		const pureVal = row[prop];
+		if (prop == 'serialNumber') {
+			const url = `/equipment/${row.id}`
+			return <Link to={url} className="serial-link">{pureVal}</Link>
+		}
+		return pureVal
+	}
+
 	render() {
-		const columns =['编号', '名称', '型号', '类型', '状态', '操作'];
-		const display = ['serialNumber', 'name', 'model', 'type', 'status'];
+		const columns =['编号', '名称', '型号', '类型', '状态'];
+		const display = ['serialNumber', 'name', 'version', 'type', 'status'];
 		let dataSource = [{
 			id: 1,
 			serialNumber: 233,
 			name: 'dell',
-			model: 'YN',
+			version: 'YN',
 			type: '耗材',
 			status: '可领'
 		}, {
 			id: 2,
 			serialNumber: 233,
 			name: 'dell',
-			model: 'YN',
+			version: 'YN',
 			type: '耗材',
 			status: '可领'
 		}];
@@ -70,6 +80,8 @@ class Equipment extends Component {
 					columns={columns}
 					dataSource={dataSource}
 					display={display}
+					action={false}
+					columnFactory={this.makeLink}
 					ref={r => this.table = r}
 				/>
 				<Pagination />
@@ -79,7 +91,6 @@ class Equipment extends Component {
                     ref={r => this.snackbar = r}
                  />
                 <Popconfirm message="你确定要删除选择的内容吗?" ref={r => this.popconfirm = r}/>
-                <Dialog ref={r => this.dialog = r} />
 			</div>
 		)
 	}

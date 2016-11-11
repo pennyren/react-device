@@ -9,6 +9,7 @@ import Users from 'containers/Users';
 import Setting from'containers/Setting';
 import Notifications from'containers/Notifications';
 import Approval from 'containers/Approval';
+import EditEquipment from 'containers/EditEquipment';
 
 const routes = (
 	<Route path="/" component={App}>
@@ -22,6 +23,7 @@ const routes = (
 			<Route path="/setting" component={Setting} />
 			<Route path="/notifications" component={Notifications} />
 			<Route path="/approval" component={Approval} />
+			<Route path="/equipment/:id" component={EditEquipment} />
 		</Route>
 	</Route>
 );

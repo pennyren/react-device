@@ -20,7 +20,7 @@ class TableRow extends Component {
 	}
 
 	render() {
-		const {row, checked, display} = this.props;
+		const {row, checked, display, columnFactory} = this.props;
 		
 		return (
 			<tr className="row" data-id={row.id}>
@@ -28,7 +28,8 @@ class TableRow extends Component {
 								<Checkbox onChange={this.onSelectSingle} ref={r => this.checkbox = r}/>
 							</td>}
 				{display.map((prop, index) => {
-					return (<td key={index}>{row[prop]}</td>)
+					const finalColumn = typeof columnFactory == 'function' ? columnFactory(row, prop) : row[prop];
+					return <td key={index}>{finalColumn}</td>;
 				})}
 				{this.ownAction()}
 			</tr>
