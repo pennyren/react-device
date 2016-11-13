@@ -3,29 +3,51 @@ import Checkbox from 'components/Checkbox';
 import shortId from 'shortid';
 
 class TableHeader extends Component {
-	onSelectAll = () => {
-		const {selectAll} = this.props;
-		selectAll();
+	shouldChecked() {
+		const {selectAll, checked} = this.props;
+		if (checked) {
+			return (
+				<th className="select">
+					<div className="wrap-cell">
+						<Checkbox 
+							onChange={selectAll}
+							key={shortId.generate()}
+							ref={r => this.checkbox = r}
+						/>
+					</div>
+			   	</th>
+			);
+		}
+	}
+
+	renderColumns() {
+		const {columnStyle, computedWidth, columns} = this.props;
+		const computedColumns = Object.keys(columns).map((key, index) => {
+			const finalWidth = (columnStyle[key] == 0) ? `calc(100% - ${computedWidth}px)` : columnStyle[key];
+			const props = {
+				key: index,
+				style: {
+					width: finalWidth
+				}
+			}
+			return (
+				<th {...props}>
+					<div className="wrap-cell">{columns[key]}</div>
+				</th>
+			)
+		});
+		return computedColumns;
 	}
 
 	render() {
-		const {columns, checked, action} = this.props;
-		const lastCol = columns.length - 1;
-		
 		return (
 			<thead>
 				<tr>
-					{checked && <th className="selection-column">
-									<Checkbox onChange={this.onSelectAll} ref={r => this.checkbox = r} key={shortId.generate()}/>
-								</th>}
-
-					{columns.map((title, index) => {
-						const actionClassName = action && (lastCol == index) ? {className: 'action'} : {};
-						return <th {...actionClassName} key={index}>{title}</th>;
-					})}
+					{this.shouldChecked()}
+					{this.renderColumns()}
 				</tr>
 			</thead>
-		);
+		)
 	}
 }
 

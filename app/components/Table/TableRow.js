@@ -1,37 +1,45 @@
 import React, {Component} from 'react';
-
 import Checkbox from 'components/Checkbox';
 
 class TableRow extends Component {
-	onSelectSingle = (e, isChecked) => {
-		const {selectSingle} = this.props;
-		selectSingle(e, isChecked);
-	}
-	
-	ownAction() {
-		const {action, children} = this.props;
-		if (action) {
+	shouldChecked() {
+		const {checked, selectSingle} = this.props;
+		if (checked) {
 			return (
-				<td className="action">
-					{children}
+				<td className="select">
+					<div className="wrap-cell">
+						<Checkbox onChange={selectSingle} ref={r => this.checkbox = r}/>
+					</div>
 				</td>
-			);
+			)
 		}
 	}
 
 	render() {
-		const {row, checked, display, columnFactory} = this.props;
+		const {row, columns, columnFactory, columnStyle, columnClass, computedWidth} = this.props;
 		
 		return (
 			<tr className="row" data-id={row.id}>
-				{checked && <td className="selection-column">
-								<Checkbox onChange={this.onSelectSingle} ref={r => this.checkbox = r}/>
-							</td>}
-				{display.map((prop, index) => {
-					const finalColumn = typeof columnFactory == 'function' ? columnFactory(row, prop) : row[prop];
-					return <td key={index}>{finalColumn}</td>;
+				{this.shouldChecked()}
+				{Object.keys(columns).map((key, index) => {
+					const finalColumn = (typeof columnFactory == 'function') ? columnFactory(row, key) : row[key];
+					const finalWidth = (columnStyle[key] == 0) ? `calc(100% - ${computedWidth}px)` : columnStyle[key];
+					let props = {
+						key: index,
+						style: {
+							width: finalWidth
+						}
+					}
+					if (typeof columnClass == 'object' && columnClass[key]) {
+						 props.className = columnClass[key];
+					}
+					
+					return (
+						<td {...props}>
+							<div className="wrap-cell">{finalColumn}</div>
+						</td>
+					);
 				})}
-				{this.ownAction()}
 			</tr>
 		)
 	}

@@ -116,9 +116,36 @@ class Users extends Component {
 		store.dispatch({type: 'GET_USERS_ASYNC', isInitialized: false, currentPage});
 	}
 
+	renderAction = (row, prop) => {
+		if (prop == 'action') {
+			return <IconButton 
+						icon="mdi-pen" 
+						color="#b4c5cd" 
+						onClick={this.onModify} 
+						tooltip={'编辑'}
+					/>;
+		} else {
+			return row[prop];
+		}
+	}
+
 	render() {
-		const columns =['姓名', '角色', '创建时间', '操作'];
-		const display = ['username', 'role', 'ctime'];
+		const columns = {
+			username: '姓名',
+			role: '角色',
+			ctime: '创建时间',
+			action: '操作'
+		};
+		const columnStyle = {
+			username: 0,
+			role: 128,
+			ctime: 128,
+			action: 96
+		};
+		const columnClass = {
+			action: 'action'
+		};
+
 		const {current, total, list} = this.props; 
 		return (
 			<div className="users">
@@ -133,12 +160,11 @@ class Users extends Component {
 				<Table 
 					columns={columns}
 					dataSource={list}
-					display={display}
-					action={true}
+					columnStyle={columnStyle}
+					columnClass={columnClass}
+					columnFactory={this.renderAction}
 					ref={r => this.table = r}
-				>
-					<IconButton icon="mdi-pen" color="#b4c5cd" onClick={this.onModify} tooltip={'编辑'}/>
-				</Table>
+				/>
 
 				<Pagination
 					current={current}

@@ -7,8 +7,7 @@ import styles from './styles.css';
 
 class Table extends Component {
 	static defaultProps = {
-		checked: true,
-		action: true
+		checked: true
 	}
 	
 	selectAll = () => {
@@ -47,25 +46,33 @@ class Table extends Component {
 	}
 
 	render() {
-		const {columns, dataSource, display, columnFactory, ...others} = this.props;
+		const {dataSource, ...others} = this.props;
+		const {columnStyle, checked} = this.props;
+		let computedWidth = 0;
+		Object.keys(columnStyle).forEach((prop) => {
+			computedWidth += columnStyle[prop];
+		})
+		if (checked) {
+			computedWidth += 72
+		}
+
 		return (
-			<div className="table-scroll">
+			<div className="datagrid">
 				<table>
-					<TableHeader 
-						columns={columns}
+					<TableHeader
 						selectAll={this.selectAll}
-						ref={r => this.tableHeader = r}
+						computedWidth={computedWidth}
 						{...others}
+						ref={r => this.tableHeader = r}
 					/>
 					<tbody ref={r => this.tableBody = r}>
 						{dataSource.map((row) => {
 							return (
-								<TableRow 
+								<TableRow
+									key={shortId.generate()} 
 									row={row}
-									key={shortId.generate()}
 									selectSingle={this.selectSingle}
-									display={display}
-									columnFactory={columnFactory}
+									computedWidth={computedWidth}
 									{...others}
 								/>
 							);
