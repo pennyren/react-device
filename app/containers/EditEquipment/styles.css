@@ -1,5 +1,53 @@
 .edit-equipment {
 	height: calc(100vh - 96px);
-	width: 80%;
+	width: 60%;
 	margin: 16px auto;
+	& .box-info {
+		background-color: #fff;
+		box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);
+		& .title {
+			height: 32px;
+			background: #f4f4f4;
+			font-weight: 400;
+			color: #424242;
+			line-height: 32px;
+			letter-spacing: 1.6px;
+			padding-left: 32px;
+		}
+	}
+	& .spec {
+		height: 210px;
+	}
+	& .wrapper {
+		position: relative;	
+		margin-top: 16px;
+		height: calc(100% - 226px);
+		& .fund {
+			position: absolute;
+			left: 0;
+			width: 60%;
+			height: 100%;
+		}
+		& .bill {
+			position: absolute;	
+			right: 0;
+			top: 0;
+			width: calc(40% - 16px);
+			height: calc(50% - 8px);
+			& .title {
+				background-color: #fdeeee;
+			}
+		}
+
+		& .other {
+			position: absolute;	
+			right: 0;
+			bottom: 0;
+			width: calc(40% - 16px);
+			height: calc(50% - 8px);
+			& .title {
+				background-color: #fdeeee;
+			}
+		}
+	}
 }
