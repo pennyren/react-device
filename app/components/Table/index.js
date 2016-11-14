@@ -47,21 +47,12 @@ class Table extends Component {
 
 	render() {
 		const {dataSource, ...others} = this.props;
-		const {columnStyle, checked} = this.props;
-		let computedWidth = 0;
-		Object.keys(columnStyle).forEach((prop) => {
-			computedWidth += columnStyle[prop];
-		})
-		if (checked) {
-			computedWidth += 72
-		}
-
+		
 		return (
 			<div className="datagrid">
 				<table>
 					<TableHeader
 						selectAll={this.selectAll}
-						computedWidth={computedWidth}
 						{...others}
 						ref={r => this.tableHeader = r}
 					/>
@@ -72,7 +63,6 @@ class Table extends Component {
 									key={shortId.generate()} 
 									row={row}
 									selectSingle={this.selectSingle}
-									computedWidth={computedWidth}
 									{...others}
 								/>
 							);

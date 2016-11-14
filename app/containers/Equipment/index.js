@@ -50,8 +50,21 @@ class Equipment extends Component {
 	}
 
 	render() {
-		const columns =['编号', '名称', '型号', '类型', '状态'];
-		const display = ['serialNumber', 'name', 'version', 'type', 'status'];
+		const columns = {
+			serialNumber: '编号',
+			name: '名称',
+			version: '型号',
+			type: '类型',
+			status: '状态'
+		};
+		const columnStyle = {
+			serialNumber: 114,
+			name: '20%',
+			version: 'calc(40% - 186px)',
+			type: '20%',
+			status: '20%'
+		}
+
 		let dataSource = [{
 			id: 1,
 			serialNumber: 233,
@@ -79,8 +92,7 @@ class Equipment extends Component {
 				<Table 
 					columns={columns}
 					dataSource={dataSource}
-					display={display}
-					action={false}
+					columnStyle={columnStyle}
 					columnFactory={this.makeLink}
 					ref={r => this.table = r}
 				/>

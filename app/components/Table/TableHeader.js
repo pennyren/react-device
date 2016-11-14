@@ -21,13 +21,12 @@ class TableHeader extends Component {
 	}
 
 	renderColumns() {
-		const {columnStyle, computedWidth, columns} = this.props;
+		const {columnStyle, columns} = this.props;
 		const computedColumns = Object.keys(columns).map((key, index) => {
-			const finalWidth = (columnStyle[key] == 0) ? `calc(100% - ${computedWidth}px)` : columnStyle[key];
 			const props = {
 				key: index,
 				style: {
-					width: finalWidth
+					width: columnStyle[key]
 				}
 			}
 			return (

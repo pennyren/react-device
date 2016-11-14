@@ -137,9 +137,9 @@ class Users extends Component {
 			action: '操作'
 		};
 		const columnStyle = {
-			username: 0,
-			role: 128,
-			ctime: 128,
+			username: 'calc(50% - 168px)',
+			role: '25%',
+			ctime: '25%',
 			action: 96
 		};
 		const columnClass = {

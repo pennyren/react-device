@@ -16,18 +16,17 @@ class TableRow extends Component {
 	}
 
 	render() {
-		const {row, columns, columnFactory, columnStyle, columnClass, computedWidth} = this.props;
+		const {row, columns, columnFactory, columnStyle, columnClass} = this.props;
 		
 		return (
 			<tr className="row" data-id={row.id}>
 				{this.shouldChecked()}
 				{Object.keys(columns).map((key, index) => {
 					const finalColumn = (typeof columnFactory == 'function') ? columnFactory(row, key) : row[key];
-					const finalWidth = (columnStyle[key] == 0) ? `calc(100% - ${computedWidth}px)` : columnStyle[key];
 					let props = {
 						key: index,
 						style: {
-							width: finalWidth
+							width: columnStyle[key]
 						}
 					}
 					if (typeof columnClass == 'object' && columnClass[key]) {
