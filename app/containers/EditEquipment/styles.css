@@ -1,0 +1,5 @@
+.edit-equipment {
+	height: calc(100vh - 96px);
+	width: 80%;
+	margin: 16px auto;
+}

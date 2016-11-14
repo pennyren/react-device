@@ -1,15 +1,54 @@
 import React, {Component} from 'react';
 import IconButton from 'components/IconButton';
 import IconPopover from 'components/IconPopover';
+import SelectField from 'components/SelectField';
 import Drawer from 'components/Drawer';
+import Radio from 'components/Radio';
 import Dialog from 'components/Dialog';
 import {index} from 'utils/dom';
 import {history} from 'routes';
 import styles from './styles.css';
 
+class ApplyDialog extends Component {
+	state = {
+		applyType: 0
+	}
+
+	open() {
+		this.dialog.open('申请');
+	}
+
+	onChange(val) {
+		console.log(val);
+	}
+
+	render() {
+		const menuItems =['购买', '领用', '退还', '维修', '维护'];
+
+		return (
+			<Dialog
+                customClassName="apply-dialog"
+                onConfirm={this.onConfirm}
+                ref={r => this.dialog = r}
+            >
+            	<SelectField name="type" menuItems={menuItems} onChange={this.onChange} />
+            	<Radio />
+            </Dialog>
+		)
+	}
+}
+
 class AppBar extends Component {
+	goNotification() {
+		history.push('/notifications');
+	}
+	
 	openDrawer = () => {
-		this.drawer.openDrawer();
+		this.drawer.open();
+	}
+	
+	onApply = () => {
+		this.applyDialog.open();
 	}
 
 	manageAccount = (e) => {
@@ -18,22 +57,13 @@ class AppBar extends Component {
 		if (!currentIndex) {
 			history.push('/setting');
 		} else {
-			// do stuff
-			setTimeout(() => history.push('/signin'), 200);
+			history.push('/signin')
 		}
 	}
 
-	goNotification() {
-		history.push('/notifications');
-	}
-
-	add = () => {
-		this.dialog.open();
-	}
-
-	render() {
+	getAccountMenu = () => {
 		const setting = (
-			<div className="account" onClick={this.setAccount}>
+			<div className="account">
 				<i className="mdi mdi-settings"></i>设置
 			</div>
 		);
@@ -43,10 +73,10 @@ class AppBar extends Component {
 				<i className="mdi mdi-signout"></i>登出
 			</div>
 		);
+		return [setting, signout];
+	}
 
-		const accountMenu = [setting, signout];
-
-		
+	render() {
 		const drawerItems = [{
 			url: '/users',
 			name: '用户',
@@ -64,6 +94,7 @@ class AppBar extends Component {
 			name: '待办',
 			icon: 'mdi-todo'
 		}];
+		
 
 		return (
 			<div className="nav">
@@ -73,7 +104,7 @@ class AppBar extends Component {
 						<IconButton 
 							icon="mdi-plus" 
 							color="#b4c5cd"
-							onClick={this.add}
+							onClick={this.onApply}
 						/>
 						<IconButton 
 							icon="mdi-bell" 
@@ -82,19 +113,21 @@ class AppBar extends Component {
 							onClick={this.goNotification}
 						/>
 						<IconPopover 
-							menuItems={accountMenu} 
-							icon="mdi-account-circle" 
-							onAfterClose={this.manageAccount}
+							menuItems={this.getAccountMenu()}
+							onClose={this.manageAccount}
+							icon="mdi-account-circle"
 						/>
 					</div>
 				</header>
+
 				<Drawer 
 					docked={false} 
 					title="管理" 
 					drawerItems={drawerItems} 
 					ref={r => this.drawer = r} 
 				/>
-				<Dialog ref={r => this.dialog = r} />
+
+				<ApplyDialog ref={r => this.applyDialog = r} />
 			</div>
 		)
 	}

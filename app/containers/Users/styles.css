@@ -22,7 +22,7 @@
 }
 
 .user-dialog .dialog {
-	width: 30%;
+	width: 25%;
 	& .mdl-textfield {
 		width: 100%;
 		margin-top: 32px;

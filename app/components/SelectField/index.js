@@ -20,8 +20,10 @@ class SelectField extends Component {
 
 	setValue = (e) => {
 		const val = e.currentTarget.textContent;
+		const {onChange} = this.props;
 		this.setState({value: val})
-		setTimeout(() => this.close(), 100)
+		setTimeout(() => this.close(), 100);
+		(typeof onChange == 'function') && onChange(val);
 	}
 
 	render() {

@@ -4,40 +4,39 @@ import Table from 'components/Table';
 import Pagination from 'components/Pagination';
 import Snackbar from 'components/Snackbar';
 import Popconfirm from 'components/Popconfirm';
-import Dialog from 'components/Dialog';
+import {closest} from 'utils/dom';
 import {Link} from 'react-router';
+import {history} from 'routes';
 import styles from './styles.css';
 
 class Equipment extends Component {
-	onBatchDelete = (e) => {
-		if (this.popconfirm.isOpen()) {
-			this.popconfirm.close();
+	onDelete = (e) => {
+		const checkedRows = this.table.tableBody.querySelectorAll('.row .checkbox.checked');
+		checkedRows.length ? this.popconfirm.open(e) : this.snackbar.open();
+	}
+
+	onDeleteConfirm = () => {
+		const checkedRows = this.table.tableBody.querySelectorAll('.row .checkbox.checked');
+		const i = checkedRows.length;
+		let checkedIds = [];
+		if (i == 0) {
+			this.snackbar.open();
 			return;
 		}
-		
-		const rows = this.table.tableBody.getElementsByClassName('row');
-		const ids = [];
-		let len = rows.length;
-		while (len --) {
-			const row = rows[len];
-			const isChecked = row.querySelector('input[type=checkbox]').checked;
-			isChecked && ids.push(+row.getAttribute('data-id'))
+		for (const row of checkedRows) {
+			checkedIds.push(+closest(row, '.row').getAttribute('data-id'))
 		}
-		
-		if (ids.length) {
-			this.popconfirm.open(e);
-		} else {
-			this.snackbar.open()
-		}
+		this.popconfirm.close();
+		console.log(checkedIds)
+		/*store.dispatch({type: 'DELETE_USERS_ASYNC', ids: checkedIds});*/
 	}
 
 	onAdd = () => {
-		this.dialog.open();
+		 history.push('/equipment/new');
 	}
 
 	onSearch = () => {
 		const value = this.header.textfield.input.value.trim();
-		
 	}
 
 	makeLink = (row, prop) => {
@@ -84,11 +83,12 @@ class Equipment extends Component {
 			<div className="equipment">
 				<Header
 					title="设备"
-					onBatchDelete={this.onBatchDelete}
+					onBatchDelete={this.onDelete}
 					onAdd={this.onAdd}
 					onSearch={this.onSearch}
 					ref={r => this.header = r}
 				/>
+
 				<Table 
 					columns={columns}
 					dataSource={dataSource}
@@ -96,13 +96,20 @@ class Equipment extends Component {
 					columnFactory={this.makeLink}
 					ref={r => this.table = r}
 				/>
+
 				<Pagination />
+
 				<Snackbar 
                     message="请选择要删除的内容!"
                     type="warning"
                     ref={r => this.snackbar = r}
                  />
-                <Popconfirm message="你确定要删除选择的内容吗?" ref={r => this.popconfirm = r}/>
+
+                <Popconfirm 
+                	message="你确定要删除选择的内容吗?"
+                	onConfirm={this.onDeleteConfirm}
+                	ref={r => this.popconfirm = r}
+                />
 			</div>
 		)
 	}

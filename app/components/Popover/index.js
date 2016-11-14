@@ -89,10 +89,10 @@ class TransitionItem extends Component {
 	}
 	
 	render() {
-		const {items, onClickAway, hierarchy, onRequestClose} = this.props;
+		const {items, onClickAway, hierarchy, onActive} = this.props;
 		const lists = items.map((item, index) => {
 			return (
-				<li className="item" key={index} onClick={onRequestClose}>
+				<li className="item" key={index} onClick={onActive}>
 					{item}
 					<Ripple color="#bababa"/>
 				</li>
@@ -121,14 +121,14 @@ class Popover extends Component {
 		this.setState({open: !this.state.open});
 	}
 
-	removeAway = () => {
+	close = () => {
 		this.setState({open: false});
 	}
 
-	requestClose = (e) => {
-		const onAfterClose = this.props.onAfterClose;
-		setTimeout(() => {this.removeAway()}, 200);
-		(typeof onAfterClose == 'function') && onAfterClose(e);
+	active = (e) => {
+		const {onClose} = this.props;
+		this.close();
+		(typeof onClose == 'function') && onClose(e);
 
 	}
 
@@ -142,8 +142,8 @@ class Popover extends Component {
 						items={items}
 						hierarchy={hierarchy}
 						alignment={alignment}
-						onRequestClose={this.requestClose}
-						onClickAway={this.removeAway}
+						onActive={this.active}
+						onClickAway={this.close}
 					/>}
 			</ReactTransitionGroup>
 		)

@@ -4,11 +4,11 @@ import Ripple from 'components/Ripple';
 import styles from './styles.css';
 
 class Drawer extends Component {
-	closeDrawer = () => {
+	close = () => {
 		this.Drawer.classList.remove('is-visible');
 	}
 
-	openDrawer = () => {
+	open = () => {
 		this.Drawer.classList.add('is-visible');
 	}
 
@@ -18,7 +18,7 @@ class Drawer extends Component {
 		const renderItems = drawerItems.map((item, index) => {
 			const className = 'mdi ' + item.icon;
 			return (
-				<li className="drawer-item" key={index} onClick={this.closeDrawer}>
+				<li className="drawer-item" key={index} onClick={this.close}>
 					<Link to={item.url} className="drawer-link">
 						<i className={className}></i>
 						<Ripple color="#bababa"/>
@@ -31,12 +31,12 @@ class Drawer extends Component {
 		return (
 			<div className="drawer-wrapper" ref={v => this.Drawer =v}>
 				<div className="drawer">
-					<span className="title" onClick={this.closeDrawer}>{title}</span>
+					<span className="title" onClick={this.close}>{title}</span>
 					<ul className="drawer-lists">
 						{renderItems}
 					</ul>
 				</div>
-				{!docked && <div className="obfuscator" onClick={this.closeDrawer}></div>}
+				{!docked && <div className="obfuscator" onClick={this.close}></div>}
 			</div>
 		);
 	}
