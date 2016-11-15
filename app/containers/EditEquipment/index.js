@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import TextField from 'components/TextField';
+import Button from 'components/Button';
 import styles from './styles.css';
 
 class EditEquipment extends Component {
@@ -12,52 +13,18 @@ class EditEquipment extends Component {
 				<section className="box-info spec">
 					<div className="title">规格参数</div>
 					<div className="content">
-						<div className="form">
-							<label>编号</label>
-							<TextField name="serialNumber" />
-						</div>
-						<div className="form">
-							<label>名称</label>
-							<TextField name="name" />
-						</div>
-						<div className="form">
-							<label>型号</label>
-							<TextField name="version" />
-						</div>
-						<div className="form">
-							<label>规格</label>
-							<TextField name="spec" />
-						</div>
-						
-						<div className="form">
-							<label>生产厂家</label>
-							<TextField name="manufacturer" />
-						</div>
-						<div className="form">
-							<label>出厂日期</label>
-							<TextField name="prodDate" />
-						</div>
-						<div className="form">
-							<label>出厂号</label>
-							<TextField name="prodSign" />
-						</div>
-						<div className="form">
-							<label>质保期</label>
-							<TextField name="warranty" />
-						</div>
-						<div className="form">
-							<label>计量单位</label>
-							<TextField name="measure" />
-						</div>
-						<div className="form">
-							<label>单价</label>
-							<TextField name="price" />
-						</div>
-						<div className="form">
-							<label>总额</label>
-							<TextField name="equipmentTotal" />
-						</div>
-						
+						<TextField name="serialNumber" placeholder="编号"/>
+						<TextField name="name" placeholder="名称"/>
+						<TextField name="version" placeholder="型号"/>
+						<TextField name="spec" placeholder="规格"/>
+						<TextField name="manufacturer" placeholder="生产厂家"/>
+						<TextField name="prodDate" placeholder="出厂日期"/>
+						<TextField name="prodSign" placeholder="出厂号"/>
+						<TextField name="warranty" placeholder="质保期"/>
+						<TextField name="measure" placeholder="计量单位"/>
+						<TextField name="price" placeholder="单价"/>
+						<TextField name="equipmentTotal" placeholder="总额"/>
+						<Button>保存</Button>
 					</div>
 				</section>
 
