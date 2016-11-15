@@ -1,5 +1,4 @@
 .edit-equipment {
-	height: calc(100vh - 96px);
 	width: 60%;
 	margin: 16px auto;
 	& .box-info {
@@ -14,14 +13,26 @@
 			letter-spacing: 1.6px;
 			padding-left: 32px;
 		}
+		& .content {
+			height: calc(100% - 32px);
+			padding: 16px;
+			& .form {
+				display: inline-block;
+				margin-right: 16px;
+				margin-bottom: 16px;
+				& label {
+					margin-right: 16px;
+				}
+			}
+		}
 	}
 	& .spec {
-		height: 210px;
+		height: 320px;
 	}
 	& .wrapper {
 		position: relative;	
 		margin-top: 16px;
-		height: calc(100% - 226px);
+		height: 400px;
 		& .fund {
 			position: absolute;
 			left: 0;

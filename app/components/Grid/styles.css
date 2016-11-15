@@ -10,7 +10,7 @@
 		display: none;
 	}
 	& .toggle-grid{
-		position: absolute;
+		position: fixed;
 		right:10px;
 		bottom:10px;
 		top:auto;

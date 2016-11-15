@@ -2,29 +2,94 @@ import React, {Component} from 'react';
 import IconButton from 'components/IconButton';
 import IconPopover from 'components/IconPopover';
 import SelectField from 'components/SelectField';
+import Snackbar from 'components/Snackbar';
+import TextField from 'components/TextField';
 import Drawer from 'components/Drawer';
 import Radio from 'components/Radio';
 import Dialog from 'components/Dialog';
+import getPropsFromInputs from 'utils/form';
 import {index} from 'utils/dom';
 import {history} from 'routes';
 import styles from './styles.css';
 
 class ApplyDialog extends Component {
 	state = {
-		applyType: 0
+		isPurchased: true
+	}
+	
+	shouldComponentUpdate(nextProps, nextState) {
+		return nextState.isPurchased !== this.state.isPurchased;
 	}
 
 	open() {
+		this.setState({isPurchased: true});
 		this.dialog.open('申请');
 	}
 
-	onChange(val) {
-		console.log(val);
+	onChange = (val) => {
+		const isPurchased = val == '购买';
+		this.setState({isPurchased: isPurchased});
+	}
+
+	onChecked = () => {
+		const isChecked = this.assetRadio.rawRadio.checked;
+		if (isChecked) {
+			this.assetRadio.checked();
+			this.generalRadio.unChecked();
+		} else {
+			this.assetRadio.unChecked();
+			this.generalRadio.checked();
+		}
+	}
+
+	onConfirm = (dialogContent) => {
+		const isPurchased = this.state.isPurchased;
+		const apply = getPropsFromInputs(dialogContent);
+		if (isPurchased && !apply.detail) {
+			this.snackbar.open('请输入你要购买的设备详情!');
+			return;
+		} else if (!isPurchased && !apply.deviceNumber) {
+			this.snackbar.open('请输入设备编号!');
+			return;
+		}
+	}
+
+	getDialogContent() {
+		if (this.state.isPurchased) {
+			return (
+				<div className="change-content">
+					<div className="select-equipment">
+	            		<Radio 
+	            			name="deviceType" 
+	            			value="耗材" 
+	            			defaultChecked={true}
+	            			onChecked={this.onChecked}
+	            			ref={r => this.generalRadio = r}
+	            		/>
+	            		<Radio
+	            			name="deviceType" 
+	            			value="固定资产" 
+	            			onChecked={this.onChecked}
+	            			ref={r => this.assetRadio = r}
+	            		/>
+	            	</div>
+	            	<TextField multiLine={true} name="detail" placeholder="详述" />
+
+				</div>
+				
+			)
+		} else {
+			return (
+				<div className="change-content">
+					<TextField name="deviceNumber" placeholder="设备编号" />
+				</div>
+			)
+		}
 	}
 
 	render() {
 		const menuItems =['购买', '领用', '退还', '维修', '维护'];
-
+		
 		return (
 			<Dialog
                 customClassName="apply-dialog"
@@ -32,7 +97,11 @@ class ApplyDialog extends Component {
                 ref={r => this.dialog = r}
             >
             	<SelectField name="type" menuItems={menuItems} onChange={this.onChange} />
-            	<Radio />
+            	{this.getDialogContent()}
+            	<Snackbar 
+	                type="warning"
+                    ref={r => this.snackbar = r}
+                />
             </Dialog>
 		)
 	}

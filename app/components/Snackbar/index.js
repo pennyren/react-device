@@ -63,14 +63,17 @@ class Snackbar extends Component {
         open: false
     }
     
-    open() {
+    open(message) {
+        this.message = message;
         this.setState({open: true});
         setTimeout(() => this.setState({open: false}), 3000);
     }
 
     render() {
-        const {message, type} = this.props;
-        
+        let {message, type} = this.props;
+        if (!message) {
+            message = this.message;
+        } 
         return (
             <Layer open={true}>
                 <ReactTransitionGroup component="div">

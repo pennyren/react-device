@@ -46,4 +46,14 @@
 	& .selectfield {
 		width: 100%;
 	}
+	& .select-equipment {
+		margin-top: 32px;
+		& .radio:last-child {
+			margin-left: 32px;
+		}
+	}
+	& .mdl-textfield {
+		margin-top: 32px;
+		width: 100%;
+	}
 }

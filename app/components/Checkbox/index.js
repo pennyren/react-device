@@ -25,7 +25,7 @@ class Checkbox extends Component {
 	}
 
 	render() {
-		const {name, label} = this.props;
+		const {name, value} = this.props;
 		return (
 			<div className="checkbox-wrapper">
 				<div className="checkbox" ref={r => this.checkbox = r} onClick={this.toggle}>
@@ -33,10 +33,10 @@ class Checkbox extends Component {
 					<div className="inner">
 						<i className="mdi mdi-check"></i>
 					</div>
-					<input type="checkbox" name={name} ref={r => this.rawCheck = r}/>
+					<input type="checkbox" name={name} value={value} ref={r => this.rawCheck = r}/>
 					<Ripple centerRipple={true} color="#b4c5cd"/>
 				</div>
-				<label>{label}</label>
+				<label>{value}</label>
 			</div>
 		);
 	}
