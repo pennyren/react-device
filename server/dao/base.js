@@ -53,8 +53,8 @@ class BaseDao {
 	totalPage = async (filter = '', pageSize = 10) => {
 		const condition = getConditionQuery(filter);
 		const count = await this.count(filter);
-		const totalPage = parseInt(count / pageSize);
-		return (count % pageSize == 0) ? totalPage : totalPage + 1;
+		const totalPage = (count == 0) ? 1 : (count % pageSize == 0) ? (count / pageSize) : (parseInt(count / pageSize) + 1);
+		return totalPage;
 	}
 }
 

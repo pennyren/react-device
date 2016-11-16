@@ -8,6 +8,16 @@
 	box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);
 	& .datagrid {
 		height: calc(100% - 84px);
+		& .action .wrap-cell {
+			overflow: visible;
+			& .btn-icon {
+	            height: 32px;
+	            width: 32px;
+	            & .mdi {
+	                font-size: 1.5rem;
+	            }
+	        }
+		}
 	}
 	& .serial-link {
 		color: #2187c0;
@@ -17,5 +27,19 @@
     	&:hover {
     		text-decoration: underline;
     	}
+	}
+}
+.equipment-dialog .dialog {
+	width: 25%;
+	& .mdl-textfield {
+		width: 100%;
+		margin-bottom: 32px;
+	}
+
+	& .selectfield {
+		width: 100%;
+		&:last-child {
+			margin-top: 32px;
+		}
 	}
 }

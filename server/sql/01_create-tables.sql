@@ -47,6 +47,5 @@ CREATE TABLE equipment
 	financeVoucherDate timestamp without time zone, --财务凭单日期
 	equipmentTotal bigint,	--设备总额
 	assertInventory character varying(255), --资产清查
-	userId bigint, --用户id
 	CONSTRAINT equipment_pkey PRIMARY KEY ("id")
 );

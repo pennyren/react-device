@@ -63,7 +63,7 @@ class UserDialog extends Component {
 
 class Users extends Component {
 	componentDidMount() {
-		store.dispatch({type: 'GET_USERS_ASYNC', isInitialized: true});
+		store.dispatch({type: 'GET_USERS_ASYNC', currentPage: 1});
 	}
 	
 	onDelete = (e) => {
@@ -94,7 +94,7 @@ class Users extends Component {
 	onSearch = () => {
 		const value = this.header.textfield.input.value.trim();
 		store.getState().users.search = value;
-		store.dispatch({type: 'GET_USERS_ASYNC', isInitialized: true});
+		store.dispatch({type: 'GET_USERS_ASYNC', currentPage: 1});
 	}
 
 	onModify = (e) => {
@@ -113,7 +113,7 @@ class Users extends Component {
 	}
 
 	onPaginated = (currentPage) => {
-		store.dispatch({type: 'GET_USERS_ASYNC', isInitialized: false, currentPage});
+		store.dispatch({type: 'GET_USERS_ASYNC', currentPage});
 	}
 
 	renderAction = (row, prop) => {

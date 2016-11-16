@@ -9,19 +9,14 @@ const {doGet, doPost} = fetch;
 
 function* getUsers(action) {
 	try {
-		let {isInitialized, currentPage} = action;
-		currentPage= currentPage || 1;
 		const props = {
-			currentPage: currentPage,
-			isInitialized: isInitialized,
+			currentPage: action.currentPage,
 			filter: getFilter()
 		};
 
 		const response = yield call(doPost, '/user/getUsers', props);
 		let {totalPage, list} = response.result;
-		(totalPage == -1) && (totalPage = store.getState().users.totalPage);
 		const finalList = list.length == 0 ? [] : filterUserInfo(list);
-
 		yield put({type: 'GET_USERS', list: finalList, totalPage, currentPage});
 	} catch (e) {
 		yield put({type: 'FETCH_FAILED'})
