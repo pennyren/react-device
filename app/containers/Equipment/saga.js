@@ -9,17 +9,17 @@ const {doGet, doPost} = fetch;
 
 function* getEquipments(action) {
 	try {
+		const currentPage = action.currentPage;
 		const props = {
-			currentPage: action.currentPage,
+			currentPage: currentPage,
 			filter: getFilter()
 		};
 
 		const response = yield call(doPost, '/equipment/getEquipments', props);
 		let {totalPage, list} = response.result;
-		console.log(response.result)
 		yield put({type: 'GET_EQUIPMENTS', list: list, totalPage, currentPage});
 	} catch (e) {
-		yield put({type: 'FETCH_FAILED'});
+		yield put({type: 'FETCH_FAILED', message: e});
 	}
 }
 
@@ -34,7 +34,12 @@ function* addEquipment(action) {
 		}
 		const response = yield call(doPost, 'equipment/addEquipment', props);
 		const {equipment, isIncrease} = response.result;
-		yield isIncrease ? put({type: 'INCREASE_TOTAL', totalPage: totalPage + 1}) : put({type: 'ADD_EQUIPMENT', equipment: equipment});
+		if (isIncrease) {
+			yield put({type: 'INCREASE_TOTAL', totalPage: totalPage + 1})
+		} else if (isLastPage) {
+			yield put({type: 'ADD_EQUIPMENT', equipment: equipment})
+		}
+		
 	} catch (e) {
 		yield put({type: 'FETCH_FAILED'})
 	}

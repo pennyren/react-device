@@ -176,4 +176,7 @@ ul {
 	&.mdi-double-right:before {
 		content: "\f13e";
 	}
+	&.mdi-eye:before {
+		content: '\f208';
+	}
 }

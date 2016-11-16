@@ -9,17 +9,18 @@ const {doGet, doPost} = fetch;
 
 function* getUsers(action) {
 	try {
+		const currentPage = action.currentPage;
 		const props = {
-			currentPage: action.currentPage,
+			currentPage: currentPage,
 			filter: getFilter()
 		};
-
+		
 		const response = yield call(doPost, '/user/getUsers', props);
 		let {totalPage, list} = response.result;
 		const finalList = list.length == 0 ? [] : filterUserInfo(list);
 		yield put({type: 'GET_USERS', list: finalList, totalPage, currentPage});
 	} catch (e) {
-		yield put({type: 'FETCH_FAILED'})
+		yield put({type: 'FETCH_FAILED', message: e});
 	}
 }
 
@@ -35,7 +36,12 @@ function* addUser(action) {
 		}
 		const response = yield call(doPost, 'user/addUser', props);
 		const {user, isIncrease} = response.result;
-		yield isIncrease ? put({type: 'INCREASE_TOTAL', totalPage: totalPage + 1}) : put({type: 'ADD_USER', user: filterUserInfo([user])[0]});
+		if (isIncrease) {
+			yield put({type: 'INCREASE_TOTAL', totalPage: totalPage + 1})
+		} else if (isLastPage) {
+			yield put({type: 'ADD_USER', user: filterUserInfo([user])[0]})
+		}
+
 	} catch (e) {
 		yield put({type: 'FETCH_FAILED'})
 	}

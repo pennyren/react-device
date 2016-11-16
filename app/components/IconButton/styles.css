@@ -50,7 +50,8 @@
 		    opacity: 0;
 	        border-radius: 2px;
 	        bottom: -24px;
-    		left: 0px;
+    		transform: translateX(-50%);
+    		left: 50%;
     		margin-bottom: 10px;
     		z-index: 999;
     	}

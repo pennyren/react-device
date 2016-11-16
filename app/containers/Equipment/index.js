@@ -120,6 +120,10 @@ class Equipment extends Component {
 		this.equipmentDialog.open({isEdit: true, title: '修改设备', equipment: currentEquipment});
 	}
 
+	seeHistory = () => {
+		
+	}
+
 	makeColumns = (row, prop) => {
 		const pureVal = row[prop];
 		if (prop == 'serialnumber') {
@@ -127,12 +131,21 @@ class Equipment extends Component {
 			return <Link to={url} className="serial-link">{pureVal}</Link>
 		} else if (prop == 'action') {
 			return (
-				<IconButton 
-					icon="mdi-pen" 
-					color="#b4c5cd" 
-					onClick={this.onModify} 
-					tooltip={'编辑'}
-				/>
+				<div>
+					<IconButton 
+						icon="mdi-pen" 
+						color="#b4c5cd" 
+						onClick={this.onModify} 
+						tooltip={'编辑'}
+					/>
+					<IconButton 
+						icon="mdi-eye" 
+						color="#b4c5cd" 
+						onClick={this.seeHistory} 
+						tooltip={'历史记录'}
+					/>
+				</div>
+				
 			)
 		}
 		return pureVal

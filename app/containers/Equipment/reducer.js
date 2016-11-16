@@ -9,7 +9,6 @@ const initEquipments = {
 const equipmentsReducer = function(state = initEquipments, action) {
 	switch (action.type) {
 		case 'GET_EQUIPMENTS':
-			console.log(action);
 			return diffEquipmentsState(state, {
 				currentPage: action.currentPage,
 				totalPage: action.totalPage,
