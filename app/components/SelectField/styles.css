@@ -13,11 +13,19 @@
     	font-family: inherit;
 	}
 	& .selectfield-label {
-		position: absolute;
-		bottom: 0;
-		left: 0;
-		height: 2px;
-		width: 100%;
+			position: absolute;
+	        top: -18px;
+        	color: #39b881;
+        	font-size: 1.2rem;
+	        left: 0;
+	        right: 0;
+	        bottom: 0;
+	        display: block;
+	        pointer-events: none;
+	        width: 100%;
+	        overflow: hidden;
+	        white-space: nowrap;
+	        text-align: left;
 		&:after {
             background-color: #39b881;
             bottom: 0;
@@ -51,7 +59,7 @@
 	}
 	& .menu-container {
 		position: absolute;
-		top: -8px;
+		top: -16px;
 		width: 100%;
 		transform-origin: left top 0px;
 		transform: scaleY(0);

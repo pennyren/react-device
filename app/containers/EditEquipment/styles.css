@@ -1,5 +1,5 @@
 .edit-equipment {
-	width: 60%;
+	width: 55%;
 	margin: 16px auto;
 	& .box-info {
 		background-color: #fff;
@@ -27,23 +27,23 @@
 		}
 	}
 	& .spec {
-		height: 400px;
-		& .mdl-textfield {
-			margin: 24px 24px 0 24px;
-			width: calc(50% - 48px);
+		height: 500px;
+		& .mdl-textfield, & .datepicker{
+			margin: 24px 16px 0 16px;
+			width: calc(50% - 32px);
 		}
 	}
 	& .wrapper {
 		position: relative;	
 		margin-top: 16px;
-		height: 400px;
-		& .fund {
+		height: 600px;
+		& .other {
 			position: absolute;
 			left: 0;
 			width: 60%;
 			height: 100%;
 		}
-		& .bill {
+		& .fund {
 			position: absolute;	
 			right: 0;
 			top: 0;
@@ -52,9 +52,13 @@
 			& .title {
 				background-color: #fdeeee;
 			}
+			& .mdl-textfield {
+				width: calc(100% - 16px);
+    			margin: 24px 8px 0 8px;
+			}
 		}
 
-		& .other {
+		& .bill {
 			position: absolute;	
 			right: 0;
 			bottom: 0;

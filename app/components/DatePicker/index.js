@@ -6,6 +6,7 @@ import FlatButton from 'components/FlatButton';
 import CalendarBody from './CalendarBody';
 import CalendarYear from './CalendarYear';
 import CalendarMonth from './CalendarMonth';
+import {generateDate} from './dateUtils';
 import styles from './styles.css';
 
 class Calendar extends Component {
@@ -73,7 +74,7 @@ class Calendar extends Component {
 		this.setState({active: year + '-' + month + '-' + day})
 	}
 
-	getCalendarBody(date) {
+	getCalendarBody = (date) => {
 		switch (this.state.bodyType) {
 			case 1:
 				return <CalendarYear 
@@ -99,11 +100,10 @@ class Calendar extends Component {
 	}
 
 	scrollCalendarBody = (scrollTop) => {
-		console.log(scrollTop)
-		console.log(this.calendar);
-		/*this.calendarBody.scrollTop = scrollTop;*/
+		console.log(this.calendarBody)
+		this.calendarBody.scrollTop = scrollTop;
 	}
-
+	
 	render() {
 		const {close} = this.props;
 		const date = {
@@ -141,25 +141,19 @@ class DatePicker extends Component {
 
 	open = () => {
 		const date = new Date();
+		const {defaultValue} = this.props;
 		const val = this.input.value;
 		if (val == '') {
-			this.now = {
-				year: date.getFullYear(),
-				month: date.getMonth(),
-				day: date.getDate()
+			if (defaultValue) {
+				this.now = generateDate(defaultValue);
+			} else {
+				this.now = generateDate(date);
 			}
-			this.now.active = this.now.year + '-' + (this.now.month + 1) + '-' + this.now.day;
-
+			this.dateSelect.classList.remove('is-dirty');
 		} else {
-			let current = val.split('-');
-			this.now = {
-				year: +current[0],
-				month: +current[1] - 1,
-				day: +current[2],
-				active: val
-			}
+			this.now = generateDate(val)
+			this.dateSelect.classList.add('is-dirty');
 		}
-
 		this.setState({open: true});
 	}
 
@@ -169,22 +163,23 @@ class DatePicker extends Component {
 
 	setVal = (val) => {
 		this.input.value = val;
+		this.dateSelect.classList.add('is-dirty');
 	}
 
 	render() {
-		const {name} = this.props;
+		const {name, placeholder} = this.props;
 		
 		return (
 			<div className="datepicker">
-				<div className="date-select">
+				<div className="date-select" ref={r => this.dateSelect = r}>
 					<input className="date-input"
-						   placeholder="Select date"
 						   readOnly={true}
 						   name={name}
 						   onClick={this.open}
 						   ref={r => this.input = r}
 					/>
 					<i className="mdi mdi-calendar"></i>
+					<label className="datepicker-label" htmlFor={name}>{placeholder}</label>
 				</div>
 				<ReactTransitionGroup component="div">
 					{this.state.open && <Calendar 

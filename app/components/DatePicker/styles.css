@@ -5,6 +5,7 @@
 		position: relative;
 		& .date-input {
 			width: 100%;
+			padding: 4px 0;
 			font-size: 1.6rem;
 			outline: none;
 			border: none;
@@ -21,17 +22,37 @@
 			font-size: 1.8rem;
 			pointer-events: none;
 		}
+		& .datepicker-label {
+			position: absolute;
+	        top: 0;
+	        left: 0;
+	        right: 0;
+	        bottom: 0;
+	        display: block;
+	        color: #a3a3a3;
+	        pointer-events: none;
+	        width: 100%;
+	        overflow: hidden;
+	        white-space: nowrap;
+	        text-align: left;
+		}
+		&.is-dirty .datepicker-label {
+			top: -18px;
+        	color: #39b881;
+        	font-size: 1.2rem;
+		}
 	}
 
 	& .date-display {
 		position: absolute;
-		top: -8px;
-		width: 130%;
+		top: -16px;
+		width: 100%;
 		min-width: 250px;
 		border-radius: 2px;
 		background-color: #fff;
 		box-shadow: rgba(0, 0, 0, 0.117647) 0px 1px 6px, rgba(0, 0, 0, 0.117647) 0px 1px 4px;
 		overflow: hidden;
+		z-index: 6;
 		& .calendar-toolbar {
 			padding: 6px;
 			& .btn-icon {

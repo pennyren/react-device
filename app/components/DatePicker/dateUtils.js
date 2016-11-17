@@ -15,3 +15,27 @@ export function weekDiff(year, month) {
 	const diff = week == 0 ? 6 : week - 1;
 	return diff;
 }
+
+export function generateDate(date) {
+	const isStr = typeof date == 'string';
+
+	if (isStr) {
+		const dateNum = date.split('-');
+		return {
+			year: +dateNum[0],
+			month: +dateNum[1] - 1,
+			day: +dateNum[2],
+			active: date
+		}
+	} else {
+		const year =  date.getFullYear();
+		const month = date.getMonth();
+		const day = date.getDate();
+		return {
+			year: year,
+			month: month,
+			day: day,
+			active: year + '-' + (month + 1) + '-' + day
+		}
+	}
+}

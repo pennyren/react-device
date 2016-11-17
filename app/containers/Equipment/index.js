@@ -59,8 +59,8 @@ class EquipmentDialog extends Component {
                 <TextField name="serialNumber" placeholder="编号" value={serialnumber}/>
                 <TextField name="name" placeholder="名称" value={name}/>
                 <TextField name="version" placeholder="型号" value={version}/>
-            	<SelectField name="type" menuItems={typeItems} value={type}/>
-            	<SelectField name="status" menuItems={statusItems} value={status}/>
+            	<SelectField name="type" menuItems={typeItems} value={type} placeholder="类型"/>
+            	<SelectField name="status" menuItems={statusItems} value={status} placeholder="状态"/>
             </Dialog>
 		)
 	}

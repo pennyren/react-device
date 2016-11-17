@@ -21,7 +21,7 @@ class Approval extends Component {
 		}];
 		return (
 			<div className="approval">
-				<DatePicker />
+				<DatePicker placeholder="选择日期"/>
 			</div>
 		)
 	}

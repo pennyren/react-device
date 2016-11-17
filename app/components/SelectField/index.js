@@ -27,7 +27,7 @@ class SelectField extends Component {
 	}
 
 	render() {
-		const {menuItems, name} = this.props;
+		const {menuItems, name, placeholder} = this.props;
 		const val = this.state.value;
 		
 		const lists = menuItems.map((item, index) => {
@@ -53,6 +53,7 @@ class SelectField extends Component {
 							<svg viewBox="0 0 24 24">
 								<path d="M7 10l5 5 5-5z"></path>
 							</svg>
+							{placeholder}
 						</label>
 					</div>
 					
