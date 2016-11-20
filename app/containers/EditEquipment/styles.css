@@ -16,7 +16,7 @@
 		& .content {
 			position: relative;
 			height: calc(100% - 32px);
-			padding: 16px;
+			padding: 24px;
 			& .mdl-btn {
 				position: absolute;
 			    right: 40px;
@@ -36,36 +36,53 @@
 	& .wrapper {
 		position: relative;	
 		margin-top: 16px;
-		height: 600px;
+		height: 800px;
 		& .other {
 			position: absolute;
 			left: 0;
-			width: 60%;
+			width: 50%;
 			height: 100%;
+			& .mdl-textfield {
+				width: 100%;
+    			margin-top: 24px;
+    			&:first-child {
+    				margin-top: 0;
+    			}
+			}
 		}
 		& .fund {
 			position: absolute;	
 			right: 0;
 			top: 0;
-			width: calc(40% - 16px);
-			height: calc(50% - 8px);
+			width: calc(50% - 16px);
+			height: 272px;
 			& .title {
 				background-color: #fdeeee;
 			}
 			& .mdl-textfield {
-				width: calc(100% - 16px);
-    			margin: 24px 8px 0 8px;
+				width: 100%;
+    			margin-top: 24px;
+    			&:first-child {
+    				margin-top: 0;
+    			}
 			}
 		}
 
 		& .bill {
 			position: absolute;	
 			right: 0;
-			bottom: 0;
-			width: calc(40% - 16px);
-			height: calc(50% - 8px);
+			top: 288px;
+			width: calc(50% - 16px);
+			height: 400px;
 			& .title {
 				background-color: #fdeeee;
+			}
+			& .mdl-textfield {
+				width: 100%;
+    			margin-top: 24px;
+    			&:first-child {
+    				margin-top: 0;
+    			}
 			}
 		}
 	}

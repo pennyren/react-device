@@ -179,4 +179,7 @@ ul {
 	&.mdi-eye:before {
 		content: '\f208';
 	}
+	&.mdi-save:before {
+		content: '\f193';
+	}
 }
