@@ -12,37 +12,36 @@
 			line-height: 32px;
 			letter-spacing: 1.6px;
 			padding-left: 32px;
+			& .btn-icon {
+				height: 32px;
+			    width: 32px;
+			    font-size: 1.8rem;
+			    margin-left: 16px;
+			}
 		}
 		& .content {
 			position: relative;
 			height: calc(100% - 32px);
 			padding: 24px;
-			& .mdl-btn {
-				position: absolute;
-			    right: 40px;
-			    bottom: 40px;
-			    min-width: 64px;
-			    min-height: 24px;
-			}
 		}
 	}
 	& .spec {
 		height: 500px;
-		& .mdl-textfield, & .datepicker{
-			margin: 24px 16px 0 16px;
+		& .mdl-textfield, & .datepicker, & .selectfield{
+			margin: 0 16px 24px 16px;
 			width: calc(50% - 32px);
 		}
 	}
 	& .wrapper {
 		position: relative;	
 		margin-top: 16px;
-		height: 800px;
-		& .other {
+		height: 670px;
+		& .detail {
 			position: absolute;
 			left: 0;
 			width: 50%;
 			height: 100%;
-			& .mdl-textfield {
+			& .mdl-textfield, & .selectfield, & .datepicker {
 				width: 100%;
     			margin-top: 24px;
     			&:first-child {
@@ -73,11 +72,11 @@
 			right: 0;
 			top: 288px;
 			width: calc(50% - 16px);
-			height: 400px;
+			height: 382px;
 			& .title {
 				background-color: #fdeeee;
 			}
-			& .mdl-textfield {
+			& .mdl-textfield, & .datepicker{
 				width: 100%;
     			margin-top: 24px;
     			&:first-child {

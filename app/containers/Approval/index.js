@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Stepper from 'components/Stepper';
 import DatePicker from 'components/DatePicker';
+import AutoComplete from 'components/AutoComplete'
 import styles from './styles.css';
 
 class Approval extends Component {
@@ -21,7 +22,8 @@ class Approval extends Component {
 		}];
 		return (
 			<div className="approval">
-				<DatePicker placeholder="选择日期"/>
+				
+				<AutoComplete placeholder="hello"/>
 			</div>
 		)
 	}
