@@ -12,7 +12,6 @@ import {history} from 'routes';
 import IconButton from 'components/IconButton';
 import TextField from 'components/TextField'; 
 import SelectField from 'components/SelectField';
-
 import {connect} from 'react-redux';
 import store from 'store';
 
@@ -49,14 +48,14 @@ class EquipmentDialog extends Component {
 	render() {
 		const typeItems = ['耗材', '固定资产', '国有资产'];
 		const statusItems = ['可领', '在用', '维修', '报废'];
-		const {serialnumber, name, version, type, status} = this.state.equipment;
+		const {serialNumber, name, version, type, status} = this.state.equipment;
 		return (
 			<Dialog
                 	customClassName="equipment-dialog"
                 	onConfirm={this.onConfirm}
                 	ref={r => this.dialog = r}
                 >
-                <TextField name="serialNumber" placeholder="编号" value={serialnumber}/>
+                <TextField name="serialNumber" placeholder="编号" value={serialNumber}/>
                 <TextField name="name" placeholder="名称" value={name}/>
                 <TextField name="version" placeholder="型号" value={version}/>
             	<SelectField name="type" menuItems={typeItems} value={type} placeholder="类型"/>
@@ -126,7 +125,7 @@ class Equipment extends Component {
 
 	makeColumns = (row, prop) => {
 		const pureVal = row[prop];
-		if (prop == 'serialnumber') {
+		if (prop == 'serialNumber') {
 			const url = `/equipment/${row.id}`
 			return <Link to={url} className="serial-link">{pureVal}</Link>
 		} else if (prop == 'action') {
@@ -153,7 +152,7 @@ class Equipment extends Component {
 
 	render() {
 		const columns = {
-			serialnumber: '编号',
+			serialNumber: '编号',
 			name: '名称',
 			version: '型号',
 			type: '类型',
@@ -161,7 +160,7 @@ class Equipment extends Component {
 			action: '操作'
 		};
 		const columnStyle = {
-			serialnumber: 96,
+			serialNumber: 96,
 			name: '16%',
 			version: 'calc(36% - 168px)',
 			type: '16%',

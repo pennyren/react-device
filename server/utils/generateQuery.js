@@ -7,11 +7,14 @@ function getConditionQuery(filter) {
 }
 
 function getEntityMap(entity, isMap = true) {
+	const hyphenateRE = /([a-z\d])([A-Z])/g;
 	const keys = Object.keys(entity);
 	const values = keys.map((key, index) => {
+		const isHyphenate = hyphenateRE.test(key);
 		const val = entity[key];
 		const finalVal = typeof val == 'string' ? `'${val}'` : val;
-		return isMap ? `${key} = ${finalVal}` : finalVal;
+		isHyphenate && (keys[index] = `"${key}"`);
+		return isMap ? `${keys[index]} = ${finalVal}` : finalVal;
 	});
 	return isMap ? values.join(',') : {keys: keys.join(','), values: values.join(',')};
 }
