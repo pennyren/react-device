@@ -50,9 +50,8 @@ function* updateEquipment(action) {
 		const {equipment, isGlobal, snackbar} = action;
 		const response = yield call(doPost, 'equipment/update', equipment);
 		const newEquipment = response.result;
-		
 		snackbar && snackbar.open({message: '保存成功!', type: 'success'});
-		yield isGlobal ? put({type: 'UPDATE_CURRENT_EQUIPMENT', equipment: newEquipment}) : put({type: 'UPDATE_EQUIPMENT', equipment: newEquipment});
+		yield !isGlobal && put({type: 'UPDATE_EQUIPMENT', equipment: newEquipment});
 	} catch (e) {
 		yield put({type: 'FETCH_FAILED'});
 	}
@@ -67,7 +66,6 @@ function* updateEquipmentDetail(action) {
 		} else {
 			snackbar && snackbar.open({message: '保存成功!', type: 'success'});
 		}
-		
 	} catch (e) {
 		yield put({type: 'FETCH_FAILED'});
 	}

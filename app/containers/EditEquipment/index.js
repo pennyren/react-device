@@ -9,7 +9,6 @@ import fetch from 'utils/fetch';
 import getPropsFromInputs from 'utils/form';
 import {closest} from 'utils/dom';
 import store from 'store';
-
 import styles from './styles.css';
 
 class EditEquipment extends Component {
@@ -17,8 +16,6 @@ class EditEquipment extends Component {
 		const id = +this.props.params.id;
 		const infoBox = closest(e.currentTarget, '.box-info');
 		const props = getPropsFromInputs(infoBox);
-		/*this.snackbar.open()
-		console.log(this.snackbar)*/
 		if (!props.username) {
 			store.dispatch({
 				type: 'UPDATE_EQUIPMENT_ASYNC', 
