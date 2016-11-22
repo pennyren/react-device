@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import ClickAway from 'internals/ClickAway';
+import debounce from 'utils/debounce';
+import Ripple from 'components/Ripple';
 import styles from './styles.css';
 
 class CompleteMenu extends Component {
@@ -80,7 +82,7 @@ class AutoComplete extends Component {
 
 	setValue = (e) => {
 		const val = e.currentTarget.textContent;
-		this.input.value(val);
+		this.input.value = val;
 		this.menu.close();
 	} 
 
@@ -108,7 +110,7 @@ class AutoComplete extends Component {
 						defaultValue={value}
 						onFocus={this.isFocus}
 		   				onBlur={this.isBlur}
-		   				onChange={this.checkDirty}
+		   				onChange={debounce(this.checkDirty, 600)}
 		   				ref={r => this.input = r}
 					/>
 					<label className="auto-textfield-label" htmlFor={name}>{placeholder}</label>

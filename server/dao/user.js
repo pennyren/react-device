@@ -17,6 +17,18 @@ class UserDao extends BaseDao {
 		const sql = `delete from "user" where id in (${ids.join(', ')})`;
 		await executeQuery(sql);
 	}
+
+	getUsersByUsername = async (username) => {
+		const sql = `select username from "user" where username ilike '%${username}%'`;
+		const result = await executeQuery(sql);
+		return result.rows;
+	}
+
+	findUserByUsername = async (username) => {
+		const sql = `select * from "user" where username = '${username}'`;
+		const result = await executeQuery(sql);
+		return result.rows[0];
+	}
 }
 
 export default UserDao;

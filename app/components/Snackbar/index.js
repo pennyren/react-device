@@ -63,21 +63,20 @@ class Snackbar extends Component {
         open: false
     }
     
-    open(message) {
-        this.message = message;
+    open(config) {
+        config = config || {};
+        const {message, type} = config;
+        message ? this.message = message : this.message = this.props.message;
+        type ? this.type = type : this.type = this.props.type;
         this.setState({open: true});
         setTimeout(() => this.setState({open: false}), 3000);
     }
 
     render() {
-        let {message, type} = this.props;
-        if (!message) {
-            message = this.message;
-        } 
         return (
             <Layer open={true}>
                 <ReactTransitionGroup component="div">
-                    {this.state.open && <SnackbarInline message={message} type={type} />}
+                    {this.state.open && <SnackbarInline message={this.message} type={this.type} />}
                 </ReactTransitionGroup>
             </Layer>
         );

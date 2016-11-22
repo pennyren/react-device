@@ -3,13 +3,42 @@ import TextField from 'components/TextField';
 import IconButton from 'components/IconButton';
 import SelectField from 'components/SelectField';
 import DatePicker from 'components/DatePicker';
+import AutoComplete from 'components/AutoComplete';
+import Snackbar from 'components/Snackbar';
+import fetch from 'utils/fetch';
+import getPropsFromInputs from 'utils/form';
+import {closest} from 'utils/dom';
 import store from 'store';
 
 import styles from './styles.css';
 
 class EditEquipment extends Component {
-	onSave = () => {
+	onSave = (e) => {
+		const id = +this.props.params.id;
+		const infoBox = closest(e.currentTarget, '.box-info');
+		const props = getPropsFromInputs(infoBox);
+		/*this.snackbar.open()
+		console.log(this.snackbar)*/
+		if (!props.username) {
+			store.dispatch({
+				type: 'UPDATE_EQUIPMENT_ASYNC', 
+				equipment: {id: id, entity: props},
+				isGlobal: true,
+				snackbar: this.snackbar
+			});
+		} else {
+			store.dispatch({
+				type: 'UPDATE_EQUIPMENT_DETAIL_ASYNC', 
+				equipment: {id: id, entity: props},
+				snackbar: this.snackbar
+			});
+		}
+	}
 
+	onFilter = (val, onChange) => {
+		fetch.doPost('user/getUsersByusername', {username: val}).then((data) => {
+            onChange(data.result.users.map((user) => user.username));
+        });
 	}
 
 	render() {
@@ -17,7 +46,6 @@ class EditEquipment extends Component {
 		const typeItems = ['耗材', '固定资产', '国有资产'];
 		const statusItems = ['可领', '在用', '维修', '报废'];
 		const equipments = store.getState().equipments.list;
-		console.log(equipments)
 		let i = equipments.length;
 		let currentEquipment = {};
 		while (i--) {
@@ -27,7 +55,7 @@ class EditEquipment extends Component {
 			}
 			
 		}
-		console.log(currentEquipment);
+
 		return (
 			<div className="edit-equipment">
 				<section className="box-info spec">
@@ -72,7 +100,12 @@ class EditEquipment extends Component {
 							/>
 						</div>
 						<div className="content">
-							<TextField name="username" value={currentEquipment.username} placeholder="使用人"/>
+							<AutoComplete 
+								name="username" 
+								value={currentEquipment.username} 
+								placeholder="使用人"
+								onFilter={this.onFilter}
+							/>
 							<SelectField name="status" value={currentEquipment.status} menuItems={statusItems} value={status} placeholder="状态"/>
 							<DatePicker name="obtainDate" value={currentEquipment.obtainDate} placeholder="取得时间"/>
 							<TextField name="obtainWay" value={currentEquipment.obtainWay} placeholder="取得方式"/>
@@ -123,6 +156,7 @@ class EditEquipment extends Component {
 						</div>
 					</section>
 				</div>
+				<Snackbar ref={r => this.snackbar = r} />
 			</div>
 		)
 	}

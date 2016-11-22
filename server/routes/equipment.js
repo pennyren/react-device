@@ -1,9 +1,11 @@
 import express from 'express';
 import EquipmentDao from '../dao/equipment';
+import UserDao from '../dao/user';
 import resetResponse from '../utils/response';
 
 const equipmentRoute = express.Router();
 const equipmentDao = new EquipmentDao();
+const userDao = new UserDao();
 
 equipmentRoute.post('/getEquipments', async (req, res) => {
 	const {currentPage, filter} = req.body;
@@ -34,6 +36,18 @@ equipmentRoute.post('/deleteEquipments', async (req, res) => {
 	}
 	const list = await equipmentDao.list(filter, currentPage);
 	res.send(resetResponse(true, {totalPage: newTotalPage, currentPage, list}));
+});
+
+equipmentRoute.post('/updateDetail', async (req, res) => {
+	let {id, entity} = req.body;
+	const user = await userDao.findUserByUsername(entity.username);
+	if (user) {
+		entity.userId = +user.id;
+		const newEquipment = await equipmentDao.update(id, entity);
+		res.send(resetResponse(true, {equipment: newEquipment}));
+	} else {
+		res.send(resetResponse(false));
+	}
 });
 
 export default equipmentRoute;

@@ -41,4 +41,10 @@ userRoute.post('/deleteUsers', async (req, res) => {
 	res.send(resetResponse(true, {totalPage: newTotalPage, currentPage, list}));
 });
 
+userRoute.post('/getUsersByUsername', async (req, res) => {
+	const {username} = req.body;
+	const users = await userDao.getUsersByUsername(username);
+	res.send(resetResponse(true, {users}));
+})
+
 export default userRoute;

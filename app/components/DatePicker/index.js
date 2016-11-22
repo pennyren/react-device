@@ -141,18 +141,11 @@ class DatePicker extends Component {
 
 	open = () => {
 		const date = new Date();
-		const {defaultValue} = this.props;
 		const val = this.input.value;
 		if (val == '') {
-			if (defaultValue) {
-				this.now = generateDate(defaultValue);
-			} else {
-				this.now = generateDate(date);
-			}
-			this.dateSelect.classList.remove('is-dirty');
+			this.now = generateDate(date);
 		} else {
 			this.now = generateDate(val)
-			this.dateSelect.classList.add('is-dirty');
 		}
 		this.setState({open: true});
 	}
@@ -167,14 +160,15 @@ class DatePicker extends Component {
 	}
 
 	render() {
-		const {name, placeholder} = this.props;
-		
+		const {name, placeholder, value} = this.props;
+		const className = value ? 'date-select is-dirty' : 'date-select';
 		return (
 			<div className="datepicker">
-				<div className="date-select" ref={r => this.dateSelect = r}>
+				<div className={className} ref={r => this.dateSelect = r}>
 					<input className="date-input"
 						   readOnly={true}
 						   name={name}
+						   defaultValue={value}
 						   onClick={this.open}
 						   ref={r => this.input = r}
 					/>

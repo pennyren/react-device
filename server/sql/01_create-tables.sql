@@ -23,10 +23,10 @@ CREATE TABLE equipment
 	manufacturer character varying(255), --生产厂家
 	"prodDate" timestamp without time zone, --出厂日期
 	"prodSign" character varying(255), --出厂号
-	warranty character varying(255), --质保期
+	warranty timestamp without time zone, --质保期
 	measure character varying(255), --计量单位
-	price bigint, --单价
-	"equipmentTotal" bigint,	--设备总额
+	price character varying(255), --单价
+	"equipmentTotal" character varying(255),	--设备总额
 	retailer character varying(255), --供货商家
 
 	"userId" bigint, --用户ID

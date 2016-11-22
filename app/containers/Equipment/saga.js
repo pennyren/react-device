@@ -17,7 +17,7 @@ function* getEquipments(action) {
 
 		const response = yield call(doPost, '/equipment/getEquipments', props);
 		let {totalPage, list} = response.result;
-		yield put({type: 'GET_EQUIPMENTS', list: list, totalPage, currentPage});
+		yield put({type: 'GET_EQUIPMENTS', list: filterEquipmentInfo(list), totalPage, currentPage});
 	} catch (e) {
 		yield put({type: 'FETCH_FAILED', message: e});
 	}
@@ -47,10 +47,27 @@ function* addEquipment(action) {
 
 function* updateEquipment(action) {
 	try {
-		const {equipment, isGlobal} = action;
+		const {equipment, isGlobal, snackbar} = action;
 		const response = yield call(doPost, 'equipment/update', equipment);
 		const newEquipment = response.result;
+		
+		snackbar && snackbar.open({message: '保存成功!', type: 'success'});
 		yield isGlobal ? put({type: 'UPDATE_CURRENT_EQUIPMENT', equipment: newEquipment}) : put({type: 'UPDATE_EQUIPMENT', equipment: newEquipment});
+	} catch (e) {
+		yield put({type: 'FETCH_FAILED'});
+	}
+}
+
+function* updateEquipmentDetail(action) {
+	try {
+		const {equipment, snackbar} = action;
+		const response = yield call(doPost, 'equipment/updateDetail', equipment);
+		if (!response.success) {
+			snackbar && snackbar.open({message: '该用户名不存在!', type: 'error'});
+		} else {
+			snackbar && snackbar.open({message: '保存成功!', type: 'success'});
+		}
+		
 	} catch (e) {
 		yield put({type: 'FETCH_FAILED'});
 	}
@@ -77,8 +94,32 @@ function* equipmentSaga() {
 		takeEvery('GET_EQUIPMENTS_ASYNC', getEquipments),
 		takeEvery('ADD_EQUIPMENT_ASYNC', addEquipment),
 		takeEvery('UPDATE_EQUIPMENT_ASYNC', updateEquipment),
+		takeEvery('UPDATE_EQUIPMENT_DETAIL_ASYNC', updateEquipmentDetail),
 		takeEvery('DELETE_EQUIPMENTS_ASYNC', deleteEquipments),
 	];
+}
+
+function filterEquipmentInfo(equipments) {
+	const newEquipments = equipments.map((equipment, index) => {
+		const {prodDate, warranty, obtainDate, recordDate, financeVoucherDate} = equipment;
+		if (prodDate) {
+			equipment.prodDate = moment.get(prodDate, 'YYYY-MM-DD');
+		}
+		if (warranty) {
+			equipment.warranty = moment.get(warranty, 'YYYY-MM-DD');
+		}
+		if (obtainDate) {
+			equipment.obtainDate = moment.get(obtainDate, 'YYYY-MM-DD');
+		}
+		if (recordDate) {
+			equipment.recordDate = moment.get(recordDate, 'YYYY-MM-DD');
+		}
+		if (financeVoucherDate) {
+			equipment.financeVoucherDate = moment.get(financeVoucherDate, 'YYYY-MM-DD');
+		}
+		return equipment;
+	});
+	return newEquipments
 }
 
 function getFilter() {
