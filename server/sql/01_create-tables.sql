@@ -54,3 +54,27 @@ CREATE TABLE equipment
 	agent character varying(255), --经办人
 	CONSTRAINT equipment_pkey PRIMARY KEY ("id")
 );
+
+CREATE TABLE apply
+(
+	id bigserial NOT NULL,
+	"userId" bigint, -- 申请人
+	type character varying(255), --申请类型
+	detail character varying(255), --申请详情
+	"equipmentType" character varying(255), --设备类型
+	"equipmentNumber" character varying(255), --设备编号
+	"approvalUserIds" bigint [], --审批用户IDs
+	"currentApprovalUserId" bigint, --当前审批用户ID
+	"stepInfo" json [], --步骤信息
+	"currentStep" integer, --当前步骤
+	comment character varying(255), --备注
+	CONSTRAINT apply_pkey PRIMARY KEY ("id")
+);
+
+CREATE TABLE history
+(
+);
+
+CREATE TABLE notification
+(
+);

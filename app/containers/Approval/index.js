@@ -23,7 +23,7 @@ class Approval extends Component {
 		return (
 			<div className="approval">
 				
-				<AutoComplete placeholder="hello"/>
+				<Stepper info={info} />
 			</div>
 		)
 	}

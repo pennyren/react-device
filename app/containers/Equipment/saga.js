@@ -98,23 +98,14 @@ function* equipmentSaga() {
 }
 
 function filterEquipmentInfo(equipments) {
+	const dateHandle = ['prodDate', 'warranty', 'obtainDate', 'recordDate', 'financeVoucherDate'];
 	const newEquipments = equipments.map((equipment, index) => {
-		const {prodDate, warranty, obtainDate, recordDate, financeVoucherDate} = equipment;
-		if (prodDate) {
-			equipment.prodDate = moment.get(prodDate, 'YYYY-MM-DD');
-		}
-		if (warranty) {
-			equipment.warranty = moment.get(warranty, 'YYYY-MM-DD');
-		}
-		if (obtainDate) {
-			equipment.obtainDate = moment.get(obtainDate, 'YYYY-MM-DD');
-		}
-		if (recordDate) {
-			equipment.recordDate = moment.get(recordDate, 'YYYY-MM-DD');
-		}
-		if (financeVoucherDate) {
-			equipment.financeVoucherDate = moment.get(financeVoucherDate, 'YYYY-MM-DD');
-		}
+		dateHandle.forEach((prop) => {
+			const val = equipment[prop];
+			if (val) {
+				equipment[prop] = moment.get(val, 'YYYY-MM-DD');
+			}
+		});
 		return equipment;
 	});
 	return newEquipments

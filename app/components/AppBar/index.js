@@ -8,6 +8,7 @@ import Drawer from 'components/Drawer';
 import Radio from 'components/Radio';
 import Dialog from 'components/Dialog';
 import getPropsFromInputs from 'utils/form';
+import fetch from 'utils/fetch';
 import {index} from 'utils/dom';
 import {history} from 'routes';
 import styles from './styles.css';
@@ -45,13 +46,18 @@ class ApplyDialog extends Component {
 	onConfirm = (dialogContent) => {
 		const isPurchased = this.state.isPurchased;
 		const apply = getPropsFromInputs(dialogContent);
+		//@todo
+		apply.userId = 1;
 		if (isPurchased && !apply.detail) {
-			this.snackbar.open('请输入你要购买的设备详情!');
+			this.snackbar.open({message: '请输入你要购买的设备详情!', type: 'warning'});
 			return;
-		} else if (!isPurchased && !apply.deviceNumber) {
-			this.snackbar.open('请输入设备编号!');
+		} else if (!isPurchased && !apply.equipmentNumber) {
+			this.snackbar.open({message: '请输入设备号!', type: 'warning'});
 			return;
 		}
+		fetch.doPost('apply/add', {apply: apply}).then((data) => {
+			console.log(data);
+		});
 	}
 
 	getDialogContent() {
@@ -60,14 +66,14 @@ class ApplyDialog extends Component {
 				<div className="change-content">
 					<div className="select-equipment">
 	            		<Radio 
-	            			name="deviceType" 
+	            			name="equipmentType" 
 	            			value="耗材" 
 	            			defaultChecked={true}
 	            			onChecked={this.onChecked}
 	            			ref={r => this.generalRadio = r}
 	            		/>
 	            		<Radio
-	            			name="deviceType" 
+	            			name="equipmentType" 
 	            			value="固定资产" 
 	            			onChecked={this.onChecked}
 	            			ref={r => this.assetRadio = r}
@@ -81,14 +87,14 @@ class ApplyDialog extends Component {
 		} else {
 			return (
 				<div className="change-content">
-					<TextField name="deviceNumber" placeholder="设备编号" />
+					<TextField name="equipmentNumber" placeholder="设备编号" />
 				</div>
 			)
 		}
 	}
 
 	render() {
-		const menuItems =['购买', '领用', '退还', '维修', '维护'];
+		const menuItems = ['购买', '领用', '退还', '维修', '维护'];
 		
 		return (
 			<Dialog
@@ -98,9 +104,7 @@ class ApplyDialog extends Component {
             >
             	<SelectField name="type" menuItems={menuItems} onChange={this.onChange} />
             	{this.getDialogContent()}
-            	<Snackbar 
-	                type="warning"
-                    ref={r => this.snackbar = r}
+            	<Snackbar ref={r => this.snackbar = r}
                 />
             </Dialog>
 		)
