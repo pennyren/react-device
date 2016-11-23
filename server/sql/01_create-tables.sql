@@ -65,16 +65,31 @@ CREATE TABLE apply
 	"equipmentNumber" character varying(255), --设备编号
 	"approvalUserIds" bigint [], --审批用户IDs
 	"currentApprovalUserId" bigint, --当前审批用户ID
-	"stepInfo" json [], --步骤信息
+	"stepInfo" json, --步骤信息
 	"currentStep" integer, --当前步骤
 	comment character varying(255), --备注
 	CONSTRAINT apply_pkey PRIMARY KEY ("id")
 );
 
-CREATE TABLE history
-(
-);
-
 CREATE TABLE notification
 (
+	id bigserial NOT NULL,
+	"acceptUserId" bigint, --接受通知人
+	"makeUserId" bigint, --产生通知人
+	type character varying(255)， --类型 通过、未通过、审批
+	content character varying(255)，--消息内容
+	read boolean, --是否已读
+	ctime timestamp without time zone, --创建时间
+	CONSTRAINT notification_pkey PRIMARY KEY ("id")
 );
+
+CREATE TABLE history
+(
+	id bigserial NOT NULL,
+	"userId" bigint,
+	"equipmentId" bigint,
+	content character varying(255),
+	ctime timestamp without time zone, --创建时间
+	CONSTRAINT history_pkey PRIMARY KEY ("id")
+);
+

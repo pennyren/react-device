@@ -27,7 +27,8 @@ applyRoute.post('/add', async (req, res) => {
 });
 
 function getInitStepInfoJSON(type) {
-	const applyType = ['购买', '领用', '退还', '维修', '维护'];
+	const applyType = ['购买', '维修', '领用', '维护', '退还'];
+
 	switch(applyType.indexOf(type)) {
 		
 	}
