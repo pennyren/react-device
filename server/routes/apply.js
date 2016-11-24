@@ -8,10 +8,26 @@ const applyDao = new ApplyDao();
 const equipmentDao = new EquipmentDao();
 const userDao = new UserDao();
 
-const getStepInfoJSON = (type, isFixedAsset) => {
-	const applyType = ['购买', '维修', '领用', '维护', '退还'];
+const applyType = ['购买', '维修', '领用', '维护', '退还'];
+const approval = {
+	most: {
+		roles: ['主任', '系统管理员', '经费管理员', '院长'],
+		flows: ['科室审批', '管理员审批', '经费管理员审批', '院长审批']
+	},
+	middle: {
+		roles: ['系统管理员', '经费管理员'],
+		flows: ['管理员审批', '经费管理员审批']
+	},
+	lease: {
+		roles: ['系统管理员'],
+		flows: ['管理员审批']
+	}
+}
+
+const getStepInfo = (type, isFixedAsset) => {
 	const infoStatus = ['unread', 'disabled'];
-	const infoFlowOne = ['科室审批', '管理员审批', '经费管理员审批', '院长审批'].map((flow, index) => {
+	const typeIndex = applyType.indexOf(type);
+	const mostInfoFlow = approval.most.flows.map((flow, index) => {
 		const status = index == 0 ? infoStatus[0] : infoStatus[1];
 		return {
 			title: flow,
@@ -19,7 +35,7 @@ const getStepInfoJSON = (type, isFixedAsset) => {
 			content: ''
 		}
 	});
-	const infoFlowTwo = ['管理员审批', '经费管理员审批'].map((flow, index) => {
+	const middleInfoFlow = approval.middle.flows.map((flow, index) => {
 		const status = index == 0 ? infoStatus[0] : infoStatus[1];
 		return {
 			title: flow,
@@ -27,28 +43,26 @@ const getStepInfoJSON = (type, isFixedAsset) => {
 			content: ''
 		}
 	});
-	const infoFlowThr = [{
+	const leastInfoFlow = [{
 		title: '管理员审批',
 		status: 'unread',
 		content: ''
 	}];
-	
-	const typeIndex = applyType.indexOf(type);
 	if (typeIndex < 2) {
-		return JSON.stringify(infoFlowOne);
+		return JSON.stringify(mostInfoFlow);
 	} else if (typeIndex == 2) {
-		return isFixedAsset ? JSON.stringify(infoFlowTwo) : JSON.stringify(infoFlowThr);
+		return isFixedAsset ? JSON.stringify(middleInfoFlow) : JSON.stringify(leastInfoFlow);
 	} else {
-		return JSON.stringify(infoFlowThr); 
+		return JSON.stringify(leastInfoFlow); 
 	}
 }
 
 const getUserIds = async (type) => {
-
+	const typeIndex = applyType.indexOf(type);
 }
 
 const getCurrentUserId = async (type) => {
-
+	const typeIndex = applyType.indexOf(type);
 }
 
 const applyRoute = express.Router();
@@ -56,7 +70,7 @@ const applyRoute = express.Router();
 applyRoute.post('/add', async (req, res) => {
 	const {apply} = req.body;
 	const {type, equipmentNumber} = apply;
-	const isFixedAsset = false;
+	let isFixedAsset = false;
 
 	if (equipmentNumber) {
 		const equipment = await equipmentDao.findEquipmentBySerialNumber(equipmentNumber);
@@ -71,7 +85,7 @@ applyRoute.post('/add', async (req, res) => {
 	apply.currentStep = 1;
 	apply.approvalUserIds = await getUserIds(type);
 	apply.currentApprovalUserId = await getCurrentUserId(type);
-	apply.stepInfo = getStepInfoJSON(type, isFixedAsset);
+	apply.stepInfo = getStepInfo(type, isFixedAsset);
 	
 	res.send(resetResponse(true, {apply: apply}));
 });

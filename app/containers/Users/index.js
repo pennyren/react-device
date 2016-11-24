@@ -33,7 +33,6 @@ class UserDialog extends Component {
 	onConfirm = (dialogContent) => {
 		const user = getPropsFromInputs(dialogContent);
 		const isEdit = this.state.isEdit;
-		user.role = getEnumVal('userRole', user.role);
 		if (isEdit) {
 			user.utime = moment.get();
 			store.dispatch({type: 'UPDATE_USER_ASYNC', user: {id: this.state.user.id, entity: user}})

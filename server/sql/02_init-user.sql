@@ -1,1 +1,1 @@
-INSERT INTO "user" (username, pwd, role) VALUES ('admin', 'manager', '管理员');
+INSERT INTO "user" (username, pwd, role) VALUES ('admin', 'manager', '系统管理员');

@@ -88,8 +88,7 @@ function* userSaga() {
 
 function filterUserInfo(users) {
 	const newUsers = users.map((user, index) => {
-		const {role, ctime} = user;
-		user.role = getEnumVal('userRole', role);
+		const {ctime} = user;
 		user.ctime = moment.get(ctime, 'YYYY-MM-DD');
 		return user;
 	});
