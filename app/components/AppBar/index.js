@@ -11,6 +11,7 @@ import getPropsFromInputs from 'utils/form';
 import fetch from 'utils/fetch';
 import {index} from 'utils/dom';
 import {history} from 'routes';
+import moment from 'utils/date';
 import styles from './styles.css';
 
 class ApplyDialog extends Component {
@@ -48,6 +49,7 @@ class ApplyDialog extends Component {
 		const apply = getPropsFromInputs(dialogContent);
 		//@todo
 		apply.userId = 1;
+		apply.ctime = moment.get();
 		if (isPurchased && !apply.detail) {
 			this.snackbar.open({message: '请输入你要购买的设备详情!', type: 'warning'});
 			return;
@@ -56,7 +58,11 @@ class ApplyDialog extends Component {
 			return;
 		}
 		fetch.doPost('apply/add', {apply: apply}).then((data) => {
-			console.log(data);
+			const {result, success} = data;
+			if (success) {
+				this.dialog.close();                
+				this.snackbar.open({message: '您的申请已发送, 请静候佳音!', type: 'success'});
+			}
 		});
 	}
 
@@ -97,16 +103,18 @@ class ApplyDialog extends Component {
 		const menuItems = ['购买', '领用', '退还', '维修', '维护'];
 		
 		return (
-			<Dialog
-                customClassName="apply-dialog"
-                onConfirm={this.onConfirm}
-                ref={r => this.dialog = r}
-            >
-            	<SelectField name="type" menuItems={menuItems} onChange={this.onChange} />
-            	{this.getDialogContent()}
-            	<Snackbar ref={r => this.snackbar = r}
-                />
-            </Dialog>
+			<div>
+				<Dialog
+	                customClassName="apply-dialog"
+	                onConfirm={this.onConfirm}
+	                ref={r => this.dialog = r}
+	            >
+	            	<SelectField name="type" menuItems={menuItems} onChange={this.onChange} />
+	            	{this.getDialogContent()}
+            	</Dialog>
+            	<Snackbar ref={r => this.snackbar = r} />
+			</div>
+			
 		)
 	}
 }

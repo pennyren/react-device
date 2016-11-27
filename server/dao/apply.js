@@ -7,4 +7,4 @@ class ApplyDao extends BaseDao {
 	}
 }
 
-export default BaseDao;
+export default ApplyDao;

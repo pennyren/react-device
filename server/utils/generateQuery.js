@@ -10,7 +10,13 @@ function getEntityMap(entity, isMap = true) {
 	const hyphenateRE = /([a-z\d])([A-Z])/;
 	const keys = Object.keys(entity);
 	const values = keys.map((key, index) => {
-		const finalVal = typeof entity[key] == 'string' ? `'${entity[key]}'` : entity[key];
+		const val = entity[key];
+		let finalVal = val;
+		if (typeof val == 'string') {
+			finalVal = `'${val}'`
+		} else if (Array.isArray(val)) {
+			finalVal = `array [${val.join(', ')}]`;
+		}
 		hyphenateRE.test(key) && (keys[index] = `"${key}"`);
 		return isMap ? `${keys[index]} = ${finalVal}` : finalVal;
 	});

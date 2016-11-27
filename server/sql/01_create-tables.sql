@@ -67,6 +67,7 @@ CREATE TABLE apply
 	"currentApprovalUserId" bigint, --当前审批用户ID
 	"stepInfo" json, --步骤信息
 	"currentStep" integer, --当前步骤
+	ctime timestamp without time zone, --创建时间
 	comment character varying(255), --备注
 	CONSTRAINT apply_pkey PRIMARY KEY ("id")
 );

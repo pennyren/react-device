@@ -18,13 +18,14 @@ const approval = {
 		roles: ['系统管理员', '经费管理员'],
 		flows: ['管理员审批', '经费管理员审批']
 	},
-	lease: {
+	least: {
 		roles: ['系统管理员'],
 		flows: ['管理员审批']
 	}
 }
 
-const getStepInfo = (type, isFixedAsset) => {
+const getFinalApply = async (apply, isFixedAsset) => {
+	const {type} = apply;
 	const infoStatus = ['unread', 'disabled'];
 	const typeIndex = applyType.indexOf(type);
 	const mostInfoFlow = approval.most.flows.map((flow, index) => {
@@ -48,32 +49,36 @@ const getStepInfo = (type, isFixedAsset) => {
 		status: 'unread',
 		content: ''
 	}];
+	apply.currentStep = 1;
+
 	if (typeIndex < 2) {
-		return JSON.stringify(mostInfoFlow);
+		apply.stepInfo = JSON.stringify(mostInfoFlow);
+		apply.approvalUserIds = await userDao.findIdsByRoles(approval.most.roles);
 	} else if (typeIndex == 2) {
-		return isFixedAsset ? JSON.stringify(middleInfoFlow) : JSON.stringify(leastInfoFlow);
+		if (isFixedAsset) {
+			apply.stepInfo = JSON.stringify(middleInfoFlow);
+			apply.approvalUserIds = await userDao.findIdsByRoles(approval.middle.roles);
+		} else {
+			apply.stepInfo = JSON.stringify(leastInfoFlow);
+			apply.approvalUserIds = await userDao.findIdsByRoles(approval.least.roles);
+		}
 	} else {
-		return JSON.stringify(leastInfoFlow); 
+		apply.stepInfo = JSON.stringify(leastInfoFlow);
+		apply.approvalUserIds = await userDao.findIdsByRoles(approval.least.roles);
 	}
-}
 
-const getUserIds = async (type) => {
-	const typeIndex = applyType.indexOf(type);
-}
-
-const getCurrentUserId = async (type) => {
-	const typeIndex = applyType.indexOf(type);
+	apply.currentApprovalUserId = apply.approvalUserIds[0];
+	return apply;
 }
 
 const applyRoute = express.Router();
 
 applyRoute.post('/add', async (req, res) => {
 	const {apply} = req.body;
-	const {type, equipmentNumber} = apply;
 	let isFixedAsset = false;
 
-	if (equipmentNumber) {
-		const equipment = await equipmentDao.findEquipmentBySerialNumber(equipmentNumber);
+	if (apply.equipmentNumber) {
+		const equipment = await equipmentDao.findEquipmentBySerialNumber(apply.equipmentNumber);
 		if (!equipment) {
 			res.send(resetResponse(false));
 			return;
@@ -82,12 +87,9 @@ applyRoute.post('/add', async (req, res) => {
 		}
 	}
 
-	apply.currentStep = 1;
-	apply.approvalUserIds = await getUserIds(type);
-	apply.currentApprovalUserId = await getCurrentUserId(type);
-	apply.stepInfo = getStepInfo(type, isFixedAsset);
-	
-	res.send(resetResponse(true, {apply: apply}));
+	const finalApply =  await getFinalApply(apply, isFixedAsset);
+	const newApply = await applyDao.create(finalApply);
+	res.send(resetResponse(true, {apply: newApply}));
 });
 
 export default applyRoute;

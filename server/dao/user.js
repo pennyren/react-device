@@ -29,6 +29,15 @@ class UserDao extends BaseDao {
 		const result = await executeQuery(sql);
 		return result.rows[0];
 	}
+
+	findIdsByRoles = async (roles) => {
+		const values = roles.map((role, index) => `('${role}', ${index + 1})`);
+		const sql = `select u.id from "user" u join (values ${values.join(', ')}) as v (role, ordering) on u.role = v.role order by v.ordering`;
+		const result = await executeQuery(sql);
+		let ids = [];
+		result.rows.forEach((row) => ids.push(+row.id));
+		return ids;
+	}
 }
 
 export default UserDao;
