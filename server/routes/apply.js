@@ -2,10 +2,12 @@ import express from 'express';
 import ApplyDao from '../dao/apply';
 import EquipmentDao from '../dao/equipment';
 import UserDao from '../dao/user';
+import NotificationDao from '../dao/notification';
 import resetResponse from '../utils/response';
 
 const applyDao = new ApplyDao();
 const equipmentDao = new EquipmentDao();
+const notificationDao = new NotificationDao();
 const userDao = new UserDao();
 
 const applyType = ['购买', '维修', '领用', '维护', '退还'];
@@ -75,20 +77,36 @@ const applyRoute = express.Router();
 
 applyRoute.post('/add', async (req, res) => {
 	const {apply} = req.body;
+	const {type, equipmentNumber, userId} = apply;
 	let isFixedAsset = false;
-
-	if (apply.equipmentNumber) {
-		const equipment = await equipmentDao.findEquipmentBySerialNumber(apply.equipmentNumber);
+	let equipment = null;
+	let equipmentContent = '';
+	if (equipmentNumber) {
+		equipment = await equipmentDao.findEquipmentBySerialNumber(equipmentNumber);
 		if (!equipment) {
 			res.send(resetResponse(false));
 			return;
 		} else {
 			isFixedAsset = equipment.type == '固定资产' ? true : false;
+			equipmentContent = equipment.name + ' ' + equipment.version;
 		}
 	}
 
+	const user = await userDao.get(userId);
 	const finalApply =  await getFinalApply(apply, isFixedAsset);
+	
+	const finalNotification = {
+		acceptUserId: finalApply.currentApprovalUserId,
+		makeUserId: finalApply.userId,
+		type: '审批',
+		content: `${user.username} 申请${type} ${equipmentNumber ? equipmentContent : '新设备'}`,
+		read: false,
+		ctime: finalApply.ctime
+	}
+
 	const newApply = await applyDao.create(finalApply);
+	const newNotification = await notificationDao.create(finalNotification);
+
 	res.send(resetResponse(true, {apply: newApply}));
 });
 

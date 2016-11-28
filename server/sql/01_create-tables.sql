@@ -80,6 +80,7 @@ CREATE TABLE notification
 	type character varying(255), --类型 通过、未通过、审批
 	content character varying(255), --消息内容
 	read boolean, --是否已读
+	recieve boolean, --是否接受
 	ctime timestamp without time zone, --创建时间
 	CONSTRAINT notification_pkey PRIMARY KEY ("id")
 );

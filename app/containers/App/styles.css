@@ -182,4 +182,7 @@ ul {
 	&.mdi-save:before {
 		content: '\f193';
 	}
+	&.mdi-bullhorn:before {
+		content: '\f0e6';
+	}
 }

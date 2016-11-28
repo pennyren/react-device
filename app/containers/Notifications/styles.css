@@ -15,29 +15,18 @@
    		color: #909090;
 	}
 	& .tool-bar {
-		& .mark {
-			position: relative;
-			float: right;
-			margin-right: 16px;
-			padding: 5px 16px;
-			outline: none;
-			border-radius: 2px;
-    		border-style: none;
-    		font-size: 1.4rem;
-    		font-family: inherit;
-    		background: none;
-   	 		cursor: pointer;
-   	 		color: #999999;
-   	 		transform: translateY(-5px);
-   	 		transition: background 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms, color 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
-   	 		&:hover {
-   	 			color: #555555;
-   	 			background: rgba(153, 153, 153, 0.2);
-   	 		}
-   	 		& .mdi {
-   	 			font-weight: bold;
-   	 			margin-right: 3px;
-   	 		}
+		& .title-bar {
+			font-weight: 600;
+			color: #555;
+		}
+		& .flat-btn {
+			color: #666;
+		    float: right;
+		    font-size: 1.2rem;
+		    height: 20px;
+		    line-height: 20px;
+		    padding: 0 8px;
+		    letter-spacing: 1px;
 		}
 	}
 	& .message {

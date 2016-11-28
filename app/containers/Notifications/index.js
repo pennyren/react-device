@@ -1,52 +1,43 @@
 import React, {Component} from 'react';
 import Ripple from 'components/Ripple';
-import Button from 'components/Button';
+import FlatButton from 'components/FlatButton';
+import {connect} from 'react-redux';
+import store from 'store';
 import styles from './styles.css';
 
 class Notifications extends Component {
-	activeLink = (e) => {
-		const el = e.currentTarget;
-		const next = el.nextElementSibling;
-		const prev = el.previousElementSibling;
-		if (!el.classList.contains('active')) {
-			el.classList.add('active');
-			next.classList.contains('link') ? next.classList.remove('active') : 
-				prev.classList.remove('active');
-		}
+	componentDidMount() {
+		store.dispatch({type: 'GET_NOTIFICATIONS_ASYNC'});
 	}
 
 	render() {
-		console.log(this.props);
+		const {notifications} = this.props;
+		
+		const items = notifications.map((notification, index) => {
+			return (
+				<li className="item"></li>
+			)
+		})
+
 		return (
 			<div className="notifications">
 				<h2 className="title">我的提醒</h2>
 				<div className="tool-bar">
-					<a className="link active" 
-					   href="#/notifications" 
-					   onClick={this.activeLink} 
-					   style={{'borderRight': '1px solid #d9d9d9'}}>
-						全部提醒
-						<Ripple color="#bababa"/>
-					</a>
-					<a className="link" href="#/notifications?unread=true" onClick={this.activeLink}>
-						未读提醒
-						<Ripple color="#bababa"/>
-					</a>
-					<button className="mark">
-						<i className="mdi mdi-check"></i>
-						全部标记为已读
-						<Ripple color="#bababa"/>
-					</button>
+					<span className="title-bar">通知提醒</span>
+					<FlatButton>全部标记为已读</FlatButton>
 				</div>
 				<ul className="message">
-					<li className="item"></li>
-					<li className="item"></li>
-					<li className="item"></li>
-					<li className="item"></li>
+					{items}
 				</ul>
 			</div>
 		)
 	}
 }
 
-export default Notifications;
+const mapStateToProps = function(store) {
+	return {
+		notifications: store.notifications
+	}
+}
+
+export default connect(mapStateToProps)(Notifications);
