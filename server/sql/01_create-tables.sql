@@ -77,6 +77,7 @@ CREATE TABLE notification
 	id bigserial NOT NULL,
 	"acceptUserId" bigint, --接受通知人
 	"makeUserId" bigint, --产生通知人
+	"applyId" bigint,
 	type character varying(255), --类型 通过、未通过、审批
 	content character varying(255), --消息内容
 	read boolean, --是否已读

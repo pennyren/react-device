@@ -17,29 +17,30 @@ import moment from 'utils/date';
 import styles from './styles.css';
 
 class NotificationPopover extends Component {
-	open = () => {
-		this.popover.classList.add('show');
+	toggle = () => {
+		this.popover.classList.toggle('show');
 	}
 
 	close = () => {
 		this.popover.classList.remove('show');
 	}
 
-	isOpen = () => {
-		return this.popover.classList.contains('show');
+	seeAll = () => {
+		this.popover.classList.remove('show');
+		history.push('/notifications');
 	}
 
 	render() {
 		return (
-			<ClickAway onClickAway={this.close} hierarchy={0}>
+			<ClickAway onClickAway={this.close} hierarchy={1}>
 				<div className="notification-popover" ref={r => this.popover = r}>
 					<div className="header">
 						<i className="mdi mdi-bullhorn"></i>
 					</div>
-					<ul className="message">
+					<ul className="messages">
 					</ul>
 					<div className="footer">
-						<FlatButton>查看全部<i className="mdi mdi-double-right"></i></FlatButton>
+						<FlatButton onClick={this.seeAll}>查看全部<i className="mdi mdi-double-right"></i></FlatButton>
 					</div>
 				</div>
 			</ClickAway>
@@ -154,9 +155,7 @@ class ApplyDialog extends Component {
 
 class AppBar extends Component {
 	showNotification = () => {
-		const notification = this.notificationPopover;
-		const isShow = notification.isOpen();
-		isShow ? notification.close() : notification.open();
+		this.notificationPopover.toggle();
 	}
 	
 	openDrawer = () => {
@@ -222,18 +221,21 @@ class AppBar extends Component {
 							color="#b4c5cd"
 							onClick={this.onApply}
 						/>
-						<IconButton 
-							icon="mdi-bell" 
-							color="#b4c5cd"  
-							hasBadge={true}
-							onClick={this.showNotification}
-						/>
+						<div className="message-wrapper">
+							<IconButton 
+								icon="mdi-bell" 
+								color="#b4c5cd"  
+								hasBadge={true}
+								onClick={this.showNotification}
+							/>
+							<NotificationPopover ref={r => this.notificationPopover = r}/>
+						</div>
+						
 						<IconPopover 
 							menuItems={this.getAccountMenu()}
 							onClose={this.manageAccount}
 							icon="mdi-account-circle"
 						/>
-						<NotificationPopover ref={r => this.notificationPopover = r}/>
 					</div>
 				</header>
 

@@ -39,6 +39,12 @@
     				transform: translateY(3px);
 				}
 			}
+
+			& .message-wrapper {
+				display: inline-block;
+				margin-right: 16px;
+			}
+
 			& .notification-popover {
 				position: absolute;
 				right: 80px;
@@ -58,6 +64,9 @@
     					line-height: 40px;
     					color: #39b881;
 					}
+				}
+				& .messages {
+					height: calc(100% - 74px);
 				}
 				& .footer {
 					position: absolute;	

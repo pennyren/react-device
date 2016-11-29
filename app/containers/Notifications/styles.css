@@ -38,6 +38,32 @@
    			margin-bottom: 1px;
     		border-bottom: 1px solid #eeeeee;
     		height: 42px;
+    		color: #555;
+    		&.unread {
+    			background-color: #eee;
+    		}
+    		& .mdi {
+    			margin-right: 10px;
+    			color: #39b881;
+    			font-size: 1.8rem;
+    			transform: translateY(2px);
+    		}
+    		& .mdi-record {
+    			font-size: 1.2rem;
+    			transform: none;
+    		}
+    		& .apply-link {
+    			margin: 0 10px;
+    			color: #39b881;
+		    	text-decoration: none;
+		    	&:hover {
+		    		text-decoration: underline;
+		    	}
+    		}
+    		& .time {
+    			color: #999;
+    			float: right;
+    		}
     	}
 	}
 }

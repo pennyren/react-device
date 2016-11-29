@@ -1,9 +1,10 @@
 import userSaga from 'containers/Users/saga';
 import equipmentSaga from 'containers/Equipment/saga';
 import notificationSaga from 'containers/Notifications/saga';
+import approvalSaga from 'containers/Approval/saga';
 
 function* appSagas() {
-	yield [userSaga(), equipmentSaga(), notificationSaga()];
+	yield [userSaga(), equipmentSaga(), notificationSaga(), approvalSaga()];
 }
 
 export default appSagas;

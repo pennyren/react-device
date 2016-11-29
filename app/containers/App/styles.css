@@ -185,4 +185,7 @@ ul {
 	&.mdi-bullhorn:before {
 		content: '\f0e6';
 	}
+	&.mdi-record:before {
+		content: '\f44a';
+	}
 }

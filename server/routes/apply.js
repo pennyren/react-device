@@ -94,17 +94,18 @@ applyRoute.post('/add', async (req, res) => {
 
 	const user = await userDao.get(userId);
 	const finalApply =  await getFinalApply(apply, isFixedAsset);
-	
+	const newApply = await applyDao.create(finalApply);
+
 	const finalNotification = {
 		acceptUserId: finalApply.currentApprovalUserId,
 		makeUserId: finalApply.userId,
+		applyId: newApply.id,
 		type: '审批',
-		content: `${user.username} 申请${type} ${equipmentNumber ? equipmentContent : '新设备'}`,
+		content: `${user.username}|申请了${type}|${equipmentNumber ? equipmentContent : '新设备'}`,
 		read: false,
+		recieve: false,
 		ctime: finalApply.ctime
 	}
-
-	const newApply = await applyDao.create(finalApply);
 	const newNotification = await notificationDao.create(finalNotification);
 
 	res.send(resetResponse(true, {apply: newApply}));

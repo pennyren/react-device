@@ -10,6 +10,7 @@ import Setting from'containers/Setting';
 import Notifications from'containers/Notifications';
 import Approval from 'containers/Approval';
 import EditEquipment from 'containers/EditEquipment';
+import DoneApproval from 'containers/DoneApproval';
 
 const routes = (
 	<Route path="/" component={App}>
@@ -24,6 +25,7 @@ const routes = (
 			<Route path="/notifications" component={Notifications} />
 			<Route path="/approval" component={Approval} />
 			<Route path="/equipment/:id" component={EditEquipment} />
+			<Route path="/approval/:id" component={DoneApproval} />
 		</Route>
 	</Route>
 );

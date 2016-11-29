@@ -1,6 +1,13 @@
 function getConditionQuery(filter) {
+	const hyphenateRE = /([a-z\d])([A-Z])/;
 	if (filter) {
-		const filterMap = filter.map((item) => item.key + item.operator + item.val);
+		const filterMap = filter.map((item) => {
+			let key = item.key;
+			const operator = item.operator;
+			const val = item.val;
+			hyphenateRE.test(key) && (key = `"${key}"`);
+			return key + operator + val;
+		});
 		filter = 'where ' + filterMap.join(' and ');
 	}
 	return filter;
