@@ -40,7 +40,7 @@
     		height: 42px;
     		color: #555;
     		&.unread {
-    			background-color: #eee;
+    			background-color: #fff9ea;
     		}
     		& .mdi {
     			margin-right: 10px;
@@ -51,6 +51,7 @@
     		& .mdi-record {
     			font-size: 1.2rem;
     			transform: none;
+    			color: #f5a623;
     		}
     		& .apply-link {
     			margin: 0 10px;
