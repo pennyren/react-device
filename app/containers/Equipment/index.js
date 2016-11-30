@@ -119,8 +119,10 @@ class Equipment extends Component {
 		this.equipmentDialog.open({isEdit: true, title: '修改设备', equipment: currentEquipment});
 	}
 
-	seeHistory = () => {
-		
+	seeHistory = (e) => {
+		const currentRow = closest(e.currentTarget, '.row');
+		const id = +currentRow.getAttribute('data-id');
+		history.push(`equipment/${id}/history`);
 	}
 
 	makeColumns = (row, prop) => {

@@ -188,4 +188,7 @@ ul {
 	&.mdi-record:before {
 		content: '\f44a';
 	}
+	&.mdi-history:before {
+		content: '\f2da';
+	}
 }

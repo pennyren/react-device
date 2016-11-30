@@ -16,20 +16,12 @@ class EditEquipment extends Component {
 		const id = +this.props.params.id;
 		const infoBox = closest(e.currentTarget, '.box-info');
 		const props = getPropsFromInputs(infoBox);
-		if (!props.username) {
-			store.dispatch({
-				type: 'UPDATE_EQUIPMENT_ASYNC', 
-				equipment: {id: id, entity: props},
-				isGlobal: true,
-				snackbar: this.snackbar
-			});
-		} else {
-			store.dispatch({
-				type: 'UPDATE_EQUIPMENT_DETAIL_ASYNC', 
-				equipment: {id: id, entity: props},
-				snackbar: this.snackbar
-			});
-		}
+		store.dispatch({
+			type: 'UPDATE_EQUIPMENT_ASYNC', 
+			equipment: {id: id, entity: props},
+			isGlobal: true,
+			snackbar: this.snackbar
+		});
 	}
 
 	onFilter = (val, onChange) => {

@@ -48,24 +48,15 @@ function* addEquipment(action) {
 function* updateEquipment(action) {
 	try {
 		const {equipment, isGlobal, snackbar} = action;
-		const response = yield call(doPost, 'equipment/update', equipment);
-		const newEquipment = response.result;
-		snackbar && snackbar.open({message: '保存成功!', type: 'success'});
-		yield !isGlobal && put({type: 'UPDATE_EQUIPMENT', equipment: newEquipment});
-	} catch (e) {
-		yield put({type: 'FETCH_FAILED'});
-	}
-}
-
-function* updateEquipmentDetail(action) {
-	try {
-		const {equipment, snackbar} = action;
-		const response = yield call(doPost, 'equipment/updateDetail', equipment);
+		const response = yield call(doPost, 'equipment/updateEquipment', equipment);
 		if (!response.success) {
 			snackbar && snackbar.open({message: '该用户名不存在!', type: 'error'});
-		} else {
+			return;
+		} 
+		if (isGlobal) {
 			snackbar && snackbar.open({message: '保存成功!', type: 'success'});
 		}
+		yield !isGlobal && put({type: 'UPDATE_EQUIPMENT', equipment: response.result.equipment});
 	} catch (e) {
 		yield put({type: 'FETCH_FAILED'});
 	}
@@ -92,8 +83,7 @@ function* equipmentSaga() {
 		takeEvery('GET_EQUIPMENTS_ASYNC', getEquipments),
 		takeEvery('ADD_EQUIPMENT_ASYNC', addEquipment),
 		takeEvery('UPDATE_EQUIPMENT_ASYNC', updateEquipment),
-		takeEvery('UPDATE_EQUIPMENT_DETAIL_ASYNC', updateEquipmentDetail),
-		takeEvery('DELETE_EQUIPMENTS_ASYNC', deleteEquipments),
+		takeEvery('DELETE_EQUIPMENTS_ASYNC', deleteEquipments)
 	];
 }
 
