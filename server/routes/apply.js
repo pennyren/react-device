@@ -111,4 +111,10 @@ applyRoute.post('/add', async (req, res) => {
 	res.send(resetResponse(true, {apply: newApply}));
 });
 
+applyRoute.post('/getOffsetList', async (req, res) => {
+	const {filter, currentCount} = req.body;
+	const approvals = await applyDao.getOffsetList(filter, currentCount);
+	res.send(resetResponse(true, {approvals}));
+});
+
 export default applyRoute;

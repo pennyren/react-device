@@ -18,11 +18,40 @@ function* getNotifications(action) {
 	}
 }
 
-      
+function* clearNotifications(action) {
+	try {
+		yield put({type: 'CLEAR_NOTIFICATIONS_NULL'});
+	} catch (e) {
+		yield put({type: 'FETCH_FAILED', message: e});
+	}
+}
+
+function* readNotification(action) {
+	try {
+		yield call(doPost, '/notification/read', {id: action.id});
+	} catch (e) {
+		yield put({type: 'FETCH_FAILED', message: e});
+	}
+}
+
+function* readAllNotification(action) {
+	try {
+		const {ids} = action;
+		const response = yield call(doPost, '/notification/readAll', {ids: action.ids});
+		if (response.success) {
+			yield put({type: 'READ_ALL_TRUE', notifications: makeNotificationsReaded(store.getState().notifications, ids)});
+		}
+	} catch (e) {
+		yield put({type: 'FETCH_FAILED', message: e});
+	}
+}     
 
 function* notificationSaga() {
 	yield [
-		takeEvery('GET_NOTIFICATIONS_ASYNC', getNotifications)
+		takeEvery('GET_NOTIFICATIONS_ASYNC', getNotifications),
+		takeEvery('CLEAR_NOTIFICATIONS', clearNotifications),
+		takeEvery('READ_NOTIFICATION_ASYNC', readNotification),
+		takeEvery('READ_ALL_ASYNC', readAllNotification)
 	];
 }
 
@@ -42,6 +71,16 @@ function filterNotificationsInfo(notifications) {
 		return notification;
 	});
 	return newNotifications
+}
+
+function makeNotificationsReaded(notifications, ids) {
+	return notifications.map((notification, index) => {
+		const id = +notification.id;
+		if (ids.indexOf(id) != -1) {
+			notification.read = true;
+		}
+		return notification;
+	});
 }
 
 export default notificationSaga;

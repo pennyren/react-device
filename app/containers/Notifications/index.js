@@ -2,12 +2,34 @@ import React, {Component} from 'react';
 import Ripple from 'components/Ripple';
 import FlatButton from 'components/FlatButton';
 import {connect} from 'react-redux';
+import {closest} from 'utils/dom';
 import store from 'store';
 import styles from './styles.css';
 
 class Notifications extends Component {
 	componentDidMount() {
 		store.dispatch({type: 'GET_NOTIFICATIONS_ASYNC'}); 
+	}
+
+	componentWillUnmount() {
+		store.dispatch({type: 'CLEAR_NOTIFICATIONS'}); 
+	}
+
+	readNotification = (e) => {
+		const id = +closest(e.currentTarget, '.item').getAttribute('data-id');
+		store.dispatch({type: 'READ_NOTIFICATION_ASYNC', id});
+	}
+
+	readAll = (e) => {
+		const items = this.messageContainer.querySelectorAll('.unread');
+		const ids = [];
+		for (let item of items) {
+			ids.push(+item.getAttribute('data-id'));
+		}
+		if (ids.length == 0) {
+			return;
+		}
+		store.dispatch({type: 'READ_ALL_ASYNC', ids});
 	}
 
 	render() {
@@ -24,7 +46,7 @@ class Notifications extends Component {
 					{!read && <i className="mdi mdi-record" />}
 					<i className={'mdi ' + currentIcon}></i>
 					<span>{newContent[0]}</span>
-					<a href={'#/approval/' + applyId} className="apply-link">{newContent[1]}</a>
+					<a href={'#/approval/' + applyId} className="apply-link" onClick={this.readNotification}>{newContent[1]}</a>
 					<span>{newContent[2]}</span>
 					<span className="time">{ctime}</span>
 				</li>
@@ -36,9 +58,9 @@ class Notifications extends Component {
 				<h2 className="title">我的提醒</h2>
 				<div className="tool-bar">
 					<span className="title-bar">通知提醒</span>
-					<FlatButton>全部标记为已读</FlatButton>
+					<FlatButton onClick={this.readAll}>全部标记为已读</FlatButton>
 				</div>
-				<ul className="message">
+				<ul className="message" ref={r => this.messageContainer = r}>
 					{items}
 				</ul>
 			</div>

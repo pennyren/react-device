@@ -5,6 +5,10 @@ class ApplyDao extends BaseDao {
 	constructor() {
 		super('apply');
 	}
+
+	getOffsetList = async (filter, currentCount) => {
+		
+	}
 }
 
 export default ApplyDao;

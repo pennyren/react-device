@@ -14,6 +14,11 @@ class NotificationDao extends BaseDao {
 		const result = await executeQuery(sql);
 		return result.rows;
 	}
+
+	readAll = async (ids) => {
+		const sql = `update "${this.entity}" set read = true where id in (${ids.join(', ')})`;
+		await executeQuery(sql);
+	}
 }
 
 export default NotificationDao;

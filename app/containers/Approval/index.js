@@ -1,32 +1,27 @@
 import React, {Component} from 'react';
-import Stepper from 'components/Stepper';
-import DatePicker from 'components/DatePicker';
-import AutoComplete from 'components/AutoComplete'
+import {connect} from 'react-redux';
+import store from 'store';
 import styles from './styles.css';
 
 class Approval extends Component {
 	render() {
-		const info = [{
-			title: '科室审批',
-			status: 'agreed',
-			content: '通过'
-		}, {
-			title: '管理员审批',
-			status: 'unread'
-		}, {
-			title: '经费管理员审批',
-			status: 'disagreed'
-		}, {
-			title: '院长审批',
-			status: 'disabled'
-		}];
+		const {list} = this.props;
+		console.log(list);
 		return (
 			<div className="approval">
-				
-				<Stepper info={info} />
+				<h2 className="title">审批</h2>
+				<ul className="list">
+					
+				</ul>
 			</div>
 		)
 	}
 }
 
-export default Approval;
+const mapStateToProps = function(store) {
+	return {
+		list: store.approvals.list
+	}
+}
+
+export default connect(mapStateToProps)(Approval);
