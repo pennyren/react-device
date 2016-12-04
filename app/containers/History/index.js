@@ -7,6 +7,7 @@ class History extends Component {
 	componentDidMount() {
 		store.dispatch({type: 'GET_HISTORY_ASYNC', equipmentId: +this.props.params.id}); 
 	}
+	
 	componentWillUnmount() {
 		store.dispatch({type: 'CLEAR_HISTORY'}); 
 	}

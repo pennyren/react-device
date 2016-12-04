@@ -9,6 +9,12 @@ const approvalsReducer = function(state = initApprovals, action) {
 			return diffApprovalsState(state, {
 				current: action.current
 			});
+		case 'GET_APPROVALS':
+			return diffApprovalsState(state, {
+				list: action.list
+			});
+		case 'CLEAR_APPROVALS_LIST':
+			return {list: []};
 		default:
 			return state;
 	}

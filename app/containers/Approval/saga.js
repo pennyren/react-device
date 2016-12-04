@@ -8,8 +8,27 @@ const {doGet, doPost} = fetch;
 
 function* getCurrentApproval(action) {
 	try {
-		const response = yield call(doGet, '/apply/get', {id: action.id});
-		yield put({type: 'GET_CURRENT_APPROVAL', current: response.result});
+		const response = yield call(doGet, '/apply/getCurrentApproval', {id: action.id});
+		yield put({type: 'GET_CURRENT_APPROVAL', current: response.result.current});
+	} catch (e) {
+		yield put({type: 'FETCH_FAILED', message: e});
+	}
+}
+
+function* getApprovalList(action) {
+	const offset = store.getState().approvals.list.length;
+	const userId = 1;
+	try {
+		const response = yield call(doPost, '/apply/getOffsetList', {userId: userId, offset: offset});
+		yield put({type: 'GET_APPROVALS', list: filterApprovalsInfo(response.result.list)});
+	} catch (e) {
+		yield put({type: 'FETCH_FAILED', message: e});
+	}
+}
+
+function* clearApprovals(action) {
+	try {
+		yield put({type: 'CLEAR_APPROVALS_LIST'});
 	} catch (e) {
 		yield put({type: 'FETCH_FAILED', message: e});
 	}
@@ -17,8 +36,19 @@ function* getCurrentApproval(action) {
 
 function* approvalSaga() {
 	yield [
-		takeEvery('GET_CURRENT_APPROVAL_ASYNC', getCurrentApproval)
+		takeEvery('GET_CURRENT_APPROVAL_ASYNC', getCurrentApproval),
+		takeEvery('GET_APPROVALS_ASYNC', getApprovalList),
+		takeEvery('CLEAR_APPROVALS', clearApprovals)
 	];
+}
+
+function filterApprovalsInfo(approvals) {
+	const newApprovals = approvals.map((approval, index) => {
+		const {ctime} = approval;
+		approval.ctime = moment.get(ctime, 'YYYY-MM-DD HH:MM');
+		return approval;
+	});
+	return newApprovals;
 }
 
 export default approvalSaga;

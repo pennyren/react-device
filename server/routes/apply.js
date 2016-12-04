@@ -111,10 +111,16 @@ applyRoute.post('/add', async (req, res) => {
 	res.send(resetResponse(true, {apply: newApply}));
 });
 
+applyRoute.post('/getCurrentApproval', async (req, res) => {
+	const applyId = +req.body.query.id;
+	const approval = await applyDao.getCurrentApproval(applyId);
+	res.send(resetResponse(true, {current: approval}));
+});
+
 applyRoute.post('/getOffsetList', async (req, res) => {
-	const {filter, currentCount} = req.body;
-	const approvals = await applyDao.getOffsetList(filter, currentCount);
-	res.send(resetResponse(true, {approvals}));
+	const {userId, offset} = req.body;
+	const approvals = await applyDao.getOffsetApprovals(userId, offset);
+	res.send(resetResponse(true, {list: approvals}));
 });
 
 export default applyRoute;
