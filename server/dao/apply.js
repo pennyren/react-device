@@ -22,11 +22,11 @@ class ApplyDao extends BaseDao {
 	getOffsetApprovals = async (userId, offset) => {
 		const sql = `
 			select 
-			a.id, a."currentApprovalUserId", u.username, a.type, a."equipmentNumber" as number, e.name, e.version, a.ctime
+			a.id, a."currentApprovalUserId", a."currentOrderUserIds", u.username, a.type, a."equipmentNumber" as number, e.name, e.version, a.ctime
 			from "apply" a
 			left join "user" u on u.id = a."userId" 
 			left join "equipment" e on a."equipmentNumber" = e."serialNumber"
-			where ${userId} = any (a."approvalUserIds")
+			where ${userId} = any (a."currentOrderUserIds")
 			limit 10 offset ${offset}
 		`;
 		const result = await executeQuery(sql);

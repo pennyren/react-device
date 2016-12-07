@@ -64,6 +64,7 @@ CREATE TABLE apply
 	"equipmentType" character varying(255), --设备类型
 	"equipmentNumber" character varying(255), --设备编号
 	"approvalUserIds" bigint [], --审批用户IDs
+	"currentOrderUserIds" bigint [], -- 当前需审批用户序列
 	"currentApprovalUserId" bigint, --当前审批用户ID
 	"stepInfo" json, --步骤信息
 	"currentStep" integer, --当前步骤

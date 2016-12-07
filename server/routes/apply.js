@@ -68,7 +68,8 @@ const getFinalApply = async (apply, isFixedAsset) => {
 		apply.stepInfo = JSON.stringify(leastInfoFlow);
 		apply.approvalUserIds = await userDao.findIdsByRoles(approval.least.roles);
 	}
-
+	
+	apply.currentOrderUserIds = [apply.approvalUserIds[0]];
 	apply.currentApprovalUserId = apply.approvalUserIds[0];
 	return apply;
 }
