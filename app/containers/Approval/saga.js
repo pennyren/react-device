@@ -34,11 +34,20 @@ function* clearApprovals(action) {
 	}
 }
 
+function* clearCurrentApproval(action) {
+	try {
+		yield put({type: 'CLEAR_APPROVALS_CURRENT'});
+	} catch (e) {
+		yield put({type: 'FETCH_FAILED', message: e});
+	}
+}
+
 function* approvalSaga() {
 	yield [
 		takeEvery('GET_CURRENT_APPROVAL_ASYNC', getCurrentApproval),
 		takeEvery('GET_APPROVALS_ASYNC', getApprovalList),
-		takeEvery('CLEAR_APPROVALS', clearApprovals)
+		takeEvery('CLEAR_APPROVALS', clearApprovals),
+		takeEvery('CLEAR_CURRENT_APPROVAL', clearCurrentApproval)
 	];
 }
 

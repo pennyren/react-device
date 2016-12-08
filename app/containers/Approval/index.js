@@ -1,4 +1,7 @@
 import React, {Component} from 'react';
+import IconButton from 'components/IconButton';
+import {closest} from 'utils/dom';
+import {history} from 'routes';
 import {connect} from 'react-redux';
 import store from 'store';
 import styles from './styles.css';
@@ -10,6 +13,12 @@ class Approval extends Component {
 
 	componentWillUnmount() {
 		store.dispatch({type: 'CLEAR_APPROVALS'}); 
+	}
+
+	seeApproval = (e) => {
+		const item = closest(e.currentTarget, '.item');
+		const id = +item.getAttribute('data-id');
+		history.push(`/approval/${id}`);
 	}
 
 	render() {
@@ -24,9 +33,15 @@ class Approval extends Component {
 			const icon = userId == currentApprovalUserId ? 'mdi-pen' : 'mdi-success'
 			return (
 				<li className="item" key={index} data-id={approval.id}>
-				<i className={'mdi ' + icon}/>
+					<i className={'mdi ' + icon}/>
 					<span className="content">{content}</span>
 					<span className="time">{ctime}</span>
+					<IconButton 
+						icon="mdi-eye" 
+						color="#b4c5cd" 
+						onClick={this.seeApproval} 
+						tooltip={'审查'}
+					/>
 				</li>
 			)
 		})

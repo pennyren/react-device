@@ -16,7 +16,11 @@ class Notifications extends Component {
 	}
 
 	readNotification = (e) => {
-		const id = +closest(e.currentTarget, '.item').getAttribute('data-id');
+		const notification = closest(e.currentTarget, '.item');
+		if (!notification.classList.contains('unread')) {
+			return;
+		}
+		const id = +notification.getAttribute('data-id');
 		store.dispatch({type: 'READ_NOTIFICATION_ASYNC', id});
 	}
 

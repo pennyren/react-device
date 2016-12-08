@@ -89,6 +89,7 @@ applyRoute.post('/add', async (req, res) => {
 			return;
 		} else {
 			isFixedAsset = equipment.type == '固定资产' ? true : false;
+			apply.equipmentType = equipment.type;
 			equipmentContent = equipment.name + ' ' + equipment.version;
 		}
 	}
@@ -112,8 +113,8 @@ applyRoute.post('/add', async (req, res) => {
 	res.send(resetResponse(true, {apply: newApply}));
 });
 
-applyRoute.post('/getCurrentApproval', async (req, res) => {
-	const applyId = +req.body.query.id;
+applyRoute.get('/getCurrentApproval', async (req, res) => {
+	const applyId = +req.query.id;
 	const approval = await applyDao.getCurrentApproval(applyId);
 	res.send(resetResponse(true, {current: approval}));
 });

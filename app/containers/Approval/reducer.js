@@ -14,7 +14,13 @@ const approvalsReducer = function(state = initApprovals, action) {
 				list: action.list
 			});
 		case 'CLEAR_APPROVALS_LIST':
-			return {list: []};
+			return diffApprovalsState(state, {
+				list: []
+			});
+		case 'CLEAR_APPROVALS_CURRENT':
+			return diffApprovalsState(state, {
+				current: {}
+			});
 		default:
 			return state;
 	}

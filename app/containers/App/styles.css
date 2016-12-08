@@ -191,4 +191,13 @@ ul {
 	&.mdi-history:before {
 		content: '\f2da';
 	}
+	&.mdi-time:before {
+		content: '\f0f0';
+	}
+	&.mdi-user-check:before {
+		content: '\f008';
+	}
+	&.mdi-list:before {
+		content: '\f279';
+	}
 }

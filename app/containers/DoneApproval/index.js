@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Stepper from 'components/Stepper';
 import {connect} from 'react-redux';
 import store from 'store';
+import moment from 'utils/date';
 import styles from './styles.css';
 
 class DoneApproval extends Component {
@@ -9,15 +10,50 @@ class DoneApproval extends Component {
 		const applyId = +this.props.params.id;
 		store.dispatch({type: 'GET_CURRENT_APPROVAL_ASYNC', id: applyId}); 
 	}
+
+	componentWillUnmount() {
+		store.dispatch({type: 'CLEAR_CURRENT_APPROVAL'}); 
+	}
+
 	render() {
-		const {currentApproval, params} = this.props;
-		const {stepInfo} = currentApproval;
+		const {currentApproval} = this.props;
 		const isInit = Object.keys(currentApproval).length == 0;
-		console.log(currentApproval);
+		const applyType = ['购买', '领用', '退还', '维修', '维护'];
+		if (isInit) {
+			return null;
+		}
+		currentApproval.ctime = moment.get(currentApproval.ctime, 'YYYY-MM-DD HH:MM');
 		
+		const {stepInfo, ctime, username, type, name, version, equipmentNumber} = currentApproval;
+		let isBuy = applyType.indexOf(type) == 0;
+		const equipment = isBuy ? '新设备' : `${name} ${version}`;
+
+		const apply = `${username} 申请${type} ${equipment}`;
+		let detail = isBuy ? (
+			<li className="detail">
+				<span className="title"><i className="mdi mdi-info" />详情</span>
+				<div className="content">{currentApproval.detail}</div>
+			</li>
+		) : (
+			<li className="number">
+				<i className="mdi mdi-mac"/>设备编号 {equipmentNumber}
+			</li>
+		);
+
 		return (
 			<div className="done-approval">
-				{!isInit && <Stepper info={stepInfo} />}
+				<h2 className="title-bar">信息</h2>
+				<ul className="approval-info">
+					<li className="apply">
+						<i className="mdi mdi-account"/>
+						{apply}
+					</li>
+					{detail}
+					<li className="time"><i className="mdi mdi-time"/>{ctime}</li>
+					<li className="list"><i className="mdi mdi-list"/>用户设备列表</li>
+				</ul>
+				<h2 className="title-bar">审核</h2>
+				<Stepper info={stepInfo} />
 			</div>
 		)
 	}

@@ -23,7 +23,7 @@
     		border-bottom: 1px solid #eeeeee;
     		height: 58px;
     		color: #555;
-    		& .mdi {
+    		& > .mdi {
     			margin: 0 16px 0 6px;
     			color: #39b881;
     			font-size: 1.5rem;
@@ -39,8 +39,17 @@
     			color: #999;
     			bottom: 8px;
     			font-size: 1.2rem;
-    			
     		}
+            & .btn-icon {
+                position: absolute;
+                right: 6px;
+                height: 32px;
+                width: 32px;
+                & .mdi {
+                    font-size: 1.6rem;
+                    line-height: 32px;
+                }
+            }
 		}
 	}
 }
