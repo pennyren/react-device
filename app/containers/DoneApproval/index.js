@@ -15,6 +15,11 @@ class DoneApproval extends Component {
 		store.dispatch({type: 'CLEAR_CURRENT_APPROVAL'}); 
 	}
 
+	doApproval = (content) => {
+		const applyId = +this.props.params.id;
+		store.dispatch({type: 'DO_APPROVAL_ASYNC', applyId, content})
+	}
+
 	render() {
 		const {currentApproval} = this.props;
 		const isInit = Object.keys(currentApproval).length == 0;
@@ -24,10 +29,10 @@ class DoneApproval extends Component {
 		}
 		currentApproval.ctime = moment.get(currentApproval.ctime, 'YYYY-MM-DD HH:MM');
 		
-		const {stepInfo, ctime, username, type, name, version, equipmentNumber} = currentApproval;
+		const {stepInfo, ctime, username, type, name, version, equipmentNumber, currentStep} = currentApproval;
+		const userId = 1;
 		let isBuy = applyType.indexOf(type) == 0;
 		const equipment = isBuy ? '新设备' : `${name} ${version}`;
-
 		const apply = `${username} 申请${type} ${equipment}`;
 		let detail = isBuy ? (
 			<li className="detail">
@@ -39,21 +44,29 @@ class DoneApproval extends Component {
 				<i className="mdi mdi-mac"/>设备编号 {equipmentNumber}
 			</li>
 		);
+		const isEditable = userId == currentApproval.currentApprovalUserId;
 
 		return (
 			<div className="done-approval">
-				<h2 className="title-bar">信息</h2>
-				<ul className="approval-info">
-					<li className="apply">
-						<i className="mdi mdi-account"/>
-						{apply}
-					</li>
-					{detail}
-					<li className="time"><i className="mdi mdi-time"/>{ctime}</li>
-					<li className="list"><i className="mdi mdi-list"/>用户设备列表</li>
-				</ul>
-				<h2 className="title-bar">审核</h2>
-				<Stepper info={stepInfo} />
+				<div className="container">
+					<h2 className="title-bar">信息</h2>
+					<ul className="approval-info">
+						<li className="apply">
+							<i className="mdi mdi-account"/>
+							{apply}
+						</li>
+						{detail}
+						<li className="time"><i className="mdi mdi-time"/>{ctime}</li>
+						<li className="list"><i className="mdi mdi-list"/>用户设备列表</li>
+					</ul>
+					<h2 className="title-bar">审核</h2>
+					<Stepper 
+						info={stepInfo}
+						current={currentStep}
+						isEditable={isEditable}
+						onApproval={this.doApproval}
+					/>
+				</div>
 			</div>
 		)
 	}

@@ -42,12 +42,22 @@ function* clearCurrentApproval(action) {
 	}
 }
 
+function* doApproval(action) {
+	try {
+		const response = yield call(doPost, '/apply/doApproval', {applyId: action.apply, content: action.content});
+		yield put({type: 'DO_APPROVAL'});
+	} catch (e) {
+		yield put({type: 'FETCH_FAILED', message: e});
+	}
+}
+
 function* approvalSaga() {
 	yield [
 		takeEvery('GET_CURRENT_APPROVAL_ASYNC', getCurrentApproval),
 		takeEvery('GET_APPROVALS_ASYNC', getApprovalList),
 		takeEvery('CLEAR_APPROVALS', clearApprovals),
-		takeEvery('CLEAR_CURRENT_APPROVAL', clearCurrentApproval)
+		takeEvery('CLEAR_CURRENT_APPROVAL', clearCurrentApproval),
+		takeEvery('DO_APPROVAL_ASYNC', doApproval)
 	];
 }
 
