@@ -15,9 +15,9 @@ class DoneApproval extends Component {
 		store.dispatch({type: 'CLEAR_CURRENT_APPROVAL'}); 
 	}
 
-	doApproval = (content) => {
+	doApproval = (content, isAgreed) => {
 		const applyId = +this.props.params.id;
-		store.dispatch({type: 'DO_APPROVAL_ASYNC', applyId, content})
+		store.dispatch({type: 'DO_APPROVAL_ASYNC', applyId, content, isAgreed})
 	}
 
 	render() {

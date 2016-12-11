@@ -34,7 +34,7 @@ class Stepper extends Component {
 		const {onApproval} = this.props;
 		let val = this.textfield.input.value.trim();
 		const content = val == '' ? '通过' : val;
-		typeof onApproval == 'function' && onApproval(content);
+		typeof onApproval == 'function' && onApproval(content, true);
 		
 	}
 
@@ -42,7 +42,7 @@ class Stepper extends Component {
 		const {onApproval} = this.props;
 		let val = this.textfield.input.value.trim();
 		const content = val == '' ? '未通过' : val;
-		typeof onApproval == 'function' && onApproval(content);
+		typeof onApproval == 'function' && onApproval(content, false);
 	}
 
 	render() {

@@ -44,7 +44,8 @@ function* clearCurrentApproval(action) {
 
 function* doApproval(action) {
 	try {
-		const response = yield call(doPost, '/apply/doApproval', {applyId: action.apply, content: action.content});
+		const {applyId, content, isAgreed} = action
+		const response = yield call(doPost, '/apply/doApproval', {applyId, content, isAgreed});
 		yield put({type: 'DO_APPROVAL'});
 	} catch (e) {
 		yield put({type: 'FETCH_FAILED', message: e});

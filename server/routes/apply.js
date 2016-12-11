@@ -125,4 +125,22 @@ applyRoute.post('/getOffsetList', async (req, res) => {
 	res.send(resetResponse(true, {list: approvals}));
 });
 
+applyRoute.post('/doApproval', async (req, res) => {
+	const {applyId, content, isAgreed} = req.body;
+	const currentApproval = await applyDao.get(applyId);
+	const {
+			userId, 
+			approvalUserIds, 
+			currentOrderUserIds, 
+			currentApprovalUserId, 
+			stepInfo, 
+			currentStep
+		} = currentApproval;
+	const totalStep = approvalUserIds.length;
+	const isLast = currentOrderUserIds.length == totalStep;
+	if (!isAgreed) {
+
+	}
+
+})
 export default applyRoute;
