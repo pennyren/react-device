@@ -23,9 +23,15 @@ class DoneApproval extends Component {
 	}
 
 	seeUserDeviceList = (e) => {
-		const {userId} = this.props.currentApproval;
-		console.log
+		const device = this.userDevices.querySelectorAll('.device');
+		const height = device.length * 35;
 		this.openList.iconBtn.classList.toggle('opened');
+		this.userDevices.classList.toggle('opened');
+		if (this.userDevices.classList.contains('opened')) {
+			this.userDevices.style.height = height + 'px';
+		} else {
+			this.userDevices.removeAttribute('style');
+		}
 	}
 
 	render() {
@@ -64,43 +70,49 @@ class DoneApproval extends Component {
 			</li>
 		);
 		const isEditable = userId == currentApproval.currentApprovalUserId;
-
+		const devices = userDevices.map((device, index) => {
+			const {serialNumber, name, version} = device;
+			return (
+				<li className="device" key={index}>
+					<i className="mdi mdi-laptop"/>
+					{`编号${serialNumber} ${name} ${version}`}
+				</li>
+			)
+		});
 		return (
 			<div className="done-approval">
-				<div className="container">
-					<h2 className="title-bar">信息</h2>
-					<ul className="approval-info">
-						<li className="apply">
-							<i className="mdi mdi-account"/>
-							{apply}
-						</li>
-						{detail}
-						<li className="time">
-							<i className="mdi mdi-time"/>
-							{ctime}
-						</li>
-						<li className="list">
-							<i className="mdi mdi-list"/>
-							用户设备列表
-							<IconButton 
-								icon="mdi-right" 
-								color="#b4c5cd"
-								onClick={this.seeUserDeviceList}
-								ref={r => this.openList = r}
-							/>
-							<ul>
-								<li></li>
-							</ul>
-						</li>
-					</ul>
-					<h2 className="title-bar">审核</h2>
-					<Stepper 
-						info={stepInfo}
-						current={currentStep}
-						isEditable={isEditable}
-						onApproval={this.doApproval}
-					/>
-				</div>
+				<h2 className="title-bar">信息</h2>
+				<ul className="approval-info">
+					<li className="apply">
+						<i className="mdi mdi-account"/>
+						{apply}
+					</li>
+					{detail}
+					<li className="time">
+						<i className="mdi mdi-time"/>
+						{ctime}
+					</li>
+					<li className="list">
+						<i className="mdi mdi-list"/>
+						用户设备列表
+						<IconButton 
+							icon="mdi-right" 
+							color="#b4c5cd"
+							onClick={this.seeUserDeviceList}
+							ref={r => this.openList = r}
+						/>
+						<ul className="user-device" ref={r => this.userDevices = r}>
+							{devices}
+						</ul>
+					</li>
+				</ul>
+				<h2 className="title-bar">审核</h2>
+				<Stepper 
+					info={stepInfo}
+					current={currentStep}
+					isEditable={isEditable}
+					onApproval={this.doApproval}
+				/>
 			</div>
 		)
 	}

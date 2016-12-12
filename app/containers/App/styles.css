@@ -200,4 +200,7 @@ ul {
 	&.mdi-list:before {
 		content: '\f279';
 	}
+	&.mdi-laptop:before {
+		content: '\f324';
+	}
 }
