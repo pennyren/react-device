@@ -47,17 +47,21 @@ class Stepper extends Component {
 
 	render() {
 		const {info, current, isEditable} = this.props;
+		const lastIndex = info.length - 1;
 		let items = info.map((item, index) => {
 			const {status, title, content} = item;
 			const className = 'stepper-item ' + status;
-			const isDisabled = status == 'disabled';
+			
 			const showOperate = isEditable && current == index + 1;
+			const hasContent = showOperate || content != '';
+			const hideLeftLine =  lastIndex == index && !hasContent;
+			
 			let icon = this.getStepIcon(status, index);
 
 			return (
 				<li className={className} key={index}>
 					<span className="title">{icon}{title}</span>
-					{!isDisabled && (
+					{!hideLeftLine && (
 						<div className="info">
 							{showOperate ? this.getOperated() : content}
 						</div>

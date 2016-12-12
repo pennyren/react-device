@@ -38,6 +38,12 @@ class UserDao extends BaseDao {
 		result.rows.forEach((row) => ids.push(+row.id));
 		return ids;
 	}
+
+	getUserEquipments = async (userId) => {
+		const sql = `select "serialNumber", name, version from equipment where "userId" = ${userId}`;
+		const result = await executeQuery(sql);
+		return result.rows;
+	}
 }
 
 export default UserDao;

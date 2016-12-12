@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Stepper from 'components/Stepper';
 import {connect} from 'react-redux';
+import IconButton from 'components/IconButton';
 import store from 'store';
 import moment from 'utils/date';
 import styles from './styles.css';
@@ -17,7 +18,14 @@ class DoneApproval extends Component {
 
 	doApproval = (content, isAgreed) => {
 		const applyId = +this.props.params.id;
-		store.dispatch({type: 'DO_APPROVAL_ASYNC', applyId, content, isAgreed})
+		const equipment = this.equipment;
+		store.dispatch({type: 'DO_APPROVAL_ASYNC', applyId, content, equipment, isAgreed})
+	}
+
+	seeUserDeviceList = (e) => {
+		const {userId} = this.props.currentApproval;
+		console.log
+		this.openList.iconBtn.classList.toggle('opened');
 	}
 
 	render() {
@@ -29,11 +37,22 @@ class DoneApproval extends Component {
 		}
 		currentApproval.ctime = moment.get(currentApproval.ctime, 'YYYY-MM-DD HH:MM');
 		
-		const {stepInfo, ctime, username, type, name, version, equipmentNumber, currentStep} = currentApproval;
+		const {
+			stepInfo, 
+			ctime, 
+			username, 
+			type, 
+			name, 
+			version, 
+			equipmentNumber, 
+			currentStep,
+			userDevices
+		} = currentApproval;
+		
 		const userId = 1;
 		let isBuy = applyType.indexOf(type) == 0;
-		const equipment = isBuy ? '新设备' : `${name} ${version}`;
-		const apply = `${username} 申请${type} ${equipment}`;
+		this.equipment = isBuy ? '新设备' : `${name} ${version}`;
+		const apply = `${username} 申请${type} ${this.equipment}`;
 		let detail = isBuy ? (
 			<li className="detail">
 				<span className="title"><i className="mdi mdi-info" />详情</span>
@@ -56,8 +75,23 @@ class DoneApproval extends Component {
 							{apply}
 						</li>
 						{detail}
-						<li className="time"><i className="mdi mdi-time"/>{ctime}</li>
-						<li className="list"><i className="mdi mdi-list"/>用户设备列表</li>
+						<li className="time">
+							<i className="mdi mdi-time"/>
+							{ctime}
+						</li>
+						<li className="list">
+							<i className="mdi mdi-list"/>
+							用户设备列表
+							<IconButton 
+								icon="mdi-right" 
+								color="#b4c5cd"
+								onClick={this.seeUserDeviceList}
+								ref={r => this.openList = r}
+							/>
+							<ul>
+								<li></li>
+							</ul>
+						</li>
 					</ul>
 					<h2 className="title-bar">审核</h2>
 					<Stepper 

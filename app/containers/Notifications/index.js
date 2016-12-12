@@ -38,7 +38,7 @@ class Notifications extends Component {
 
 	render() {
 		const {notifications} = this.props;
-		const notificationType = ['审批', '通过', '否决'];
+		const notificationType = ['审批', '同意', '否决'];
 		const icons = ['mdi-approval', 'mdi-success', 'mdi-error'];
 		const items = notifications.map((notification, index) => {
 			const {applyId, content, ctime, type, read} = notification;

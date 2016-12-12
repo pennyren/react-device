@@ -33,6 +33,8 @@
 		padding-top: 10px;
     	margin-top: 8px;
     	border-top: 1px solid #d9d9d9;
+        height: calc(100% - 122px);
+        overflow: auto;
     	& .item {
     		padding: 10px;
    			margin-bottom: 1px;
@@ -50,9 +52,12 @@
     			transform: none;
     			color: #f5a623;
     		}
-    		& .mdi-approval {
+    		& .mdi-approval, & .mdi-success, & .mdi-error {
 				margin-left: 22px;
 			}
+            & .mdi-error {
+                color: rgb(244, 67, 54);
+            }
     		& .apply-link {
     			margin: 0 10px;
     			color: #39b881;
@@ -68,7 +73,7 @@
     		}
     		&.unread {
     			background-color: #fff9ea;
-    			& .mdi-approval {
+    			& .mdi-approval, & .mdi-success, & .mdi-error {
     				margin-left: 0;
     			}
     		}

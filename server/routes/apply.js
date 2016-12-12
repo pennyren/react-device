@@ -4,6 +4,7 @@ import EquipmentDao from '../dao/equipment';
 import UserDao from '../dao/user';
 import NotificationDao from '../dao/notification';
 import resetResponse from '../utils/response';
+import moment from '../utils/date';
 
 const applyDao = new ApplyDao();
 const equipmentDao = new EquipmentDao();
@@ -116,6 +117,8 @@ applyRoute.post('/add', async (req, res) => {
 applyRoute.get('/getCurrentApproval', async (req, res) => {
 	const applyId = +req.query.id;
 	const approval = await applyDao.getCurrentApproval(applyId);
+	const userDevices = await userDao.getUserEquipments(approval.userId);
+	approval.userDevices = userDevices;
 	res.send(resetResponse(true, {current: approval}));
 });
 
@@ -126,10 +129,11 @@ applyRoute.post('/getOffsetList', async (req, res) => {
 });
 
 applyRoute.post('/doApproval', async (req, res) => {
-	const {applyId, content, isAgreed} = req.body;
+	const {applyId, content, equipment, isAgreed} = req.body;
 	const currentApproval = await applyDao.get(applyId);
-	const {
+	let {
 			userId, 
+			type,
 			approvalUserIds, 
 			currentOrderUserIds, 
 			currentApprovalUserId, 
@@ -138,9 +142,68 @@ applyRoute.post('/doApproval', async (req, res) => {
 		} = currentApproval;
 	const totalStep = approvalUserIds.length;
 	const isLast = currentOrderUserIds.length == totalStep;
-	if (!isAgreed) {
+	const makeUserId = approvalUserIds[currentStep - 1];
+	const approvalUser = stepInfo[currentStep - 1].title;
+	let currentStatus = '';
+	let notifiType = '';
+	let notifiContent = '';
 
+	if (isAgreed) {
+		currentStatus = 'agreed';
+		notifiType = '同意';
+		notifiContent = '通过了';
+	} else {
+		currentStatus = 'disagreed';
+		notifiType = '否决';
+		notifiContent = '未通过';
 	}
 
-})
+	//update stepInfo
+	const currentStepInfo = stepInfo[currentStep - 1];
+	currentStepInfo.content = content;
+	currentStepInfo.status = currentStatus;
+
+	if (isAgreed && !isLast) {
+		//update next step status
+		stepInfo[currentStep].status = 'unread';
+
+		//update currentOrderUserIds
+		currentOrderUserIds.push(approvalUserIds[currentStep]);
+
+		//update currentApprovalUserId
+		currentApprovalUserId = approvalUserIds[currentStep]
+
+		//update currentStep
+		currentStep ++;
+	} else {
+		currentStep = -1;
+	}
+
+	//update apply
+	const newApplyEntiy = {
+		currentOrderUserIds: currentOrderUserIds,
+		currentApprovalUserId: currentApprovalUserId,
+		stepInfo: JSON.stringify(stepInfo),
+		currentStep: currentStep
+	};
+
+	//create notification
+	const notificationEntity = {
+		acceptUserId: userId,
+		makeUserId: makeUserId,
+		applyId: applyId,
+		type: notifiType,
+		content: `您申请${type}${equipment}|${notifiContent}|${approvalUser}`,
+		read: false,
+		recieve: false,
+		ctime: moment.get()
+	};
+	const newApply = await applyDao.update(applyId, newApplyEntiy);
+	const notification = await notificationDao.create(notificationEntity);
+	const finalApply = await applyDao.getCurrentApproval(applyId);
+	const userDevices = await userDao.getUserEquipments(finalApply.userId);
+	finalApply.userDevices = userDevices;
+	res.send(resetResponse(true, {apply: finalApply}));
+});
+
 export default applyRoute;

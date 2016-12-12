@@ -38,6 +38,19 @@
     	}
         & .list {
             color: #999;
+            & .btn-icon {
+                width: 32px;
+                height: 32px;
+                margin-left: 8px;
+                & .mdi {
+                    margin-right: 0;
+                    transition: transform .2s ease-in;
+                    transform: rotate(0deg);
+                }
+                &.opened .mdi {
+                    transform: rotate(90deg);
+                }
+            }
         }
 	}
 	& .stepper {
