@@ -47,7 +47,14 @@ class Approval extends Component {
 		})
 		return (
 			<div className="approval">
-				<h2 className="title">审批</h2>
+				<h2 className="title">
+					审批
+					<IconButton 
+						icon="mdi-refresh" 
+						color="#b4c5cd"
+						onClick={this.refreshNotification}
+					/>
+				</h2>
 				<ul className="list">
 					{items}
 				</ul>

@@ -1,0 +1,21 @@
+.back-up {
+	position: fixed;
+    z-index: 5;
+    bottom: 1em;
+    right: 1em;
+    text-align: center;
+	width: 2.5em;
+    height: 2.5em;
+    line-height: 2.5em;
+    border-radius: 50%;
+    border: 1px solid #f1f1f1;
+    background-color: #fff;
+    color: #909090;
+    cursor: pointer;
+    box-shadow: 0 0 5px #f1f1f1;
+    -webkit-transition: text-shadow .3s,color .3s;
+    transition: text-shadow .3s,color .3s;
+    &:hover {
+    	box-shadow: 0 0 5px #ddd;
+    }
+}

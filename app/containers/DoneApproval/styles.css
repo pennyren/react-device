@@ -1,6 +1,7 @@
 .done-approval {
-	width: 56%;
-	margin: 16px auto;
+	width: 60%;
+    min-height: calc(100vh - 112px);
+	margin: 24px auto;
 	overflow: hidden;
 	background-color: #fff;
 	padding: 32px;

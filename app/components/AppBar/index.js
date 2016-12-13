@@ -16,38 +16,6 @@ import {history} from 'routes';
 import moment from 'utils/date';
 import styles from './styles.css';
 
-class NotificationPopover extends Component {
-	toggle = () => {
-		this.popover.classList.toggle('show');
-	}
-
-	close = () => {
-		this.popover.classList.remove('show');
-	}
-
-	seeAll = () => {
-		this.popover.classList.remove('show');
-		history.push('/notifications');
-	}
-
-	render() {
-		return (
-			<ClickAway onClickAway={this.close} hierarchy={1}>
-				<div className="notification-popover" ref={r => this.popover = r}>
-					<div className="header">
-						<i className="mdi mdi-bullhorn"></i>
-					</div>
-					<ul className="messages">
-					</ul>
-					<div className="footer">
-						<FlatButton onClick={this.seeAll}>查看全部<i className="mdi mdi-double-right"></i></FlatButton>
-					</div>
-				</div>
-			</ClickAway>
-		)
-	}
-}
-
 class ApplyDialog extends Component {
 	state = {
 		isPurchased: true
@@ -155,7 +123,7 @@ class ApplyDialog extends Component {
 
 class AppBar extends Component {
 	showNotification = () => {
-		this.notificationPopover.toggle();
+		history.push('/notifications');
 	}
 	
 	openDrawer = () => {
@@ -221,16 +189,14 @@ class AppBar extends Component {
 							color="#b4c5cd"
 							onClick={this.onApply}
 						/>
-						<div className="message-wrapper">
-							<IconButton 
-								icon="mdi-bell" 
-								color="#b4c5cd"  
-								hasBadge={true}
-								onClick={this.showNotification}
-							/>
-							<NotificationPopover ref={r => this.notificationPopover = r}/>
-						</div>
 						
+						<IconButton 
+							icon="mdi-bell" 
+							color="#b4c5cd"  
+							hasBadge={true}
+							onClick={this.showNotification}
+						/>
+					
 						<IconPopover 
 							menuItems={this.getAccountMenu()}
 							onClose={this.manageAccount}

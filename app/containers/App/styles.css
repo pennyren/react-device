@@ -203,4 +203,7 @@ ul {
 	&.mdi-laptop:before {
 		content: '\f324';
 	}
+	&.mdi-refresh:before {
+		content: '\f450';
+	}
 }

@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Ripple from 'components/Ripple';
 import FlatButton from 'components/FlatButton';
+import IconButton from 'components/IconButton';
 import {connect} from 'react-redux';
 import {closest} from 'utils/dom';
 import store from 'store';
@@ -36,6 +37,10 @@ class Notifications extends Component {
 		store.dispatch({type: 'READ_ALL_ASYNC', ids});
 	}
 
+	refreshNotification = (e) => {
+		
+	}
+
 	render() {
 		const {notifications} = this.props;
 		const notificationType = ['审批', '同意', '否决'];
@@ -62,6 +67,11 @@ class Notifications extends Component {
 				<h2 className="title">我的提醒</h2>
 				<div className="tool-bar">
 					<span className="title-bar">通知提醒</span>
+					<IconButton 
+						icon="mdi-refresh" 
+						color="#b4c5cd"
+						onClick={this.refreshNotification}
+					/>
 					<FlatButton onClick={this.readAll}>全部标记为已读</FlatButton>
 				</div>
 				<ul className="message" ref={r => this.messageContainer = r}>

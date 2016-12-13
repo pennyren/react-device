@@ -1,7 +1,7 @@
 .equipment {
-	height: calc(100vh - 96px);
+	height: calc(100vh - 112px);
 	width: 80%;
-	margin: 16px auto;
+	margin: 24px auto;
 	overflow: hidden;
 	background-color: #fff;
 	padding: 32px;
