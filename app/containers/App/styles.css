@@ -206,4 +206,7 @@ ul {
 	&.mdi-refresh:before {
 		content: '\f450';
 	}
+	&.mdi-up:before {
+		content: '\f360';
+	}
 }
