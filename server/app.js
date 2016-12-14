@@ -4,13 +4,11 @@ import bodyParser from 'body-parser';
 import path from 'path';
 
 import setup from './middlewares/frontend';
-import Session from './middlewares/session';
+import session from './middlewares/session';
 import startRoutes from './routes';
 
 const isDev = process.env.NODE_ENV == 'development';
-const appSession = new Session();
 const app = express();
-appSession.set(1);
 app.set('port', process.env.PROT || 8080);
 
 //use middleware
@@ -19,6 +17,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: true
 }));
+app.use(session.check);
 
 //In dev we start webpack to compile module before start routes
 setup(app, {

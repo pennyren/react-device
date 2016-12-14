@@ -1,5 +1,5 @@
 import crypto from 'crypto';
-const store = {};
+let store = {};
 
 const set = (uid) => {
 	const md5 = crypto.createHash('md5');
@@ -16,23 +16,24 @@ const set = (uid) => {
 	return token;
 }
 
-const get = (sid) => {
-
+const get = (uid) => {
+	return store[`uid_${uid}`];
 }
 
-const destroy = (sid) => {
-
+const destroy = (uid) => {
+	delete store[`uid_${uid}`];
 }
 
 const clear = () => {
-
+	store = {};
 }
 
-const check(sid) => {
-
+const check = (req, res, next) => {
+	const signinPath = '/user/signin';
+	const {uid, sid} = req.cookies;
+	const isLogin = req.path == signinPath;
+	const isSigned = uid != undefined && store[`uid_${uid}`] == sid;
+	isLogin ? next() : isSigned ? next() : res.redirect('/');
 }
 
-
-export default {
-
-};
+export default {get, set, destroy, clear, check};
