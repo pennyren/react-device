@@ -29,11 +29,8 @@ const clear = () => {
 }
 
 const check = (req, res, next) => {
-	const signinPath = '/user/signin';
-	const {uid, sid} = req.cookies;
-	const isLogin = req.path == signinPath;
-	const isSigned = uid != undefined && store[`uid_${uid}`] == sid;
-	isLogin ? next() : isSigned ? next() : res.redirect('/');
+	const isLogin = false;
+	isLogin ? next() : res.redirect('/');
 }
 
 export default {get, set, destroy, clear, check};

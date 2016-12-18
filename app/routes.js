@@ -13,32 +13,31 @@ import EditEquipment from 'containers/EditEquipment';
 import DoneApproval from 'containers/DoneApproval';
 import History from 'containers/History';
 
+const history = useRouterHistory(createHashHistory)({
+	queryKey: false
+});
+
+const requireAuth = (nextState, replace) => {
+	console.log(nextState);
+}
+
 const routes = (
 	<Route path="/" component={App}>
 		<IndexRoute component={SignIn}/>
 		<Route path="signin" component={SignIn} />
 
-		<Route path="dashboard" onEnter={checkUserInfo} component={Dashboard} >
+		<Route path="dashboard" component={Dashboard} onEnter={requireAuth}>
 			<IndexRoute component={Equipment} />
-			<Route path="/equipment" component={Equipment} />
-			<Route path="/users" component={Users} />
-			<Route path="/setting" component={Setting} />
-			<Route path="/notifications" component={Notifications} />
-			<Route path="/approval" component={Approval} />
-			<Route path="/equipment/:id" component={EditEquipment} />
-			<Route path="/equipment/:id/history" component={History} />
-			<Route path="/approval/:id" component={DoneApproval} />
+			<Route path="/equipment" component={Equipment} onEnter={requireAuth} />
+			<Route path="/users" component={Users} onEnter={requireAuth} />
+			<Route path="/setting" component={Setting} onEnter={requireAuth} />
+			<Route path="/notifications" component={Notifications} onEnter={requireAuth} />
+			<Route path="/approval" component={Approval} onEnter={requireAuth} />
+			<Route path="/equipment/:id" component={EditEquipment} onEnter={requireAuth} />
+			<Route path="/equipment/:id/history" component={History} onEnter={requireAuth} />
+			<Route path="/approval/:id" component={DoneApproval} onEnter={requireAuth} />
 		</Route>
 	</Route>
 );
-
-const history = useRouterHistory(createHashHistory)({
-	queryKey: false
-});
-
-const checkUserInfo = (nextState, replace, cb) => {
-	alert(1);
-	console.log(nextState);
-}
 
 export {routes, history};

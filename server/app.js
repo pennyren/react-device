@@ -17,7 +17,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: true
 }));
-app.use(session.check);
 
 //In dev we start webpack to compile module before start routes
 setup(app, {

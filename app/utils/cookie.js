@@ -1,0 +1,1 @@
+const cookies = document.cookie ? document.cookie.split('; ') : [];

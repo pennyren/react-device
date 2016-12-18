@@ -1,6 +1,7 @@
 import express from 'express';
 import UserDao from '../dao/user';
 import resetResponse from '../utils/response';
+import session from '../middlewares/session.js'
 
 const userRoute = express.Router();
 const userDao = new UserDao();
@@ -8,8 +9,21 @@ const userDao = new UserDao();
 userRoute.post('/signin', async (req, res) => {
 	const {username, pwd} = req.body;
 	const isMatched = await userDao.findUser(username, pwd);
+	const uid = 1;
+	if (isMatched) {
+		const token = session.set(uid);
+		res.cookie('uid', token.uid, {maxAge: 9000000, httpOnly: true});
+		res.cookie('sid', token.sid, {maxAge: 9000000, httpOnly: true});
+	}
+	
 	res.send(resetResponse(true, {isMatched}));	
 });
+
+userRoute.post('/signout', async (req, res) => {
+	const {uid} = req.body;
+	res.clearCookie('uid')
+	res.clearCookie('sid')
+})
 
 userRoute.post('/getUsers', async (req, res) => {
 	const {currentPage, filter} = req.body;
