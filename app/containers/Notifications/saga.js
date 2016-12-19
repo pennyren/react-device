@@ -2,6 +2,7 @@ import {takeEvery, delay} from 'redux-saga';
 import {call, put} from 'redux-saga/effects';
 import fetch from 'utils/fetch';
 import moment from 'utils/date';
+import cookie from 'utils/cookie';
 import store from 'store';
 
 const {doGet, doPost} = fetch;
@@ -56,9 +57,10 @@ function* notificationSaga() {
 }
 
 function getFilter() {
+	const val = +cookie.get('uid');
 	const filter = [{
 		key: 'acceptUserId',
-		val: 1,
+		val: val,
 		operator: ' = '
 	}];
 	return filter;

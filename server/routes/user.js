@@ -8,22 +8,23 @@ const userDao = new UserDao();
 
 userRoute.post('/signin', async (req, res) => {
 	const {username, pwd} = req.body;
-	const isMatched = await userDao.findUser(username, pwd);
-	const uid = 1;
+	const uid = await userDao.findUser(username, pwd);
+	const isMatched = uid == -1 ? false : true;
 	if (isMatched) {
 		const token = session.set(uid);
-		res.cookie('uid', token.uid, {maxAge: 9000000, httpOnly: true});
-		res.cookie('sid', token.sid, {maxAge: 9000000, httpOnly: true});
+		res.cookie('uid', token.uid, {maxAge: 9000000, httpOnly: false});
+		res.cookie('sid', token.sid, {maxAge: 9000000, httpOnly: false});
 	}
-	
 	res.send(resetResponse(true, {isMatched}));	
 });
 
 userRoute.post('/signout', async (req, res) => {
 	const {uid} = req.body;
-	res.clearCookie('uid')
-	res.clearCookie('sid')
-})
+	session.destroy(uid);
+	res.clearCookie('uid');
+	res.clearCookie('sid');
+	res.send(resetResponse(true, {isClear: true}));
+});
 
 userRoute.post('/getUsers', async (req, res) => {
 	const {currentPage, filter} = req.body;

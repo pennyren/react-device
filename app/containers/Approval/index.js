@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import IconButton from 'components/IconButton';
+import cookie from 'utils/cookie';
 import {closest} from 'utils/dom';
 import {history} from 'routes';
 import {connect} from 'react-redux';
@@ -24,7 +25,7 @@ class Approval extends Component {
 	render() {
 		const {list} = this.props;
 		const applyType = ['购买', '领用', '退还', '维修', '维护'];
-		const userId = 1;
+		const userId = +cookie.get('uid');
 		const items = list.map((approval, index) => {
 			const {username, type, name, version, number, ctime, currentApprovalUserId, currentStep} = approval;
 			const typeIndex = applyType.indexOf(type);

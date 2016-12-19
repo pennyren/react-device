@@ -12,7 +12,7 @@ function* getHistory(action) {
 		const filter = getFilter(action.equipmentId);
 		const response = yield call(doPost, '/history/getHistory', {filter, currentCount});
 		const finalHistory = filterHistoryInfo(response.result.history);
-		console.log(finalHistory);
+		
 		yield put({type: 'GET_HISTORY', history: finalHistory});
 	} catch (e) {
 		yield put({type: 'FETCH_FAILED', message: e});

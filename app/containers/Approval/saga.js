@@ -2,6 +2,7 @@ import {takeEvery, delay} from 'redux-saga';
 import {call, put} from 'redux-saga/effects';
 import fetch from 'utils/fetch';
 import moment from 'utils/date';
+import cookie from 'utils/cookie';
 import store from 'store';
 
 const {doGet, doPost} = fetch;
@@ -17,7 +18,7 @@ function* getCurrentApproval(action) {
 
 function* getApprovalList(action) {
 	const offset = store.getState().approvals.list.length;
-	const userId = 1;
+	const userId = +cookie.get('uid');
 	try {
 		const response = yield call(doPost, '/apply/getOffsetList', {userId: userId, offset: offset});
 		yield put({type: 'GET_APPROVALS', list: filterApprovalsInfo(response.result.list)});

@@ -7,10 +7,10 @@ class UserDao extends BaseDao {
 	}
 	
 	findUser = async (username, pwd) => {
-		const sql = `select count(*) from "user" where username = '${username}' and pwd = '${pwd}'`;
+		const sql = `select id from "user" where username = '${username}' and pwd = '${pwd}'`;
 		const result = await executeQuery(sql);
-		const count = +result.rows[0].count;
-		return count == 0 ? false : true;
+		const data = result.rows[0];
+		return data == undefined ? -1 : +data.id;
 	}
 
 	batchDelete = async (ids) => {

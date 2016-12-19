@@ -11,6 +11,7 @@ import getPropsFromInputs from 'utils/form';
 import FlatButton from 'components/FlatButton';
 import ClickAway from 'internals/ClickAway';
 import fetch from 'utils/fetch';
+import cookie from 'utils/cookie';
 import {index} from 'utils/dom';
 import {history} from 'routes';
 import moment from 'utils/date';
@@ -49,8 +50,7 @@ class ApplyDialog extends Component {
 	onConfirm = (dialogContent) => {
 		const isPurchased = this.state.isPurchased;
 		const apply = getPropsFromInputs(dialogContent);
-		//@todo
-		apply.userId = 1;
+		apply.userId = +cookie.get('uid');
 		apply.ctime = moment.get();
 		if (isPurchased && !apply.detail) {
 			this.snackbar.open({message: '请输入你要购买的设备详情!', type: 'warning'});
@@ -140,7 +140,13 @@ class AppBar extends Component {
 		if (!currentIndex) {
 			history.push('/setting');
 		} else {
-			history.push('/signin')
+			const uid = +cookie.get('uid');
+			fetch.doPost('user/signout', {uid: uid}).then((data) => {
+				const {result} = data;
+				if (result.isClear) {
+					history.push('/signin');
+				}
+			});
 		}
 	}
 

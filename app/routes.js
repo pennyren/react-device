@@ -12,13 +12,15 @@ import Approval from 'containers/Approval';
 import EditEquipment from 'containers/EditEquipment';
 import DoneApproval from 'containers/DoneApproval';
 import History from 'containers/History';
+import cookie from 'utils/cookie';
 
 const history = useRouterHistory(createHashHistory)({
 	queryKey: false
 });
 
 const requireAuth = (nextState, replace) => {
-	console.log(nextState);
+	const sid = cookie.get('sid');
+	!sid && replace('/signin');
 }
 
 const routes = (

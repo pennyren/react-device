@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import IconButton from 'components/IconButton';
 import store from 'store';
 import moment from 'utils/date';
+import cookie from 'utils/cookie';
 import styles from './styles.css';
 
 class DoneApproval extends Component {
@@ -55,7 +56,7 @@ class DoneApproval extends Component {
 			userDevices
 		} = currentApproval;
 		
-		const userId = 1;
+		const userId = +cookie.get('uid');
 		let isBuy = applyType.indexOf(type) == 0;
 		this.equipment = isBuy ? '新设备' : `${name} ${version}`;
 		const apply = `${username} 申请${type} ${this.equipment}`;

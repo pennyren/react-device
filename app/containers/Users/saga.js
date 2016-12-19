@@ -2,7 +2,7 @@ import {takeEvery, delay} from 'redux-saga';
 import {call, put} from 'redux-saga/effects';
 import fetch from 'utils/fetch';
 import moment from 'utils/date';
-import getEnumVal from 'utils/enums';
+import cookie from 'utils/cookie';
 import store from 'store';
 
 const {doGet, doPost} = fetch;
@@ -97,9 +97,10 @@ function filterUserInfo(users) {
 
 function getFilter() {
 	const search = store.getState().users.search;
+	const id = +cookie.get('uid');
 	const filter = [{
 		key: 'id',
-		val: 1,
+		val: id,
 		operator: ' != '
 	}, {
 		key: 'username',
