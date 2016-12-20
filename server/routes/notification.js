@@ -7,8 +7,10 @@ const notificationDao = new NotificationDao();
 
 notificationRoute.post('/getNotifications', async (req, res) => {
 	const {filter, currentCount} = req.body;
+	const allCount = await notificationDao.count(filter);
 	const notifications = await notificationDao.offsetNotifications(filter, currentCount);
-	res.send(resetResponse(true, {notifications}));
+	const hasOlder = (notifications.length + currentCount) < allCount;
+	res.send(resetResponse(true, {notifications, hasOlder}));
 });
 
 notificationRoute.post('/read', async (req, res) => {

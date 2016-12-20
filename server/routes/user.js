@@ -60,6 +60,12 @@ userRoute.post('/getUsersByUsername', async (req, res) => {
 	const {username} = req.body;
 	const users = await userDao.getUsersByUsername(username);
 	res.send(resetResponse(true, {users}));
-})
+});
+
+userRoute.post('/modifyPassword', async (req, res) => {
+	console.log(req.body);
+	
+	res.send(resetResponse(true, {user: req.body}));
+});
 
 export default userRoute;

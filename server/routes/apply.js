@@ -124,8 +124,10 @@ applyRoute.get('/getCurrentApproval', async (req, res) => {
 
 applyRoute.post('/getOffsetList', async (req, res) => {
 	const {userId, offset} = req.body;
+	const count = await applyDao.countApprovals(userId);
 	const approvals = await applyDao.getOffsetApprovals(userId, offset);
-	res.send(resetResponse(true, {list: approvals}));
+	const hasOlder = (approvals.length + offset) < count;
+	res.send(resetResponse(true, {list: approvals, hasOlder}));
 });
 
 applyRoute.post('/doApproval', async (req, res) => {

@@ -7,8 +7,10 @@ const historyDao = new HistoryDao();
 
 historyRoute.post('/getHistory', async (req, res) => {
 	const {filter, currentCount} = req.body;
+	const allCount = await historyDao.count(filter);
 	const history = await historyDao.offsetHistory(filter, currentCount);
-	res.send(resetResponse(true, {history}));
+	const hasOlder = (history.length + currentCount) < allCount;
+	res.send(resetResponse(true, {history, hasOlder}));
 });
 
 export default historyRoute;

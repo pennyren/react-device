@@ -7,7 +7,7 @@ class NotificationDao extends BaseDao {
 		super('notification');
 	}
 
-	offsetNotifications = async (filter, offset, size = 10) => {
+	offsetNotifications = async (filter, offset, size = 20) => {
 		const condition = getConditionQuery(filter);
 		const offsetStatement = `limit ${size} offset ${offset}`;
 		const sql = `select * from "${this.entity}" ${condition} order by id desc ${offsetStatement}`;

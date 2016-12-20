@@ -27,10 +27,16 @@ class ApplyDao extends BaseDao {
 			left join "user" u on u.id = a."userId" 
 			left join "equipment" e on a."equipmentNumber" = e."serialNumber"
 			where ${userId} = any (a."currentOrderUserIds")
-			limit 10 offset ${offset}
+			limit 20 offset ${offset}
 		`;
 		const result = await executeQuery(sql);
 		return result.rows;
+	}
+
+	countApprovals = async (userId) => {
+		const sql = `select count(*) from "apply" a where ${userId} = any (a."currentOrderUserIds")`;
+		const result = await executeQuery(sql);
+		return +result.rows[0].count;
 	}
 }
 
