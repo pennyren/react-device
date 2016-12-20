@@ -63,9 +63,13 @@ userRoute.post('/getUsersByUsername', async (req, res) => {
 });
 
 userRoute.post('/modifyPassword', async (req, res) => {
-	console.log(req.body);
-	
-	res.send(resetResponse(true, {user: req.body}));
+	const uid = +req.cookies.uid;
+	const {password, newPassword} = req.body;
+	const isFound = await userDao.getUserByPassword(uid, password);
+	if (isFound) {
+		await userDao.update(uid, {pwd: newPassword});
+	}
+	res.send(resetResponse(true, {isUpdate: isFound}));
 });
 
 export default userRoute;

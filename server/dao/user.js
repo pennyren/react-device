@@ -44,6 +44,12 @@ class UserDao extends BaseDao {
 		const result = await executeQuery(sql);
 		return result.rows;
 	}
+
+	getUserByPassword = async (uid, password) => {
+		const sql = `select count(*) from "user" where id = ${uid} and pwd = '${password}'`;
+		const result = await executeQuery(sql);
+		return +result.rows[0].count == 0 ? false : true;
+	}
 }
 
 export default UserDao;
