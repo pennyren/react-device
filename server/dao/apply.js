@@ -27,6 +27,7 @@ class ApplyDao extends BaseDao {
 			left join "user" u on u.id = a."userId" 
 			left join "equipment" e on a."equipmentNumber" = e."serialNumber"
 			where ${userId} = any (a."currentOrderUserIds")
+			order by a.id desc
 			limit 20 offset ${offset}
 		`;
 		const result = await executeQuery(sql);

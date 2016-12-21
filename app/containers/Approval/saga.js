@@ -21,7 +21,8 @@ function* getApprovalList(action) {
 	const userId = +cookie.get('uid');
 	try {
 		const response = yield call(doPost, '/apply/getOffsetList', {userId: userId, offset: offset});
-		yield put({type: 'GET_APPROVALS', list: filterApprovalsInfo(response.result.list)});
+		const {list, hasOlder} = response.result;
+		yield put({type: 'GET_APPROVALS', list: filterApprovalsInfo(list), hasOlder});
 	} catch (e) {
 		yield put({type: 'FETCH_FAILED', message: e});
 	}
@@ -53,13 +54,25 @@ function* doApproval(action) {
 	}
 }
 
+function* refreshApprovals(action) {
+	const userId = +cookie.get('uid');
+	try {
+		const response = yield call(doPost, '/apply/getOffsetList', {userId: userId, offset: 0});
+		const {list, hasOlder} = response.result;
+		yield put({type: 'REFRESH_APPROVALS', list: filterApprovalsInfo(list), hasOlder});
+	} catch (e) {
+		yield put({type: 'FETCH_FAILED', message: e});
+	}
+}
+
 function* approvalSaga() {
 	yield [
 		takeEvery('GET_CURRENT_APPROVAL_ASYNC', getCurrentApproval),
 		takeEvery('GET_APPROVALS_ASYNC', getApprovalList),
 		takeEvery('CLEAR_APPROVALS', clearApprovals),
 		takeEvery('CLEAR_CURRENT_APPROVAL', clearCurrentApproval),
-		takeEvery('DO_APPROVAL_ASYNC', doApproval)
+		takeEvery('DO_APPROVAL_ASYNC', doApproval),
+		takeEvery('REFRESH_APPROVALS_ASYNC', refreshApprovals)
 	];
 }
 

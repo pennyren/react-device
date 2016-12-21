@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import IconButton from 'components/IconButton';
+import FlatButton from 'components/FlatButton';
 import cookie from 'utils/cookie';
 import {closest} from 'utils/dom';
 import {history} from 'routes';
@@ -22,8 +23,16 @@ class Approval extends Component {
 		history.push(`/approval/${id}`);
 	}
 
+	getOlder = (e) => {
+		store.dispatch({type: 'GET_APPROVALS_ASYNC'}); 
+	}
+
+	refreshApprovals = (e) => {
+		store.dispatch({type: 'REFRESH_APPROVALS_ASYNC'});
+	}
+
 	render() {
-		const {list} = this.props;
+		const {list, hasOlder} = this.props;
 		const applyType = ['购买', '领用', '退还', '维修', '维护'];
 		const userId = +cookie.get('uid');
 		const items = list.map((approval, index) => {
@@ -53,11 +62,12 @@ class Approval extends Component {
 					<IconButton 
 						icon="mdi-refresh" 
 						color="#b4c5cd"
-						onClick={this.refreshNotification}
+						onClick={this.refreshApprovals}
 					/>
 				</h2>
 				<ul className="list">
 					{items}
+					{hasOlder && <li className="older"><FlatButton onClick={this.getOlder}>Older</FlatButton></li>}
 				</ul>
 			</div>
 		)
@@ -66,7 +76,8 @@ class Approval extends Component {
 
 const mapStateToProps = function(store) {
 	return {
-		list: store.approvals.list
+		list: store.approvals.list,
+		hasOlder: store.approvals.hasOlder
 	}
 }
 

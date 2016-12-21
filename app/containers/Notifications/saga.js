@@ -9,11 +9,12 @@ const {doGet, doPost} = fetch;
 
 function* getNotifications(action) {
 	try {
-		const currentCount = store.getState().notifications.length;
+		const currentCount = store.getState().notifications.list.length;
 		const filter = getFilter();
 		const response = yield call(doPost, '/notification/getNotifications', {filter, currentCount});
-		const finalNotifications = filterNotificationsInfo(response.result.notifications);
-		yield put({type: 'GET_NOTIFICATIONS', notifications: finalNotifications});
+		const {hasOlder, notifications} = response.result;
+		const finalNotifications = filterNotificationsInfo(notifications);
+		yield put({type: 'GET_NOTIFICATIONS', notifications: finalNotifications, hasOlder});
 	} catch (e) {
 		yield put({type: 'FETCH_FAILED', message: e});
 	}
@@ -45,14 +46,27 @@ function* readAllNotification(action) {
 	} catch (e) {
 		yield put({type: 'FETCH_FAILED', message: e});
 	}
-}     
+}
+
+function* refreshNotifications(action) {
+	try {
+		const filter = getFilter();
+		const response = yield call(doPost, '/notification/getNotifications', {filter, currentCount: 0});
+		const {hasOlder, notifications} = response.result;
+		const finalNotifications = filterNotificationsInfo(notifications);
+		yield put({type: 'REFRESH_NOTIFICATIONS', notifications: finalNotifications, hasOlder});
+	} catch (e) {
+		yield put({type: 'FETCH_FAILED', message: e});
+	}
+}
 
 function* notificationSaga() {
 	yield [
 		takeEvery('GET_NOTIFICATIONS_ASYNC', getNotifications),
 		takeEvery('CLEAR_NOTIFICATIONS', clearNotifications),
 		takeEvery('READ_NOTIFICATION_ASYNC', readNotification),
-		takeEvery('READ_ALL_ASYNC', readAllNotification)
+		takeEvery('READ_ALL_ASYNC', readAllNotification),
+		takeEvery('REFRESH_NOTIFICATIONS_ASYNC', refreshNotifications)
 	];
 }
 

@@ -1,6 +1,7 @@
 const initApprovals = {
 	list: [],
-	current: {}
+	current: {},
+	hasOlder: false
 };
 
 const approvalsReducer = function(state = initApprovals, action) {
@@ -11,11 +12,13 @@ const approvalsReducer = function(state = initApprovals, action) {
 			});
 		case 'GET_APPROVALS':
 			return diffApprovalsState(state, {
-				list: action.list
+				list: [...state.list, ...action.list],
+				hasOlder: action.hasOlder
 			});
 		case 'CLEAR_APPROVALS_LIST':
 			return diffApprovalsState(state, {
-				list: []
+				list: [],
+				hasOlder: false
 			});
 		case 'CLEAR_APPROVALS_CURRENT':
 			return diffApprovalsState(state, {
@@ -24,6 +27,11 @@ const approvalsReducer = function(state = initApprovals, action) {
 		case 'DO_APPROVAL':
 			return diffApprovalsState(state, {
 				current: action.current
+			});
+		case 'REFRESH_APPROVALS':
+			return diffApprovalsState(state, {
+				list: action.list,
+				hasOlder: action.hasOlder
 			});
 		default:
 			return state;

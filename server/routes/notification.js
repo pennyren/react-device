@@ -25,4 +25,10 @@ notificationRoute.post('/readAll', async (req, res) => {
 	res.send(resetResponse(true));
 });
 
+notificationRoute.post('/getNewest', async (req, res) => {
+	const {acceptUserId} = req.body;
+	const ids = await notificationDao.getNewest(acceptUserId);
+	res.send(resetResponse(true, ids));
+});
+
 export default notificationRoute;

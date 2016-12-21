@@ -19,6 +19,12 @@ class NotificationDao extends BaseDao {
 		const sql = `update "${this.entity}" set read = true where id in (${ids.join(', ')})`;
 		await executeQuery(sql);
 	}
+
+	getNewest = async (id) => {
+		const sql = `select id from "${this.entity}" where "acceptUserId" = ${id} and recieve = false order by id desc`;
+		const result = await executeQuery(sql);
+		return result.rows;
+	}
 }
 
 export default NotificationDao;

@@ -8,12 +8,12 @@ const {doGet, doPost} = fetch;
 
 function* getHistory(action) {
 	try {
-		const currentCount = store.getState().history.length;
+		const currentCount = store.getState().history.list.length;
 		const filter = getFilter(action.equipmentId);
 		const response = yield call(doPost, '/history/getHistory', {filter, currentCount});
-		const finalHistory = filterHistoryInfo(response.result.history);
-		
-		yield put({type: 'GET_HISTORY', history: finalHistory});
+		const {history, hasOlder} = response.result;
+		const finalHistory = filterHistoryInfo(history);
+		yield put({type: 'GET_HISTORY', history: finalHistory, hasOlder});
 	} catch (e) {
 		yield put({type: 'FETCH_FAILED', message: e});
 	}

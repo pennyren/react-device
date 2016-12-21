@@ -38,11 +38,15 @@ class Notifications extends Component {
 	}
 
 	refreshNotification = (e) => {
-		
+		store.dispatch({type: 'REFRESH_NOTIFICATIONS_ASYNC'});
+	}
+
+	getOlder = (e) => {
+		store.dispatch({type: 'GET_NOTIFICATIONS_ASYNC'}); 
 	}
 
 	render() {
-		const {notifications} = this.props;
+		const {notifications, hasOlder} = this.props;
 		const notificationType = ['审批', '同意', '否决'];
 		const icons = ['mdi-approval', 'mdi-success', 'mdi-error'];
 		const items = notifications.map((notification, index) => {
@@ -76,6 +80,7 @@ class Notifications extends Component {
 				</div>
 				<ul className="message" ref={r => this.messageContainer = r}>
 					{items}
+					{hasOlder && <li className="older"><FlatButton onClick={this.getOlder}>Older</FlatButton></li>}
 				</ul>
 			</div>
 		)
@@ -84,7 +89,8 @@ class Notifications extends Component {
 
 const mapStateToProps = function(store) {
 	return {
-		notifications: store.notifications
+		notifications: store.notifications.list,
+		hasOlder: store.notifications.hasOlder
 	}
 }
 

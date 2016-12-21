@@ -16,6 +16,7 @@
 	}
 	& .list {
 		margin-top: 8px;
+        margin-bottom: 32px;
 		& .item {
 			position: relative;
 			padding: 10px;
@@ -51,5 +52,9 @@
                 }
             }
 		}
+        & .older {
+            text-align: center;
+            padding: 10px;
+        }
 	}
 }

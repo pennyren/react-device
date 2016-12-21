@@ -122,6 +122,19 @@ class ApplyDialog extends Component {
 }
 
 class AppBar extends Component {
+	componentDidMount() {
+		const userId = +cookie.get('uid');
+		this.timer = setTimeout(function() {
+			console.log('111')
+			fetch.doPost('notification/getNewest', {acceptUserId: userId}).then((data) => {
+				console.log(data)
+			});
+		}, 3000);
+	}
+
+	componentWillUnmount() {
+		clearTimeout(this.timer);
+	}
 	showNotification = () => {
 		history.push('/notifications');
 	}

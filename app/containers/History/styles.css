@@ -16,6 +16,7 @@
 	}
 	& .record {
 		margin-top: 8px;
+		margin-bottom: 32px;
 		& .item {
 			padding: 10px;
    			margin-bottom: 1px;
@@ -33,5 +34,9 @@
     			float: right;
     		}
 		}
+		& .older {
+            text-align: center;
+            padding: 10px;
+        }
 	}
 }

@@ -1,13 +1,30 @@
-const initNotifications = [];
+const initNotifications = {
+	list: [],
+	hasOlder: false
+}
 
 const notificationsReducer = function(state = initNotifications, action) {
 	switch (action.type) {
 		case 'GET_NOTIFICATIONS':
-			return [...state, ...action.notifications];
+			return {
+				list: [...state.list, ...action.notifications],
+				hasOlder: action.hasOlder
+			};
 		case 'CLEAR_NOTIFICATIONS_NULL':
-			return [];
+			return {
+				list: [],
+				hasOlder: false
+			}
 		case 'READ_ALL_TRUE':
-			return action.notifications;
+			return {
+				list: action.notifications,
+				hasOlder: state.hasOlder
+			};
+		case 'REFRESH_NOTIFICATIONS':
+			return {
+				list: action.notifications,
+				hasOlder: action.hasOlder
+			};
 		default:
 			return state;
 	}
