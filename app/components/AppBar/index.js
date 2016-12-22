@@ -121,13 +121,17 @@ class ApplyDialog extends Component {
 	}
 }
 
-class AppBar extends Component {
+class Bell extends Component {
+	state = {
+		count: 0
+	}
+
 	componentDidMount() {
 		const userId = +cookie.get('uid');
-		this.timer = setTimeout(function() {
-			console.log('111')
+		this.timer = setInterval(() => {
 			fetch.doPost('notification/getNewest', {acceptUserId: userId}).then((data) => {
-				console.log(data)
+				const ids = data.result.map(el => +el.id);
+				this.setState({count: ids.length})
 			});
 		}, 3000);
 	}
@@ -135,10 +139,25 @@ class AppBar extends Component {
 	componentWillUnmount() {
 		clearTimeout(this.timer);
 	}
+
 	showNotification = () => {
 		history.push('/notifications');
 	}
-	
+
+	render() {
+		return (
+			<IconButton 
+				icon="mdi-bell" 
+				color="#b4c5cd"  
+				hasBadge={true}
+				count={this.state.count}
+				onClick={this.showNotification}
+			/>
+		)
+	}
+}
+
+class AppBar extends Component {
 	openDrawer = () => {
 		this.drawer.open();
 	}
@@ -208,14 +227,7 @@ class AppBar extends Component {
 							color="#b4c5cd"
 							onClick={this.onApply}
 						/>
-						
-						<IconButton 
-							icon="mdi-bell" 
-							color="#b4c5cd"  
-							hasBadge={true}
-							onClick={this.showNotification}
-						/>
-					
+						<Bell />
 						<IconPopover 
 							menuItems={this.getAccountMenu()}
 							onClose={this.manageAccount}

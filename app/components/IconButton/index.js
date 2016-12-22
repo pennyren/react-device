@@ -4,13 +4,13 @@ import styles from './styles.css';
 
 class IconButton extends Component {
 	render() {
-		const {onClick, icon, color, hasBadge, action, centerRipple, tooltip, customClassName} = this.props;
+		const {onClick, icon, color, hasBadge, count, action, centerRipple, tooltip, customClassName} = this.props;
 		const defaultCenter = centerRipple == false ? false : true;
 		const classIcon = 'mdi ' + icon;
 		let className = ['btn-icon'];
 		const finalProps = {};
-		if (hasBadge) {
-			finalProps['data-badge'] = 3;
+		if (hasBadge && count) {
+			finalProps['data-badge'] = count;
 			className.push('is-badged');
 		}
 
